@@ -1,0 +1,887 @@
+/* ==========================================================================
+   GRAMSETU - NEXT-GEN LUXURY GOVTECH DESIGN SYSTEM
+   Bespoke Avant-Garde Palette: Royal Jade, Electric Mint & Terracotta Saffron
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap');
+
+:root {
+  /* Unique Color Palette */
+  --c-obsidian: #031b17;
+  --c-jade-900: #062f28;
+  --c-jade-800: #09473d;
+  --c-jade-700: #0b5e51;
+  --c-jade-600: #0e7b6a;
+  --c-jade-500: #109b85;
+  --c-mint: #10e599;
+  --c-mint-light: #6ee7b7;
+  --c-mint-bg: #ecfdf5;
+
+  --c-terracotta: #ff6b35;
+  --c-terracotta-dark: #d9480f;
+  --c-amber-glow: #f59e0b;
+  --c-saffron-bg: #fff7ed;
+
+  --c-canvas: #f4f6f2;
+  --c-surface: #ffffff;
+  --c-surface-glass: rgba(255, 255, 255, 0.88);
+  
+  --c-text-main: #0c1c19;
+  --c-text-muted: #4b635e;
+  --c-text-soft: #7d9691;
+  --c-border: #e1e8e5;
+  --c-border-hover: #b6d5ce;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--c-canvas);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(16, 229, 153, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 107, 53, 0.07) 0px, transparent 45%),
+    radial-gradient(at 50% 100%, rgba(11, 94, 81, 0.06) 0px, transparent 60%);
+  background-attachment: fixed;
+  color: var(--c-text-main);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   ANIMATIONS & DYNAMICS
+   ========================================================================== */
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(16, 229, 153, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(16, 229, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 229, 153, 0); }
+}
+
+@keyframes pulse-orange {
+  0% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 107, 53, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0); }
+}
+
+@keyframes float-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes shimmer-laser {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes gradient-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float {
+  animation: float-subtle 4s ease-in-out infinite;
+}
+
+.pulse-mint-glow {
+  animation: pulse-glow 2.2s infinite;
+}
+
+.pulse-orange-glow {
+  animation: pulse-orange 2.2s infinite;
+}
+
+/* ==========================================================================
+   BESPOKE SIDEBAR DESIGN
+   ========================================================================== */
+
+.bespoke-sidebar {
+  background: linear-gradient(180deg, var(--c-obsidian) 0%, var(--c-jade-900) 60%, var(--c-jade-800) 100%);
+  width: 260px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid rgba(16, 229, 153, 0.15);
+}
+
+.bespoke-sidebar::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: -80px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(16, 229, 153, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.bespoke-sidebar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.sidebar-brand-box {
+  padding: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sidebar-emblem-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--c-mint) 0%, var(--c-jade-600) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px -2px rgba(16, 229, 153, 0.35);
+  color: var(--c-obsidian);
+  flex-shrink: 0;
+}
+
+.nav-pill-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  margin: 4px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #a4c4be;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.nav-pill-link:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+.nav-pill-link.active {
+  background: linear-gradient(90deg, rgba(16, 229, 153, 0.2) 0%, rgba(16, 229, 153, 0.05) 100%);
+  color: var(--c-mint);
+  border: 1px solid rgba(16, 229, 153, 0.3);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.25);
+}
+
+.nav-pill-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 25%;
+  height: 50%;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--c-mint);
+  box-shadow: 0 0 10px var(--c-mint);
+}
+
+/* ==========================================================================
+   HEADER & WEATHER GLASS PANEL
+   ========================================================================== */
+
+.glass-header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(225, 232, 229, 0.8);
+}
+
+.weather-badge {
+  background: linear-gradient(135deg, rgba(16, 229, 153, 0.12) 0%, rgba(11, 94, 81, 0.08) 100%);
+  border: 1px solid rgba(16, 229, 153, 0.3);
+  border-radius: 12px;
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--c-jade-800);
+}
+
+/* ==========================================================================
+   LUXURY CARDS WITH MESH GLOW & BORDER GRADIENTS
+   ========================================================================== */
+
+.luxury-card {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid var(--c-border);
+  box-shadow: 
+    0 1px 3px rgba(12, 28, 25, 0.02),
+    0 12px 30px -4px rgba(12, 28, 25, 0.05);
+  padding: 26px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--c-border-hover);
+  box-shadow: 
+    0 4px 10px rgba(12, 28, 25, 0.03),
+    0 22px 45px -8px rgba(11, 79, 72, 0.12);
+}
+
+.luxury-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--c-mint) 0%, var(--c-jade-600) 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.luxury-card:hover::before {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   LASER TIMELINE STEPPER (GRIEVANCE TRACKING)
+   ========================================================================== */
+
+.timeline-track-container {
+  position: relative;
+  margin: 32px 0 24px 0;
+  padding: 0 10px;
+}
+
+.timeline-glow-bar {
+  position: absolute;
+  top: 15px;
+  left: 28px;
+  right: 28px;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    var(--c-mint) 0%, 
+    var(--c-mint) 65%, 
+    var(--c-terracotta) 85%, 
+    #cbd5e1 100%);
+  border-radius: 4px;
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(16, 229, 153, 0.4);
+}
+
+.timeline-step-point {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.timeline-node-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  background: #ffffff;
+  border: 3px solid #cbd5e1;
+  color: var(--c-text-soft);
+  transition: all 0.3s ease;
+}
+
+.timeline-node-circle.done {
+  background: linear-gradient(135deg, var(--c-mint) 0%, var(--c-jade-600) 100%);
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(16, 229, 153, 0.5);
+}
+
+.timeline-node-circle.current-pending {
+  background: linear-gradient(135deg, var(--c-terracotta) 0%, #ea580c 100%);
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.25), 0 6px 14px rgba(255, 107, 53, 0.4);
+  animation: pulse-orange 2s infinite;
+}
+
+/* ==========================================================================
+   VIBRANT NOTICE BOARD DATE BADGES
+   ========================================================================== */
+
+.notice-badge-date {
+  background: linear-gradient(135deg, var(--c-terracotta) 0%, #ea580c 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 8px 12px;
+  text-align: center;
+  min-width: 64px;
+  box-shadow: 0 6px 14px -2px rgba(255, 107, 53, 0.35);
+  flex-shrink: 0;
+}
+
+.notice-badge-date.blue-accent {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  box-shadow: 0 6px 14px -2px rgba(2, 132, 199, 0.35);
+}
+
+.notice-badge-date.green-accent {
+  background: linear-gradient(135deg, var(--c-jade-700) 0%, var(--c-jade-900) 100%);
+  box-shadow: 0 6px 14px -2px rgba(11, 94, 81, 0.35);
+}
+
+.notice-day {
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.notice-month {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   INTERACTIVE WELFARE SCHEMES MINI-CARDS
+   ========================================================================== */
+
+.scheme-card-box {
+  background: linear-gradient(135deg, #ffffff 0%, #f8faf9 100%);
+  border: 1px solid var(--c-border);
+  border-radius: 18px;
+  padding: 16px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scheme-card-box:hover {
+  background: #ffffff;
+  border-color: var(--c-mint);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 25px -4px rgba(16, 229, 153, 0.2);
+}
+
+/* ==========================================================================
+   DUAL-GLOW PROGRESS BARS (FINANCIAL TRANSPARENCY)
+   ========================================================================== */
+
+.progress-track-glow {
+  background-color: #e5ece9;
+  height: 11px;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 8px;
+}
+
+.progress-bar-glow-green {
+  background: linear-gradient(90deg, var(--c-jade-700) 0%, var(--c-mint) 100%);
+  height: 100%;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(16, 229, 153, 0.5);
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.progress-bar-glow-blue {
+  background: linear-gradient(90deg, #0284c7 0%, #38bdf8 100%);
+  height: 100%;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.progress-bar-glow-saffron {
+  background: linear-gradient(90deg, var(--c-terracotta) 0%, var(--c-amber-glow) 100%);
+  height: 100%;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   BUTTONS & BADGES
+   ========================================================================== */
+
+.btn-luxury-primary {
+  background: linear-gradient(135deg, var(--c-jade-800) 0%, var(--c-jade-900) 100%);
+  color: #ffffff;
+  font-weight: 700;
+  border: 1px solid rgba(16, 229, 153, 0.3);
+  border-radius: 14px;
+  padding: 10px 18px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 18px -2px rgba(9, 71, 61, 0.4);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-luxury-primary:hover {
+  background: linear-gradient(135deg, var(--c-jade-700) 0%, var(--c-jade-800) 100%);
+  border-color: var(--c-mint);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -2px rgba(16, 229, 153, 0.3);
+}
+
+.badge-tag-mint {
+  background-color: var(--c-mint-bg);
+  color: var(--c-jade-800);
+  border: 1px solid rgba(16, 229, 153, 0.4);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.badge-tag-terracotta {
+  background-color: var(--c-saffron-bg);
+  color: var(--c-terracotta-dark);
+  border: 1px solid rgba(255, 107, 53, 0.4);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   HIGH CONTRAST OUTDOOR ACCESSIBILITY MODE
+   ========================================================================== */
+
+body.high-contrast {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  background-image: none !important;
+}
+
+body.high-contrast .luxury-card,
+body.high-contrast .bespoke-sidebar,
+body.high-contrast .glass-header {
+  background: #111111 !important;
+  border-color: #ffff00 !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast h1, 
+body.high-contrast h2, 
+body.high-contrast h3, 
+body.high-contrast h4,
+body.high-contrast p,
+body.high-contrast span,
+body.high-contrast strong {
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   PRINT STYLESHEET FOR OFFICIAL E-RECEIPT
+   ========================================================================== */
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-receipt, #printable-receipt * {
+    visibility: visible;
+  }
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 24px;
+    border: 2px solid #000;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ---- Three-part grievance stage tabs (Panchayat Desk) ---- */
+.grievance-stage-tab {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+  transition: all 0.15s ease;
+}
+.grievance-stage-tab span {
+  font-family: ui-monospace, monospace;
+  background: #e2e8f0;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  margin-left: 3px;
+}
+.grievance-stage-tab:hover {
+  background: #ecfdf5;
+  border-color: #6ee7b7;
+  color: #065f46;
+}
+.grievance-stage-tab.active {
+  background: #065f46;
+  border-color: #065f46;
+  color: #fff;
+}
+.grievance-stage-tab.active span {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+/* ---- Citizen: my grievance list rows ---- */
+.my-grievance-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.my-grievance-row:hover {
+  background: #fff;
+  border-color: #a7f3d0;
+  box-shadow: 0 4px 12px -4px rgba(6, 95, 70, 0.18);
+}
+.stage-chip {
+  font-size: 9px;
+  font-weight: 900;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.stage-chip.submitted { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.stage-chip.in_progress { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+.stage-chip.completed { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+
+/* ---- Citizen inbox (notifications) ---- */
+#notif-panel {
+  position: absolute;
+  right: 0;
+  top: 46px;
+  width: 330px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.35);
+  z-index: 60;
+}
+.notif-item {
+  padding: 11px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+}
+.notif-item:hover { background: #f8fafc; }
+.notif-item.unread { background: #ecfdf5; }
+.notif-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 16px;
+  text-align: center;
+  padding: 0 3px;
+}
+
+/* ==========================================================================
+   PANCHAYAT DESK UX PASS — search/filter/SLA, KPI cards, freshness,
+   confirm dialog, sticky columns, accessibility, print, responsive.
+   ========================================================================== */
+
+/* ---- Icon tooltips (header + toolbar icon buttons) ---- */
+[data-tip] { position: relative; }
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 90;
+  background: #0f172a;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 6px 9px;
+  border-radius: 9px;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  pointer-events: none;
+  animation: tipIn 0.12s ease-out;
+}
+@keyframes tipIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+
+/* ---- Dashboard KPI cards are real buttons ---- */
+button.kpi-card {
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+button.kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: #10e599;
+  box-shadow: 0 12px 26px rgba(3, 27, 23, 0.4);
+}
+button.kpi-card:active { transform: translateY(0); }
+
+/* ---- Grievance / audit filter toolbar ---- */
+.grievance-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  margin-bottom: 12px;
+}
+.gt-field { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.gt-label {
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+}
+.gt-field input,
+.gt-field select {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 10px;
+  padding: 6px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0f172a;
+  min-height: 32px;
+  max-width: 100%;
+}
+.gt-field input:focus,
+.gt-field select:focus {
+  outline: 2px solid #109b85;
+  outline-offset: 1px;
+  border-color: #109b85;
+}
+.gt-search {
+  flex: 1 1 210px;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0 9px;
+  min-height: 32px;
+}
+.gt-search input {
+  border: 0 !important;
+  outline: none;
+  padding: 7px 0 !important;
+  background: transparent;
+  width: 100%;
+  min-height: 0 !important;
+}
+.gt-search:focus-within { outline: 2px solid #109b85; border-color: #109b85; }
+.gt-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.gt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #334155;
+  font-size: 11px;
+  font-weight: 800;
+  border-radius: 10px;
+  padding: 6px 11px;
+  min-height: 32px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.gt-btn:hover:not(:disabled) { background: #f1f5f9; border-color: #94a3b8; }
+.gt-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.gt-btn-primary { background: #065f46; border-color: #065f46; color: #fff; }
+.gt-btn-primary:hover:not(:disabled) { background: #047857; border-color: #047857; }
+
+/* ---- Sortable table headers ---- */
+.sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+.sort-btn:hover { color: #0e7b6a; text-decoration: underline; }
+.sort-btn.sorted { color: #065f46; }
+.sort-btn.sorted svg { transition: transform 0.15s ease; }
+.sort-btn.sorted.asc svg { transform: rotate(180deg); }
+th[aria-sort="ascending"], th[aria-sort="descending"] { color: #065f46; }
+
+/* ---- Sticky first column + horizontal scroll on narrow screens ---- */
+@media (max-width: 1023px) {
+  .desk-table { min-width: 940px; }
+  .desk-table .sticky-col {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: #fff;
+    box-shadow: 1px 0 0 #e2e8f0;
+  }
+  .desk-table thead .sticky-col { background: #f8fafc; z-index: 3; }
+  .desk-table tbody tr:hover .sticky-col { background: #f8fafc; }
+}
+
+/* ---- SLA urgency chips (High=3d, Medium=7d, Low=14d) ---- */
+.sla-block { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+.sla-prio {
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+.sla-prio.prio-high { color: #be123c; }
+.sla-prio.prio-medium { color: #b45309; }
+.sla-prio.prio-low { color: #0e7b6a; }
+.sla-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 900;
+  border-radius: 999px;
+  padding: 3px 8px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.sla-chip svg { width: 12px; height: 12px; }
+.sla-overdue { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
+.sla-soon { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+.sla-ontrack { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
+.sla-done { background: #e2e8f0; color: #475569; border-color: #cbd5e1; }
+
+/* ---- Confirmation dialog buttons ---- */
+.conf-btn { border-radius: 12px; border: 0; cursor: pointer; }
+.conf-ok { background: #065f46; color: #fff; }
+.conf-ok:hover { background: #047857; }
+.conf-danger { background: #dc2626; color: #fff; }
+.conf-danger:hover { background: #b91c1c; }
+
+/* ---- Section freshness stamp ---- */
+[data-freshness] { white-space: nowrap; }
+
+/* ---- Accessibility: visible focus everywhere ---- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #109b85;
+  outline-offset: 2px;
+  border-radius: 7px;
+}
+
+/* ---- Tap targets on touch devices ---- */
+@media (pointer: coarse) {
+  .gt-btn,
+  .grievance-stage-tab,
+  .btn-luxury-primary,
+  .sort-btn,
+  td button {
+    min-height: 42px;
+  }
+  [data-tip] { min-height: 44px; }
+}
+
+/* ---- Compact, consistent vertical rhythm on the desk ---- */
+#view-admin .luxury-card { padding-top: 1rem; padding-bottom: 1rem; }
+#view-admin #admin-grievances table th { position: relative; }
+#admin-trends-strip .kpi-like { margin-bottom: 0; }
+
+/* ---- Print: audit trail only ---- */
+@media print {
+  body * { visibility: hidden !important; }
+  #admin-audit, #admin-audit * { visibility: visible !important; }
+  #admin-audit {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+  #admin-audit .print-area { overflow: visible !important; }
+  #admin-audit .grievance-toolbar,
+  #admin-audit .gt-actions,
+  #admin-audit .gt-btn { display: none !important; }
+  #admin-audit thead { display: table-header-group; }
+  #admin-audit tr { page-break-inside: avoid; }
+}
+
+/* ---- High contrast: reinforce borders on chips & banners ---- */
+.high-contrast .sla-chip { border-width: 2px; }
+.high-contrast .badge-tag-mint, .high-contrast .badge-tag-terracotta { border: 2px solid currentColor; }
+.high-contrast .grievance-toolbar { border-width: 2px; }
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

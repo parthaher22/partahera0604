@@ -1,0 +1,23 @@
+# Secrets & local environment
+.env
+backend/.env
+*.env.local
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Logs & runtime artifacts
+*.log
+*.pid
+
+# Generated exports
+exports/*.xlsx
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
