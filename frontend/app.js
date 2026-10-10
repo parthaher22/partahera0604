@@ -10,31 +10,8 @@
 const GRAMSETU_API = (typeof window !== 'undefined' && window.GRAMSETU_API) || 'http://localhost:5000';
 
 // ---- Demo/placeholder data for modules not yet backed by API endpoints ----
-// (members, schemes, taxes, finance). Swap these for real GETs once the
+// (schemes, taxes, finance). Swap these for real GETs once the
 // corresponding routers exist in the backend.
-const DEMO_MEMBERS = [
-  {
-    name: 'Balasaheb R. Jadhav', role: 'Sarpanch (Village Head)', ward: 'Gram Panchayat Head',
-    phone: '+91 94220 11223', email: 'sarpanch.kumbhari@gov.in', hours: 'Mon, Wed, Fri: 10 AM - 2 PM',
-    badge: 'Elected Representative', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
-  },
-  {
-    name: 'Smt. Vandana S. Shinde', role: 'Up-Sarpanch (Deputy Head)', ward: 'Ward No. 4 & 5',
-    phone: '+91 94220 33445', email: 'upsarpanch.kumbhari@gov.in', hours: 'Tue, Thu, Sat: 11 AM - 3 PM',
-    badge: 'Elected Representative', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80'
-  },
-  {
-    name: 'Sunita M. Jadhav', role: 'Gram Sachiv (Panchayat Secretary)', ward: 'Government Administration',
-    phone: '+91 94220 55667', email: 'sachiv.kumbhari@gov.in', hours: 'Mon - Fri: 9:30 AM - 5:30 PM',
-    badge: 'State Govt Officer', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80'
-  },
-  {
-    name: 'Ganesh T. More', role: 'Gram Rojgar Sahayak (MGNREGA)', ward: 'Employment & Labor Wing',
-    phone: '+91 94220 77889', email: 'mgnrega.kumbhari@gov.in', hours: 'Daily: 10 AM - 4 PM',
-    badge: 'Public Service Staff', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80'
-  }
-];
-
 const DEMO_SCHEMES = [
   {
     id: 'SCH-PM-KISAN', title: 'PM-Kisan Samman Nidhi Yojana', category: 'Farmer',
@@ -188,7 +165,7 @@ class GramSetuClient {
       complaints: [],
       complaintsTotal: 0,
       announcements: [],
-      members: DEMO_MEMBERS,
+      members: [],
       schemes: DEMO_SCHEMES,
       taxes: DEMO_TAXES,
       financials: DEMO_FINANCIALS,

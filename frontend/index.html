@@ -3044,13 +3044,19 @@
       const grid = document.getElementById('members-grid');
       if (!grid) return;
       const staff = window.gramSetu.state.staff || [];
-      let members = DEMO_MEMBERS;
-      if (staff.length) {
-        members = staff.slice(0, 8).map(s => ({
-          name: s.full_name, role: roleLabel(s.role), badge: roleLabel(s.role),
-          phone: '+91 ' + s.mobile_number, hours: statusLabel(s.account_status), img: null
-        }));
+      if (!staff.length) {
+        grid.innerHTML = `<div class="col-span-full rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center">
+          <i data-lucide="users" class="w-6 h-6 text-slate-300 mx-auto"></i>
+          <p class="text-xs font-black text-slate-700 mt-2">Panchayat member directory not published yet</p>
+          <p class="text-[11px] text-slate-500 mt-1">Members added from the Panchayat Desk will appear here.</p>
+        </div>`;
+        safeCreateIcons();
+        return;
       }
+      const members = staff.slice(0, 8).map(s => ({
+        name: s.full_name, role: roleLabel(s.role), badge: roleLabel(s.role),
+        phone: '+91 ' + s.mobile_number, hours: statusLabel(s.account_status), img: null
+      }));
       grid.innerHTML = members.map(m => `
         <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200 text-center hover:bg-white hover:shadow-lg transition">
           ${m.img
