@@ -633,6 +633,9 @@
                 </p>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="gotoFinanceManager()" title="Manage village income & expenditure" class="px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 hover:text-white hover:bg-slate-700 transition font-bold text-xs inline-flex items-center gap-1.5">
+                  <i data-lucide="wallet" class="w-4 h-4"></i> Financials
+                </button>
                 <button onclick="refreshNow(this)" id="desk-refresh-btn" title="Refresh all desk data now" aria-label="Refresh data" data-tip="Refresh data now" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700 transition">
                   <i data-lucide="refresh-cw" class="w-4 h-4"></i>
                 </button>
@@ -901,6 +904,7 @@
                       <th class="py-1.5 pr-3">Grievances</th>
                       <th class="py-1.5 pr-3">Notices</th>
                       <th class="py-1.5 pr-3">Staff</th>
+                      <th class="py-1.5 pr-3">Financials</th>
                       <th class="py-1.5">Audit trail</th>
                     </tr>
                   </thead>
@@ -910,6 +914,7 @@
                       <td class="py-1.5 pr-3">View, assign, update, close</td>
                       <td class="py-1.5 pr-3">Draft, publish, schedule, archive, delete</td>
                       <td class="py-1.5 pr-3">Add, edit, promote, deactivate</td>
+                      <td class="py-1.5 pr-3">Add, edit, verify, delete &amp; export</td>
                       <td class="py-1.5">View, filter &amp; export</td>
                     </tr>
                     <tr class="border-t border-slate-200">
@@ -917,12 +922,14 @@
                       <td class="py-1.5 pr-3">View, assign, update, close</td>
                       <td class="py-1.5 pr-3">Draft, publish, schedule, archive</td>
                       <td class="py-1.5 pr-3">View only</td>
+                      <td class="py-1.5 pr-3">Add, edit, verify &amp; export</td>
                       <td class="py-1.5">View &amp; export</td>
                     </tr>
                     <tr class="border-t border-slate-200">
                       <td class="py-1.5 pr-3 font-black text-slate-700">Villager</td>
                       <td class="py-1.5 pr-3">Lodge &amp; track own only</td>
                       <td class="py-1.5 pr-3">Read notices only</td>
+                      <td class="py-1.5 pr-3">—</td>
                       <td class="py-1.5 pr-3">—</td>
                       <td class="py-1.5">—</td>
                     </tr>
@@ -1073,6 +1080,98 @@
                   <!-- Injected via JS -->
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- ================= FINANCIAL LEDGER MANAGEMENT ================= -->
+          <div id="admin-finance" class="luxury-card">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+              <div>
+                <h3 class="text-base font-black text-slate-900 mb-1">Financial Ledger — Income &amp; Expenditure</h3>
+                <p class="text-xs text-slate-500">Record village income and expenditure, verify entries, and export the ledger for audits.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono text-slate-400" data-freshness="finance">not loaded yet</span>
+                <button onclick="exportFinanceCsv()" class="gt-btn">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i> Export CSV
+                </button>
+                <button id="admin-add-finance-btn" onclick="openFinanceModal('')" class="btn-luxury-primary hidden">
+                  <i data-lucide="plus" class="w-4 h-4"></i> Add Entry
+                </button>
+              </div>
+            </div>
+
+            <!-- Ledger KPIs -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+              <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
+                <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Total Income</span>
+                <span id="fin-kpi-income" class="text-xl font-black text-emerald-700 block mt-0.5 font-mono">₹0</span>
+              </div>
+              <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
+                <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Total Expenditure</span>
+                <span id="fin-kpi-expense" class="text-xl font-black text-rose-700 block mt-0.5 font-mono">₹0</span>
+              </div>
+              <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
+                <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Net Balance</span>
+                <span id="fin-kpi-net" class="text-xl font-black text-slate-900 block mt-0.5 font-mono">₹0</span>
+              </div>
+              <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
+                <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Pending Verification</span>
+                <span id="fin-kpi-pending" class="text-xl font-black text-amber-600 block mt-0.5">0</span>
+              </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <input id="fin-search" type="text" placeholder="Search description / reference / fund…" class="flex-1 min-w-[180px] p-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-600 focus:outline-none" onkeydown="if(event.key==='Enter'){event.preventDefault();applyFinanceFilters();}">
+              <select id="fin-type-filter" class="p-2 rounded-xl border border-slate-300 text-xs font-bold" onchange="applyFinanceFilters()">
+                <option value="">All types</option>
+                <option value="Income">Income</option>
+                <option value="Expenditure">Expenditure</option>
+              </select>
+              <select id="fin-status-filter" class="p-2 rounded-xl border border-slate-300 text-xs font-bold" onchange="applyFinanceFilters()">
+                <option value="">All statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Verified">Verified</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+              <input id="fin-category-filter" type="text" placeholder="Category" class="w-32 p-2 rounded-xl border border-slate-300 text-xs" onkeydown="if(event.key==='Enter'){event.preventDefault();applyFinanceFilters();}">
+              <input id="fin-fy-filter" type="text" placeholder="FY e.g. 2025-2026" class="w-36 p-2 rounded-xl border border-slate-300 text-xs" onkeydown="if(event.key==='Enter'){event.preventDefault();applyFinanceFilters();}">
+              <input id="fin-date-from" type="date" class="p-2 rounded-xl border border-slate-300 text-xs text-slate-600" onchange="applyFinanceFilters()">
+              <input id="fin-date-to" type="date" class="p-2 rounded-xl border border-slate-300 text-xs text-slate-600" onchange="applyFinanceFilters()">
+              <button onclick="applyFinanceFilters()" class="gt-btn">
+                <i data-lucide="search" class="w-3.5 h-3.5"></i> Filter
+              </button>
+              <button onclick="resetFinanceFilters()" class="gt-btn">Reset</button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider">
+                    <th class="py-3 px-3">Date</th>
+                    <th class="py-3 px-3">Type</th>
+                    <th class="py-3 px-3">Category</th>
+                    <th class="py-3 px-3">Description</th>
+                    <th class="py-3 px-3">Fund Source</th>
+                    <th class="py-3 px-3">Reference</th>
+                    <th class="py-3 px-3 text-right">Amount</th>
+                    <th class="py-3 px-3">Status</th>
+                    <th class="py-3 px-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="finance-table-body" class="divide-y divide-slate-100 text-slate-900 font-medium">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="flex items-center justify-between mt-3">
+              <span id="finance-page-info" class="text-[11px] font-mono text-slate-500">—</span>
+              <div class="flex items-center gap-2">
+                <button id="fin-prev" onclick="financePage(-1)" class="gt-btn">Prev</button>
+                <button id="fin-next" onclick="financePage(1)" class="gt-btn">Next</button>
+              </div>
             </div>
           </div>
         </div>
@@ -1698,6 +1797,83 @@
           <button type="submit" class="flex-1 btn-luxury-primary justify-center py-3">
             <i data-lucide="send" class="w-4 h-4 text-emerald-300"></i>
             <span>Save</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Financial entry modal (add / edit) -->
+  <div id="modal-finance" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] overflow-y-auto">
+      <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 flex justify-between items-center sticky top-0 z-10">
+        <div>
+          <h3 class="font-black text-base flex items-center gap-2">
+            <i data-lucide="wallet" class="w-5 h-5 text-amber-400"></i>
+            <span id="finance-modal-title">Add Financial Entry</span>
+          </h3>
+          <p class="text-xs text-emerald-200 mt-0.5">Income and expenditure are recorded in the village ledger.</p>
+        </div>
+        <button onclick="closeFinanceModal()" class="text-white/80 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-finance" onsubmit="handleFinanceSubmit(event)" class="p-6 space-y-4 text-xs">
+        <input type="hidden" id="fin-id">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Date *</label>
+            <input type="date" id="fin-date" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Type *</label>
+            <select id="fin-type" required class="w-full p-2.5 rounded-xl border border-slate-300 font-bold">
+              <option value="Expenditure" selected>Expenditure</option>
+              <option value="Income">Income</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Category *</label>
+            <input type="text" id="fin-category" required placeholder="e.g. Drainage, Water Supply" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Amount (₹) *</label>
+            <input type="number" id="fin-amount" required min="0.01" step="0.01" placeholder="0.00" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Description *</label>
+          <textarea id="fin-desc" required rows="2" placeholder="What was this income / expenditure for?" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Fund Source</label>
+            <input type="text" id="fin-source" placeholder="e.g. 15th Finance Commission" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Financial Year</label>
+            <input type="text" id="fin-fy" placeholder="auto e.g. 2025-2026" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Reference (optional)</label>
+            <input type="text" id="fin-ref" placeholder="auto if blank" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Document link (optional)</label>
+            <input type="url" id="fin-doc" placeholder="https://…" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+        </div>
+        <div id="finance-error" class="hidden bg-red-50 border border-red-200 text-red-700 font-bold px-3 py-2 rounded-xl text-[11px]"></div>
+        <div class="flex gap-2">
+          <button type="button" onclick="closeFinanceModal()" class="flex-1 rounded-xl border-2 border-slate-300 text-slate-600 font-black text-xs py-3 bg-white hover:bg-slate-50 transition">Cancel</button>
+          <button type="submit" class="flex-1 btn-luxury-primary justify-center py-3">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Save Entry</span>
           </button>
         </div>
       </form>
@@ -2944,6 +3120,7 @@
       renderTrends();
       renderSystemStatus();
       renderFreshness();
+      renderFinance();
     }
 
     function roleLabel(r) {
@@ -3561,6 +3738,289 @@
       btns.push(noticeActionBtn(n, 'edit'));
       btns.push(`<button onclick="deleteNotice('${n.id}')" class="bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 py-1 px-2.5 rounded-lg text-[10px] font-bold transition">Delete</button>`);
       return can ? btns.join(' ') : '<span class="text-slate-400 italic text-[11px]">view only</span>';
+    }
+
+    // ---- Financial ledger: render, filter, paginate, CRUD -------------------
+    let editingFinanceId = null;
+
+    function gotoFinanceManager() {
+      const sec = document.getElementById('admin-finance');
+      if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function financeMoney(n) {
+      return '₹' + Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    }
+
+    function financeStatusPill(s) {
+      const map = {
+        Verified: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+        Pending: 'bg-amber-100 text-amber-800 border-amber-200',
+        Rejected: 'bg-rose-100 text-rose-800 border-rose-200'
+      };
+      const cls = map[s] || 'bg-slate-100 text-slate-700 border-slate-200';
+      return `<span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black border ${cls}">${escapeHtml(s || 'Pending')}</span>`;
+    }
+
+    function financeActions(r) {
+      const id = String(r.financial_id).replace(/'/g, '');
+      const g = window.gramSetu;
+      const canDelete = ['panchayat_admin', 'system_admin'].includes(g.role);
+      const btn = 'inline-flex items-center justify-center w-7 h-7 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-100 transition';
+      let html = `<button onclick="openFinanceModal('${id}')" title="Edit entry" class="${btn}"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>`;
+      if (r.verification_status !== 'Verified') {
+        html += ` <button onclick="financeAction('${id}','Verified')" title="Mark verified" class="${btn} text-emerald-700 hover:bg-emerald-50"><i data-lucide="check" class="w-3.5 h-3.5"></i></button>`;
+      }
+      if (r.verification_status !== 'Rejected') {
+        html += ` <button onclick="financeAction('${id}','Rejected')" title="Reject entry" class="${btn} text-amber-700 hover:bg-amber-50"><i data-lucide="ban" class="w-3.5 h-3.5"></i></button>`;
+      }
+      if (canDelete) {
+        html += ` <button onclick="financeAction('${id}','delete')" title="Delete entry" class="${btn} text-rose-600 hover:bg-rose-50"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>`;
+      }
+      return html;
+    }
+
+    function financeRow(r) {
+      const isIncome = r.transaction_type === 'Income';
+      const dt = r.transaction_date ? new Date(r.transaction_date).toLocaleDateString('en-GB') : '—';
+      const typeTag = isIncome
+        ? '<span class="badge-tag-mint">Income</span>'
+        : '<span class="badge-tag-terracotta">Expenditure</span>';
+      return `<tr class="hover:bg-slate-50 transition border-b border-slate-100">
+        <td class="py-3 px-3 whitespace-nowrap text-slate-600">${dt}</td>
+        <td class="py-3 px-3">${typeTag}</td>
+        <td class="py-3 px-3 text-slate-700 font-semibold">${escapeHtml(r.category || '—')}</td>
+        <td class="py-3 px-3 max-w-[220px]"><div class="text-slate-900 truncate" title="${escapeHtml(r.description || '')}">${escapeHtml(r.description || '—')}</div></td>
+        <td class="py-3 px-3 text-slate-600">${escapeHtml(r.source_of_fund || '—')}</td>
+        <td class="py-3 px-3 text-slate-500 font-mono text-[10px]">${escapeHtml(r.source_reference || '—')}</td>
+        <td class="py-3 px-3 text-right font-mono font-black whitespace-nowrap ${isIncome ? 'text-emerald-700' : 'text-rose-700'}">${financeMoney(r.amount)}</td>
+        <td class="py-3 px-3">${financeStatusPill(r.verification_status)}</td>
+        <td class="py-3 px-3 text-right whitespace-nowrap">${financeActions(r)}</td>
+      </tr>`;
+    }
+
+    function renderFinance() {
+      const g = window.gramSetu;
+      const fin = g.state.finance || {};
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
+
+      const addBtn = document.getElementById('admin-add-finance-btn');
+      if (addBtn) addBtn.classList.toggle('hidden', !g.isStaff);
+
+      const s = fin.summary;
+      if (s) {
+        set('fin-kpi-income', financeMoney(s.total_income));
+        set('fin-kpi-expense', financeMoney(s.total_expenditure));
+        const net = Number(s.net || 0);
+        set('fin-kpi-net', (net < 0 ? '−' : '') + financeMoney(Math.abs(net)));
+        set('fin-kpi-pending', Number((s.counts && s.counts.pending) || 0).toLocaleString('en-IN'));
+      } else {
+        set('fin-kpi-income', financeMoney(0));
+        set('fin-kpi-expense', financeMoney(0));
+        set('fin-kpi-net', financeMoney(0));
+        set('fin-kpi-pending', '0');
+      }
+
+      const tbody = document.getElementById('finance-table-body');
+      const rows = fin.records || [];
+      if (tbody) {
+        if (!rows.length) {
+          tbody.innerHTML = `<tr><td colspan="9" class="py-8 px-4 text-center">
+            <div class="mx-auto max-w-sm">
+              <i data-lucide="wallet" class="w-7 h-7 text-slate-300 mx-auto"></i>
+              <p class="text-xs font-black text-slate-700 mt-2">No financial entries</p>
+              <p class="text-[11px] text-slate-500 mt-1">Add village income and expenditure — the ledger feeds the finance KPIs above.</p>
+              ${g.isStaff ? '<button onclick="openFinanceModal(\'\')" class="gt-btn gt-btn-primary mt-3">Add the first entry</button>' : ''}
+            </div>
+          </td></tr>`;
+        } else {
+          tbody.innerHTML = rows.map(financeRow).join('');
+        }
+      }
+
+      const total = fin.total || 0;
+      const page = fin.page || 1;
+      const size = fin.pageSize || 25;
+      const from = total ? (page - 1) * size + 1 : 0;
+      const to = Math.min(page * size, total);
+      set('finance-page-info', total
+        ? `Showing ${from.toLocaleString('en-IN')}–${to.toLocaleString('en-IN')} of ${total.toLocaleString('en-IN')}`
+        : 'No entries');
+      const prev = document.getElementById('fin-prev');
+      const next = document.getElementById('fin-next');
+      if (prev) prev.disabled = page <= 1;
+      if (next) next.disabled = to >= total;
+    }
+
+    async function applyFinanceFilters() {
+      const g = window.gramSetu;
+      const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+      g.state.finance.filters = {
+        q: val('fin-search'),
+        transaction_type: val('fin-type-filter'),
+        verification_status: val('fin-status-filter'),
+        category: val('fin-category-filter'),
+        financial_year: val('fin-fy-filter'),
+        date_from: val('fin-date-from'),
+        date_to: val('fin-date-to')
+      };
+      g.state.finance.page = 1;
+      try { await g.loadFinance(); } catch (e) { /* banner handles it */ }
+      await g.loadFinanceSummary();
+      renderFinance();
+      safeCreateIcons();
+    }
+
+    async function resetFinanceFilters() {
+      ['fin-search', 'fin-category-filter', 'fin-fy-filter', 'fin-date-from', 'fin-date-to',
+        'fin-type-filter', 'fin-status-filter'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      await applyFinanceFilters();
+    }
+
+    async function financePage(delta) {
+      const g = window.gramSetu;
+      const fin = g.state.finance;
+      const maxPage = Math.max(1, Math.ceil((fin.total || 0) / fin.pageSize));
+      const target = Math.min(maxPage, Math.max(1, fin.page + delta));
+      if (target === fin.page) return;
+      fin.page = target;
+      try { await g.loadFinance(); } catch (e) { /* ignore */ }
+      renderFinance();
+      safeCreateIcons();
+    }
+
+    function openFinanceModal(id) {
+      const g = window.gramSetu;
+      if (!g.isStaff) { alert('Only Panchayat staff/admins can manage financials.'); return; }
+      const form = document.getElementById('form-finance');
+      if (form) form.reset();
+      const err = document.getElementById('finance-error');
+      if (err) err.classList.add('hidden');
+      editingFinanceId = id || null;
+      document.getElementById('finance-modal-title').innerText = id ? 'Edit Financial Entry' : 'Add Financial Entry';
+      const r = id ? (g.state.finance.records || []).find(x => x.financial_id === id) : null;
+      if (r) {
+        document.getElementById('fin-id').value = r.financial_id;
+        document.getElementById('fin-date').value = r.transaction_date ? String(r.transaction_date).slice(0, 10) : '';
+        document.getElementById('fin-type').value = r.transaction_type || 'Expenditure';
+        document.getElementById('fin-category').value = r.category || '';
+        document.getElementById('fin-amount').value = r.amount != null ? r.amount : '';
+        document.getElementById('fin-desc').value = r.description || '';
+        document.getElementById('fin-source').value = r.source_of_fund || '';
+        document.getElementById('fin-fy').value = r.financial_year || '';
+        document.getElementById('fin-ref').value = r.source_reference || '';
+        document.getElementById('fin-doc').value = r.document_url || '';
+      } else {
+        const d = new Date();
+        document.getElementById('fin-date').value =
+          `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        document.getElementById('fin-type').value = 'Expenditure';
+        document.getElementById('fin-fy').value = '';
+      }
+      document.getElementById('modal-finance').classList.remove('hidden');
+      safeCreateIcons();
+      const first = document.getElementById('fin-category');
+      if (first) first.focus();
+    }
+
+    function closeFinanceModal() {
+      document.getElementById('modal-finance').classList.add('hidden');
+      editingFinanceId = null;
+    }
+
+    async function handleFinanceSubmit(e) {
+      e.preventDefault();
+      const g = window.gramSetu;
+      const err = document.getElementById('finance-error');
+      err.classList.add('hidden');
+      const gv = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+      const amount = parseFloat(gv('fin-amount'));
+      const payload = {
+        transaction_date: gv('fin-date'),
+        transaction_type: gv('fin-type') || 'Expenditure',
+        category: gv('fin-category'),
+        description: gv('fin-desc'),
+        amount: amount,
+        source_of_fund: gv('fin-source') || null,
+        financial_year: gv('fin-fy') || null,
+        source_reference: gv('fin-ref') || null,
+        document_url: gv('fin-doc') || null
+      };
+      if (!payload.transaction_date || !payload.category || !payload.description) {
+        err.textContent = 'Date, category and description are required.';
+        err.classList.remove('hidden');
+        return;
+      }
+      if (!(amount > 0)) {
+        err.textContent = 'Enter an amount greater than 0.';
+        err.classList.remove('hidden');
+        return;
+      }
+      try {
+        if (editingFinanceId) await g.updateFinance(editingFinanceId, payload);
+        else await g.createFinance(payload);
+        closeFinanceModal();
+        await g.loadFinance();
+        await g.loadFinanceSummary();
+        renderFinance();
+        safeCreateIcons();
+      } catch (e2) {
+        err.textContent = e2.message;
+        err.classList.remove('hidden');
+      }
+    }
+
+    async function financeAction(id, action) {
+      const g = window.gramSetu;
+      const rec = (g.state.finance.records || []).find(r => r.financial_id === id);
+      try {
+        if (action === 'delete') {
+          const ok = await confirmAction('Delete this financial entry? This cannot be undone.', {
+            title: 'Delete entry', confirmText: 'Delete', danger: true,
+            detail: rec ? `${rec.category || ''} — ${rec.description || ''}` : ''
+          });
+          if (!ok) return;
+          await g.deleteFinance(id);
+          if ((g.state.finance.records || []).length === 1 && g.state.finance.page > 1) {
+            g.state.finance.page -= 1;
+          }
+        } else {
+          await g.setFinanceVerification(id, action);
+        }
+        await g.loadFinance();
+        await g.loadFinanceSummary();
+        renderFinance();
+        safeCreateIcons();
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    async function exportFinanceCsv() {
+      const g = window.gramSetu;
+      const f = g.state.finance.filters;
+      const q = new URLSearchParams();
+      Object.keys(f).forEach(k => { if (f[k]) q.set(k, f[k]); });
+      try {
+        const res = await fetch(`${g.apiBase}/api/finance/records/export?${q.toString()}`, {
+          headers: { 'Authorization': 'Bearer ' + g.token }
+        });
+        if (!res.ok) throw new Error('Export failed (' + res.status + ')');
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `kumbhari-financial-ledger-${new Date().toISOString().slice(0, 10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+      } catch (e) {
+        alert(e.message);
+      }
     }
 
     function renderNoticesAdmin() {

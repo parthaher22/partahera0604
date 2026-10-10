@@ -192,6 +192,13 @@ class GramSetuClient {
       schemes: DEMO_SCHEMES,
       taxes: DEMO_TAXES,
       financials: DEMO_FINANCIALS,
+      finance: {
+        records: [], total: 0, summary: null, page: 1, pageSize: 25,
+        filters: {
+          q: '', transaction_type: '', verification_status: '', category: '',
+          financial_year: '', date_from: '', date_to: ''
+        }
+      },
       auditLogs: [],
       auditTotal: 0,
       staff: [],
@@ -384,6 +391,8 @@ class GramSetuClient {
       this.loadStaff().catch(() => {}),
       this.loadPanchayatDashboard().catch(() => {}),
       this.loadTrends().catch(() => {}),
+      this.loadFinance().catch(() => {}),
+      this.loadFinanceSummary().catch(() => {}),
       this.loadMyTaxes().catch(() => {}),
       this.loadNotifications().catch(() => {})
     ]);
@@ -401,6 +410,8 @@ class GramSetuClient {
         this.loadStaff().catch(() => {}),
         this.loadPanchayatDashboard().catch(() => {}),
         this.loadTrends().catch(() => {}),
+        this.loadFinance().catch(() => {}),
+        this.loadFinanceSummary().catch(() => {}),
         this.loadMyTaxes().catch(() => {}),
         this.loadNotifications().catch(() => {})
       ]);
@@ -747,6 +758,62 @@ class GramSetuClient {
     } catch (e) {
       return this.state.trends; // keep last good data on failure
     }
+  }
+
+  // ---- Financial ledger management (Panchayat Desk) ------------------------
+  _financeQuery() {
+    const f = this.state.finance.filters;
+    const q = new URLSearchParams();
+    ['q', 'transaction_type', 'verification_status', 'category', 'financial_year', 'date_from', 'date_to']
+      .forEach(k => { if (f[k]) q.set(k, f[k]); });
+    return q;
+  }
+
+  async loadFinance() {
+    if (!this.isStaff) { this.state.finance.records = []; this.state.finance.total = 0; return []; }
+    const q = this._financeQuery();
+    q.set('limit', String(this.state.finance.pageSize));
+    q.set('offset', String((this.state.finance.page - 1) * this.state.finance.pageSize));
+    try {
+      const d = await this.api(`/api/finance/records?${q.toString()}`);
+      this.state.finance.records = (d && d.results) || [];
+      this.state.finance.total = d && typeof d.total === 'number' ? d.total : this.state.finance.records.length;
+      return this.state.finance.records;
+    } catch (e) {
+      this.state.finance.records = [];
+      this.state.finance.total = 0;
+      throw e;
+    }
+  }
+
+  async loadFinanceSummary() {
+    if (!this.isStaff) { this.state.finance.summary = null; return null; }
+    const q = this._financeQuery();
+    try {
+      const d = await this.api(`/api/finance/records/summary?${q.toString()}`);
+      this.state.finance.summary = d;
+      return d;
+    } catch (e) {
+      return this.state.finance.summary; // keep last good summary
+    }
+  }
+
+  async createFinance(payload) {
+    return this.api('/api/finance/records', { method: 'POST', body: payload });
+  }
+
+  async updateFinance(financialId, patch) {
+    return this.api(`/api/finance/records/${encodeURIComponent(financialId)}`, { method: 'PATCH', body: patch });
+  }
+
+  async deleteFinance(financialId) {
+    return this.api(`/api/finance/records/${encodeURIComponent(financialId)}`, { method: 'DELETE' });
+  }
+
+  async setFinanceVerification(financialId, status) {
+    return this.api(`/api/finance/records/${encodeURIComponent(financialId)}/verification`, {
+      method: 'POST', body: { status }
+    });
   }
 
   upiQrUrl(amount, note) {
