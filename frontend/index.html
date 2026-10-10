@@ -457,67 +457,18 @@
                 <!-- Card Header -->
                 <div class="flex justify-between items-center mb-1">
                   <h3 class="text-lg font-black text-slate-900">Financial Transparency</h3>
-                  <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500 cursor-pointer" onclick="scrollToSection('full-financials')"></i>
+                  <span class="inline-flex items-center gap-1 text-[10px] font-black text-emerald-700">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> LIVE
+                  </span>
                 </div>
-                <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-4">FY 2026-27 Public Budget & Work Expenditure</p>
+                <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-4" id="finance-card-subtitle">Public Village Budget &amp; Work Expenditure</p>
 
-                <!-- 3 Glowing Progress Bars (Matching Concept Image) -->
-                <div class="space-y-4">
-                  
-                  <!-- Bar 1: Village Road Fund -->
-                  <div>
-                    <div class="flex justify-between items-center text-xs font-black">
-                      <span class="text-slate-900 flex items-center gap-1.5">
-                        <i data-lucide="milestone" class="w-4 h-4 text-emerald-700"></i>
-                        <span>Village Road Fund</span>
-                      </span>
-                      <span class="text-emerald-800 font-black">65% Used</span>
-                    </div>
-                    <div class="progress-track-glow">
-                      <div class="progress-bar-glow-green" style="width: 65%;"></div>
-                    </div>
-                    <div class="flex justify-between text-[11px] text-slate-500 font-medium mt-1">
-                      <span><strong>₹6,50,000</strong> spent of ₹10,00,000</span>
-                      <span class="text-emerald-700 font-bold">Concrete Road Phase 2</span>
-                    </div>
+                <!-- Live ledger totals (injected via renderFinancials from /api/finance/public-summary) -->
+                <div id="finance-public-stats" class="space-y-3">
+                  <div class="flex items-center gap-2 text-slate-400">
+                    <span class="inline-block w-4 h-4 rounded-full border-2 border-slate-200 border-t-emerald-600 animate-spin"></span>
+                    <span class="text-[11px] font-bold">Loading live budget…</span>
                   </div>
-
-                  <!-- Bar 2: Health Center Renovation -->
-                  <div>
-                    <div class="flex justify-between items-center text-xs font-black">
-                      <span class="text-slate-900 flex items-center gap-1.5">
-                        <i data-lucide="heart-pulse" class="w-4 h-4 text-sky-600"></i>
-                        <span>Health Center Renovation</span>
-                      </span>
-                      <span class="text-sky-700 font-black">40% Used</span>
-                    </div>
-                    <div class="progress-track-glow">
-                      <div class="progress-bar-glow-blue" style="width: 40%;"></div>
-                    </div>
-                    <div class="flex justify-between text-[11px] text-slate-500 font-medium mt-1">
-                      <span><strong>₹4,00,000</strong> spent of ₹10,00,000</span>
-                      <span class="text-sky-700 font-bold">PHC Primary Clinic</span>
-                    </div>
-                  </div>
-
-                  <!-- Bar 3: Panchayat Education & Anganwadi -->
-                  <div>
-                    <div class="flex justify-between items-center text-xs font-black">
-                      <span class="text-slate-900 flex items-center gap-1.5">
-                        <i data-lucide="graduation-cap" class="w-4 h-4 text-amber-600"></i>
-                        <span>Panchayat Education Fund</span>
-                      </span>
-                      <span class="text-amber-800 font-black">85% Used</span>
-                    </div>
-                    <div class="progress-track-glow">
-                      <div class="progress-bar-glow-saffron" style="width: 85%;"></div>
-                    </div>
-                    <div class="flex justify-between text-[11px] text-slate-500 font-medium mt-1">
-                      <span><strong>₹8,50,000</strong> spent of ₹10,00,000</span>
-                      <span class="text-amber-700 font-bold">Smart Anganwadi Classroom</span>
-                    </div>
-                  </div>
-
                 </div>
               </div>
 
@@ -526,10 +477,10 @@
                 <span class="badge-tag-mint font-extrabold text-[10px]">
                   ✓ Audited Under eGramSwaraj
                 </span>
-                <a href="#full-financials" class="font-extrabold text-emerald-800 hover:underline flex items-center gap-1">
-                  <span>View Complete Balance Sheet</span>
-                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                </a>
+                <span id="finance-updated-tag" class="font-extrabold text-emerald-800 flex items-center gap-1">
+                  <i data-lucide="calendar-check" class="w-3.5 h-3.5"></i>
+                  <span>Updated —</span>
+                </span>
               </div>
             </div>
 
@@ -2393,6 +2344,7 @@
       try { renderHeaderIdentity(); } catch(e) { console.error(e); }
       try { renderMyGrievances(); } catch(e) { console.error(e); }
       try { renderTaxes(); } catch(e) { console.error(e); }
+      try { renderFinancials(); } catch(e) { console.error(e); }
       try { renderMembers(); } catch(e) { console.error(e); }
       try { renderAnnouncements(); } catch(e) { console.error(e); }
       try { renderNoticesAdmin(); } catch(e) { console.error(e); }
@@ -3738,6 +3690,62 @@
       btns.push(noticeActionBtn(n, 'edit'));
       btns.push(`<button onclick="deleteNotice('${n.id}')" class="bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 py-1 px-2.5 rounded-lg text-[10px] font-bold transition">Delete</button>`);
       return can ? btns.join(' ') : '<span class="text-slate-400 italic text-[11px]">view only</span>';
+    }
+
+    // ---- Citizen Financial Transparency card (live public totals) -----------
+    function renderFinancials() {
+      const box = document.getElementById('finance-public-stats');
+      if (!box) return;
+      const s = window.gramSetu.state.publicFinance;
+      if (!s) return; // keep the loading spinner until data arrives
+
+      const money = n => '₹' + Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 });
+      const income = Number(s.total_income || 0);
+      const expense = Number(s.total_expenditure || 0);
+      const net = Number(s.net || 0);
+      const fy = s.financial_year || '';
+
+      const sub = document.getElementById('finance-card-subtitle');
+      if (sub) sub.innerText = `Public Village Budget & Work Expenditure${fy ? ' · FY ' + fy : ''}`;
+      const tag = document.getElementById('finance-updated-tag');
+      if (tag) { const t = tag.querySelector('span'); if (t) t.innerText = fy ? `Updated · FY ${fy}` : 'Updated live'; }
+
+      if (!income && !expense) {
+        box.innerHTML = `<div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4 text-center">
+          <i data-lucide="wallet" class="w-6 h-6 text-slate-300 mx-auto"></i>
+          <p class="text-xs font-black text-slate-700 mt-2">No financial records published yet</p>
+          <p class="text-[11px] text-slate-500 mt-1">Income and expenditure published from the Panchayat Desk will appear here.</p>
+        </div>`;
+        safeCreateIcons();
+        return;
+      }
+
+      const util = income > 0 ? Math.min(100, Math.round((expense / income) * 100)) : 0;
+      box.innerHTML = `
+        <div class="grid grid-cols-3 gap-3">
+          <div class="rounded-2xl border border-emerald-100 bg-emerald-50 p-3">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Funds Received</span>
+            <span class="block text-base sm:text-lg font-black text-emerald-800 font-mono mt-0.5">${money(income)}</span>
+          </div>
+          <div class="rounded-2xl border border-rose-100 bg-rose-50 p-3">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-700">Expenditure</span>
+            <span class="block text-base sm:text-lg font-black text-rose-800 font-mono mt-0.5">${money(expense)}</span>
+          </div>
+          <div class="rounded-2xl border border-sky-100 bg-sky-50 p-3">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-700">Net Balance</span>
+            <span class="block text-base sm:text-lg font-black ${net < 0 ? 'text-rose-800' : 'text-sky-800'} font-mono mt-0.5">${net < 0 ? '−' : ''}${money(Math.abs(net))}</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-[11px] font-bold text-slate-600 mb-1">
+            <span>Budget utilisation</span>
+            <span>${util}%</span>
+          </div>
+          <div class="progress-track-glow">
+            <div class="progress-bar-glow-green" style="width: ${util}%;"></div>
+          </div>
+        </div>`;
+      safeCreateIcons();
     }
 
     // ---- Financial ledger: render, filter, paginate, CRUD -------------------

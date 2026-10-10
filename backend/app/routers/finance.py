@@ -43,6 +43,10 @@ _PAGE = 1000          # PostgREST select cap  -> page to read the whole table
 _HARD_CAP = 200000    # safety stop for very large tables
 
 
+def _msg(exc: Exception) -> str:
+    return (getattr(exc, "message", None) or str(exc))[:300]
+
+
 class FinanceCreate(BaseModel):
     transaction_date: str = Field(min_length=4, description="YYYY-MM-DD")
     transaction_type: str = "Expenditure"
@@ -98,6 +102,34 @@ def _fy_from_date(date_str: str) -> str:
         return str(datetime.now().year)
     start = d.year if d.month >= 4 else d.year - 1
     return f"{start}-{start + 1}"
+
+
+def _fy_short(fy: Optional[str]) -> str:
+    """'2026-2027' -> '2026-27' (falls back to the current FY)."""
+    if not fy:
+        d = datetime.now()
+        start = d.year if d.month >= 4 else d.year - 1
+        fy = f"{start}-{start + 1}"
+    try:
+        start, end = fy.split("-")
+        return f"{start}-{end[2:]}"
+    except (ValueError, IndexError):
+        return fy
+
+
+def _latest_fy_label() -> str:
+    try:
+        rows = (
+            supabase.table("financial_records")
+            .select("financial_year")
+            .order("transaction_date", desc=True)
+            .limit(1)
+            .execute()
+            .data
+        )
+    except Exception:
+        rows = None
+    return _fy_short(rows[0].get("financial_year") if rows else None)
 
 
 def _filtered(
@@ -174,8 +206,7 @@ def list_records(
     return {"results": rows, "total": total, "limit": limit, "offset": offset}
 
 
-@router.get("/records/summary")
-def records_summary(
+def _summarize(
     financial_year: Optional[str] = None,
     transaction_type: Optional[str] = None,
     category: Optional[str] = None,
@@ -184,8 +215,8 @@ def records_summary(
     date_from: Optional[str] = None,
     date_to: Optional[str] = None,
     project_id: Optional[str] = None,
-    current_user: CurrentUser = Depends(require_roles(*VIEW_ROLES)),
-):
+) -> dict:
+    """Sum income/expenditure server-side (PostgREST aggregates are disabled)."""
     total_income = 0.0
     total_expenditure = 0.0
     counts = {"total": 0, "pending": 0, "verified": 0, "rejected": 0}
@@ -234,6 +265,43 @@ def records_summary(
         "total_expenditure": round(total_expenditure, 2),
         "net": round(total_income - total_expenditure, 2),
         "counts": counts,
+    }
+
+
+@router.get("/records/summary")
+def records_summary(
+    financial_year: Optional[str] = None,
+    transaction_type: Optional[str] = None,
+    category: Optional[str] = None,
+    verification_status: Optional[str] = None,
+    q: Optional[str] = None,
+    date_from: Optional[str] = None,
+    date_to: Optional[str] = None,
+    project_id: Optional[str] = None,
+    current_user: CurrentUser = Depends(require_roles(*VIEW_ROLES)),
+):
+    return _summarize(
+        financial_year=financial_year,
+        transaction_type=transaction_type,
+        category=category,
+        verification_status=verification_status,
+        q=q,
+        date_from=date_from,
+        date_to=date_to,
+        project_id=project_id,
+    )
+
+
+@router.get("/public-summary")
+def public_summary():
+    """Public read-only totals for the citizen Financial Transparency card."""
+    data = _summarize()
+    return {
+        "total_income": data["total_income"],
+        "total_expenditure": data["total_expenditure"],
+        "net": data["net"],
+        "count": data["counts"]["total"],
+        "financial_year": _latest_fy_label(),
     }
 
 
@@ -341,7 +409,10 @@ def create_record(
         "created_at": now,
         "updated_at": now,
     }
-    result = supabase.table("financial_records").insert(record).execute()
+    try:
+        result = supabase.table("financial_records").insert(record).execute()
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Could not save entry: {_msg(exc)}")
     created = result.data[0] if result.data else record
 
     log_audit(
@@ -406,12 +477,15 @@ def update_record(
         raise HTTPException(status_code=400, detail="No changes provided")
 
     updates["updated_at"] = datetime.now(timezone.utc).isoformat()
-    result = (
-        supabase.table("financial_records")
-        .update(updates)
-        .eq("financial_id", financial_id)
-        .execute()
-    )
+    try:
+        result = (
+            supabase.table("financial_records")
+            .update(updates)
+            .eq("financial_id", financial_id)
+            .execute()
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Could not update entry: {_msg(exc)}")
     updated = result.data[0] if result.data else updates
 
     log_audit(
@@ -451,12 +525,15 @@ def set_verification(
         "verified_by": current_user.user_id if payload.status != "Pending" else None,
         "updated_at": datetime.now(timezone.utc).isoformat(),
     }
-    result = (
-        supabase.table("financial_records")
-        .update(update)
-        .eq("financial_id", financial_id)
-        .execute()
-    )
+    try:
+        result = (
+            supabase.table("financial_records")
+            .update(update)
+            .eq("financial_id", financial_id)
+            .execute()
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Could not update entry: {_msg(exc)}")
 
     log_audit(
         actor_id=current_user.user_id,
@@ -486,7 +563,10 @@ def delete_record(
     if not existing:
         raise HTTPException(status_code=404, detail="Financial record not found")
 
-    supabase.table("financial_records").delete().eq("financial_id", financial_id).execute()
+    try:
+        supabase.table("financial_records").delete().eq("financial_id", financial_id).execute()
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Could not delete entry: {_msg(exc)}")
 
     log_audit(
         actor_id=current_user.user_id,

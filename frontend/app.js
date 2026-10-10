@@ -199,6 +199,7 @@ class GramSetuClient {
           financial_year: '', date_from: '', date_to: ''
         }
       },
+      publicFinance: null,
       auditLogs: [],
       auditTotal: 0,
       staff: [],
@@ -393,6 +394,7 @@ class GramSetuClient {
       this.loadTrends().catch(() => {}),
       this.loadFinance().catch(() => {}),
       this.loadFinanceSummary().catch(() => {}),
+      this.loadPublicFinance().catch(() => {}),
       this.loadMyTaxes().catch(() => {}),
       this.loadNotifications().catch(() => {})
     ]);
@@ -412,6 +414,7 @@ class GramSetuClient {
         this.loadTrends().catch(() => {}),
         this.loadFinance().catch(() => {}),
         this.loadFinanceSummary().catch(() => {}),
+        this.loadPublicFinance().catch(() => {}),
         this.loadMyTaxes().catch(() => {}),
         this.loadNotifications().catch(() => {})
       ]);
@@ -814,6 +817,17 @@ class GramSetuClient {
     return this.api(`/api/finance/records/${encodeURIComponent(financialId)}/verification`, {
       method: 'POST', body: { status }
     });
+  }
+
+  // Public, read-only totals for the citizen Financial Transparency card.
+  async loadPublicFinance() {
+    try {
+      const d = await this.api('/api/finance/public-summary', { auth: false });
+      this.state.publicFinance = d;
+      return d;
+    } catch (e) {
+      return this.state.publicFinance; // keep last good value
+    }
   }
 
   upiQrUrl(amount, note) {
