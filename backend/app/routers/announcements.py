@@ -37,6 +37,7 @@ class AnnouncementCreate(BaseModel):
     description: str
     category: str = "General Notice"
     priority: str = "Medium"
+    event_date: Optional[str] = None
     expiry_date: Optional[str] = None
     attachment_url: Optional[str] = None
 
@@ -48,6 +49,7 @@ class AnnouncementUpdate(BaseModel):
     category: Optional[str] = None
     priority: Optional[str] = None
     status: Optional[str] = None
+    event_date: Optional[str] = None
     expiry_date: Optional[str] = None
     attachment_url: Optional[str] = None
     # Scheduled publishing: when status becomes Published and this timestamp is
@@ -280,6 +282,23 @@ def _is_live(record: dict) -> bool:
     return str(pub) <= datetime.now(timezone.utc).isoformat()
 
 
+def _notice_sort_key(record: dict) -> str:
+    """Board ordering date: the notice's own date, else publish/creation time.
+    event_date values are YYYY-MM-DD and timestamps are ISO-8601, so the
+    strings sort chronologically."""
+    return str(
+        record.get("event_date")
+        or record.get("published_at")
+        or record.get("created_at")
+        or ""
+    )
+
+
+def _sort_notices(records: list) -> list:
+    """Newest notice first by board date; notices without a date go last."""
+    return sorted(records, key=_notice_sort_key, reverse=True)
+
+
 def _on_notice_change(background: BackgroundTasks, broadcast: Optional[dict] = None, purge: Optional[str] = None):
     """Real-time side effects: refresh the Excel sheet, notify citizens."""
     background.add_task(_sync_notice_excel)
@@ -309,9 +328,9 @@ def list_announcements(
         # keep only the ones that are actually live before slicing to the limit.
         result = query.order("created_at", desc=True).limit(CITIZEN_NOTICE_LIMIT * 4).execute()
         live = [a for a in (result.data or []) if _is_live(a)]
-        return live[:CITIZEN_NOTICE_LIMIT]
+        return _sort_notices(live)[:CITIZEN_NOTICE_LIMIT]
     result = query.order("created_at", desc=True).limit(STAFF_NOTICE_LIMIT).execute()
-    return result.data
+    return _sort_notices(result.data or [])
 
 
 @router.get("/board-excel")

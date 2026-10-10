@@ -503,7 +503,14 @@ class GramSetuClient {
   async loadAnnouncements() {
     try {
       const rows = await this.api('/api/announcements');
-      this.state.announcements = (Array.isArray(rows) ? rows : []).map(a => this.mapAnnouncement(a));
+      const mapped = (Array.isArray(rows) ? rows : []).map(a => this.mapAnnouncement(a));
+      mapped.sort((x, y) => {
+        if (!x.date && !y.date) return 0;
+        if (!x.date) return 1;
+        if (!y.date) return -1;
+        return x.date < y.date ? 1 : (x.date > y.date ? -1 : 0);
+      });
+      this.state.announcements = mapped;
     } catch (e) {
       this.state.announcements = [];
       if (this.loggedIn) console.warn('Announcements load failed:', e.message);
@@ -517,6 +524,7 @@ class GramSetuClient {
       description: payload.description,
       category: payload.category || 'General Notice',
       priority: payload.priority || 'Medium',
+      event_date: payload.event_date || null,
       expiry_date: payload.expiry_date || null,
       attachment_url: payload.attachment_url || null
     };

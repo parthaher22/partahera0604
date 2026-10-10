@@ -885,3 +885,209 @@ textarea:focus-visible,
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   DARK MODE
+   Activated by <html data-theme="dark"> (toggle in the header, persisted in
+   localStorage 'gramsetu_theme', defaulting to the OS preference).
+   The design system is Tailwind utilities over CSS variables, so we (1)
+   redefine the palette variables and (2) override the light utility classes.
+   ========================================================================== */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --c-jade-900: #05231e;
+  --c-jade-800: #0a3a31;
+  --c-mint-bg: #0b1f1a;
+  --c-saffron-bg: #231a12;
+  --c-canvas: #060f0d;
+  --c-surface: #0e1c19;
+  --c-surface-glass: rgba(10, 22, 19, 0.82);
+  --c-text-main: #e7f1ee;
+  --c-text-muted: #a7b8b3;
+  --c-text-soft: #7c8f8a;
+  --c-border: #20322e;
+  --c-border-hover: #2f544b;
+}
+
+html[data-theme="dark"] body {
+  background-color: var(--c-canvas);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(16, 229, 153, 0.07) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 107, 53, 0.05) 0px, transparent 45%),
+    radial-gradient(at 50% 100%, rgba(11, 94, 81, 0.12) 0px, transparent 60%);
+  color: var(--c-text-main);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ---- Native form controls ------------------------------------------------- */
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  background-color: #0b1815;
+  color: var(--c-text-main);
+  border-color: #2a423b;
+}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder { color: #74847f; }
+html[data-theme="dark"] option { background-color: #0b1815; color: var(--c-text-main); }
+html[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.8); }
+
+/* ---- Scrollbars ----------------------------------------------------------- */
+html[data-theme="dark"] ::-webkit-scrollbar { width: 10px; height: 10px; }
+html[data-theme="dark"] ::-webkit-scrollbar-track { background: #0a1714; }
+html[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #24403a; border-radius: 8px; }
+html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: #2f544b; }
+
+/* ---- Surfaces ------------------------------------------------------------- */
+html[data-theme="dark"] .bg-white { background-color: #0e1c19; }
+html[data-theme="dark"] .bg-white\/90 { background-color: rgba(14, 28, 25, 0.9); }
+html[data-theme="dark"] .bg-white\/5 { background-color: rgba(255, 255, 255, 0.04); }
+html[data-theme="dark"] .bg-slate-50 { background-color: #0a1714; }
+html[data-theme="dark"] .bg-slate-50\/80 { background-color: rgba(10, 23, 20, 0.8); }
+html[data-theme="dark"] .bg-slate-100 { background-color: #13241f; }
+html[data-theme="dark"] .bg-slate-200 { background-color: #1a2d28; }
+
+/* ---- Text (dark-on-light slate scale brightened) -------------------------- */
+html[data-theme="dark"] .text-slate-900 { color: #f1f7f5; }
+html[data-theme="dark"] .text-slate-800 { color: #dbe7e3; }
+html[data-theme="dark"] .text-slate-700 { color: #c0cfca; }
+html[data-theme="dark"] .text-slate-600 { color: #a6b7b2; }
+html[data-theme="dark"] .text-slate-500 { color: #93a5a0; }
+
+/* ---- Accent text (dark-on-light accents brightened) ----------------------- */
+html[data-theme="dark"] .text-emerald-900 { color: #a7f3d0; }
+html[data-theme="dark"] .text-emerald-800 { color: #6ee7b7; }
+html[data-theme="dark"] .text-emerald-700 { color: #34d399; }
+html[data-theme="dark"] .text-emerald-600 { color: #34d399; }
+html[data-theme="dark"] .text-sky-700 { color: #7dd3fc; }
+html[data-theme="dark"] .text-sky-600 { color: #7dd3fc; }
+html[data-theme="dark"] .text-red-700 { color: #fca5a5; }
+html[data-theme="dark"] .text-red-600 { color: #f87171; }
+html[data-theme="dark"] .text-rose-700 { color: #fda4af; }
+html[data-theme="dark"] .text-amber-800 { color: #fcd34d; }
+html[data-theme="dark"] .text-amber-700 { color: #fcd34d; }
+html[data-theme="dark"] .text-amber-600 { color: #fbbf24; }
+
+/* ---- Accent backgrounds (light tints -> translucent dark tints) ----------- */
+html[data-theme="dark"] .bg-emerald-50 { background-color: rgba(16, 185, 129, 0.12); }
+html[data-theme="dark"] .bg-emerald-50\/60 { background-color: rgba(16, 185, 129, 0.1); }
+html[data-theme="dark"] .bg-emerald-50\/70 { background-color: rgba(16, 185, 129, 0.12); }
+html[data-theme="dark"] .bg-emerald-100\/80 { background-color: rgba(16, 185, 129, 0.18); }
+html[data-theme="dark"] .bg-red-50 { background-color: rgba(239, 68, 68, 0.12); }
+html[data-theme="dark"] .bg-red-500\/15 { background-color: rgba(239, 68, 68, 0.18); }
+html[data-theme="dark"] .bg-amber-50 { background-color: rgba(245, 158, 11, 0.12); }
+html[data-theme="dark"] .bg-sky-50 { background-color: rgba(56, 189, 248, 0.12); }
+
+/* ---- Borders / dividers --------------------------------------------------- */
+html[data-theme="dark"] .border-slate-100 { border-color: #17251f; }
+html[data-theme="dark"] .border-slate-200 { border-color: #1f322c; }
+html[data-theme="dark"] .border-slate-300 { border-color: #2a423b; }
+html[data-theme="dark"] .border-emerald-200 { border-color: rgba(16, 185, 129, 0.3); }
+html[data-theme="dark"] .border-sky-200 { border-color: rgba(56, 189, 248, 0.3); }
+html[data-theme="dark"] .border-amber-200 { border-color: rgba(245, 158, 11, 0.3); }
+html[data-theme="dark"] .border-red-200 { border-color: rgba(239, 68, 68, 0.3); }
+html[data-theme="dark"] .divide-slate-100 > * + * { border-color: #17251f; }
+
+/* ---- Hover utilities ------------------------------------------------------ */
+html[data-theme="dark"] .hover\:bg-white:hover { background-color: #13241f; }
+html[data-theme="dark"] .hover\:bg-slate-50:hover { background-color: #12211d; }
+html[data-theme="dark"] .hover\:bg-slate-50\/80:hover { background-color: rgba(18, 33, 29, 0.8); }
+html[data-theme="dark"] .hover\:bg-slate-100:hover { background-color: #16261f; }
+html[data-theme="dark"] .hover\:bg-slate-200:hover { background-color: #1b2e28; }
+html[data-theme="dark"] .hover\:bg-slate-300:hover { background-color: #223831; }
+html[data-theme="dark"] .hover\:text-slate-900:hover { color: #f1f7f5; }
+html[data-theme="dark"] .hover\:text-slate-600:hover { color: #a6b7b2; }
+html[data-theme="dark"] .hover\:bg-emerald-50:hover { background-color: rgba(16, 185, 129, 0.14); }
+html[data-theme="dark"] .hover\:bg-sky-100:hover { background-color: rgba(56, 189, 248, 0.16); }
+html[data-theme="dark"] .hover\:bg-red-50:hover { background-color: rgba(239, 68, 68, 0.14); }
+html[data-theme="dark"] .hover\:bg-red-100:hover { background-color: rgba(239, 68, 68, 0.2); }
+
+/* ---- Bespoke components --------------------------------------------------- */
+html[data-theme="dark"] .glass-header {
+  background: rgba(9, 20, 17, 0.82);
+  border-bottom: 1px solid rgba(34, 51, 46, 0.9);
+}
+html[data-theme="dark"] .luxury-card {
+  background: #0e1c19;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 16px 36px -8px rgba(0, 0, 0, 0.5);
+}
+html[data-theme="dark"] .scheme-card-box {
+  background: linear-gradient(135deg, #10201c 0%, #0c1815 100%);
+}
+html[data-theme="dark"] .scheme-card-box:hover { border-color: var(--c-border-hover); }
+html[data-theme="dark"] .weather-badge {
+  color: var(--c-mint-light);
+  border-color: rgba(16, 229, 153, 0.28);
+  background: linear-gradient(135deg, rgba(16, 229, 153, 0.14) 0%, rgba(11, 94, 81, 0.18) 100%);
+}
+
+/* ---- Notifications dropdown ---------------------------------------------- */
+html[data-theme="dark"] .notif-item { border-bottom-color: #17251f; }
+html[data-theme="dark"] .notif-item.unread { background: rgba(16, 185, 129, 0.08); }
+html[data-theme="dark"] .notif-item:hover { background: #12211d; }
+
+/* ---- Citizen grievance rows ---------------------------------------------- */
+html[data-theme="dark"] .my-grievance-row {
+  background: #0a1714;
+  border-color: #17251f;
+}
+html[data-theme="dark"] .my-grievance-row:hover { background: #12211d; }
+
+/* ---- Desk toolbar controls ----------------------------------------------- */
+html[data-theme="dark"] .gt-btn {
+  background: #0f1f1b;
+  color: #c0cfca;
+  border-color: #2a423b;
+}
+html[data-theme="dark"] .gt-btn:hover:not(:disabled) { background: #16261f; border-color: #35604f; }
+html[data-theme="dark"] .gt-field input,
+html[data-theme="dark"] .gt-field select,
+html[data-theme="dark"] .gt-search input {
+  background: #0b1815;
+  color: var(--c-text-main);
+  border-color: #2a423b;
+}
+html[data-theme="dark"] .gt-search:focus-within { border-color: #35604f; }
+
+/* ---- Desk data table ------------------------------------------------------ */
+html[data-theme="dark"] .desk-table thead .sticky-col { background: #0c1915; }
+html[data-theme="dark"] .desk-table tbody tr:hover .sticky-col { background: #13241f; }
+
+/* ---- Desk stage tabs ------------------------------------------------------ */
+html[data-theme="dark"] .grievance-stage-tab {
+  background: #0f1f1b;
+  border-color: #2a423b;
+  color: #a6b7b2;
+}
+html[data-theme="dark"] .grievance-stage-tab:hover {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: #35604f;
+  color: #34d399;
+}
+html[data-theme="dark"] .grievance-stage-tab.active {
+  background: #065f46;
+  border-color: #065f46;
+  color: #fff;
+}
+
+/* ---- Status chips & SLA badges (pastel -> translucent dark) --------------- */
+html[data-theme="dark"] .badge-tag-mint { color: var(--c-mint-light); }
+html[data-theme="dark"] .stage-chip.completed { background: rgba(16, 185, 129, 0.16); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.35); }
+html[data-theme="dark"] .stage-chip.in_progress { background: rgba(59, 130, 246, 0.16); color: #93c5fd; border-color: rgba(59, 130, 246, 0.35); }
+html[data-theme="dark"] .stage-chip.submitted { background: rgba(245, 158, 11, 0.16); color: #fcd34d; border-color: rgba(245, 158, 11, 0.35); }
+html[data-theme="dark"] .sla-overdue { background: rgba(239, 68, 68, 0.16); color: #fca5a5; border-color: rgba(239, 68, 68, 0.35); }
+html[data-theme="dark"] .sla-soon { background: rgba(245, 158, 11, 0.16); color: #fcd34d; border-color: rgba(245, 158, 11, 0.35); }
+html[data-theme="dark"] .sla-ontrack { background: rgba(16, 185, 129, 0.16); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.35); }
+html[data-theme="dark"] .sla-done { background: rgba(148, 163, 184, 0.16); color: #cbd5e1; border-color: rgba(148, 163, 184, 0.3); }
+html[data-theme="dark"] .sla-prio { color: #93a5a0; }
+html[data-theme="dark"] .sla-prio.prio-high { color: #fb7185; }
+html[data-theme="dark"] .sla-prio.prio-medium { color: #fbbf24; }
+html[data-theme="dark"] .sla-prio.prio-low { color: #34d399; }
+
+/* ---- Accent text hovers --------------------------------------------------- */
+html[data-theme="dark"] .hover\:text-emerald-300:hover { color: #6ee7b7; }
+html[data-theme="dark"] .hover\:text-emerald-700:hover { color: #34d399; }
+html[data-theme="dark"] .hover\:text-emerald-800:hover { color: #6ee7b7; }
+html[data-theme="dark"] .hover\:text-emerald-900:hover { color: #a7f3d0; }
+html[data-theme="dark"] .hover\:text-red-600:hover { color: #f87171; }
