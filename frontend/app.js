@@ -651,7 +651,11 @@ class GramSetuClient {
         this.state.taxes = [];
       }
     } catch (e) {
-      if (this.loggedIn) console.warn('Taxes load failed:', e.message);
+      if (this.loggedIn) {
+        this.state.taxes = [];
+        this.state.taxSummary = null;
+        console.warn('Taxes load failed:', e.message);
+      }
     }
     return this.state.taxes;
   }

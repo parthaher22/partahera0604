@@ -2015,7 +2015,10 @@
       const cpBtn = document.getElementById('change-password-btn');
       const notifWrap = document.getElementById('notif-wrap');
 
-      if (nameEl) nameEl.textContent = u.name || (window.gramSetu.user && window.gramSetu.user.full_name) || 'Villager';
+      const displayName = u.name || (window.gramSetu.user && window.gramSetu.user.full_name) || 'Villager';
+      if (nameEl) nameEl.textContent = displayName;
+      const dashNameEl = document.getElementById('dash-user-title');
+      if (dashNameEl) dashNameEl.textContent = displayName;
       if (wardEl) {
         if (window.gramSetu.isStaff) {
           wardEl.textContent = 'Signed in as: ' + roleLabel(window.gramSetu.role);
@@ -3402,7 +3405,10 @@
       const dict = I18N[lang];
       if (dict) {
         const title = document.getElementById('dash-user-title');
-        if (title) title.innerText = dict.villagerRole;
+        if (title) {
+          const cu = (window.gramSetu.state.currentUser || {}).name;
+          title.innerText = (window.gramSetu.loggedIn && cu) ? cu : dict.villagerRole;
+        }
         document.querySelectorAll('[data-i18n]').forEach(el => {
           const key = el.getAttribute('data-i18n');
           if (dict[key]) el.textContent = dict[key];
