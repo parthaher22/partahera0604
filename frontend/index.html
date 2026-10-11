@@ -834,6 +834,22 @@
             </div>
           </div>
 
+          <!-- Citizen Login Accounts (live Excel record) -->
+          <div id="admin-citizens" class="luxury-card">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div>
+                <h3 class="text-base font-black text-slate-900 mb-1">Citizen Login Accounts</h3>
+                <p class="text-xs text-slate-500">Live Excel record of every villager account (name, mobile, village/ward, last login). Updates automatically as citizens register or sign in.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="login-accounts-status" class="text-[10px] font-mono text-slate-400"></span>
+                <button onclick="exportLoginAccounts()" class="gt-btn">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i> Download Login Accounts
+                </button>
+              </div>
+            </div>
+          </div>
+
           <!-- Manage Panchayat Staff -->
           <div id="admin-staff" class="luxury-card">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
@@ -4070,6 +4086,31 @@
         document.body.removeChild(a);
         setTimeout(() => URL.revokeObjectURL(url), 2000);
       } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    async function exportLoginAccounts() {
+      const g = window.gramSetu;
+      const status = document.getElementById('login-accounts-status');
+      if (status) status.textContent = 'preparing…';
+      try {
+        const res = await fetch(`${g.apiBase}/api/auth/login-accounts-excel`, {
+          headers: { 'Authorization': 'Bearer ' + g.token }
+        });
+        if (!res.ok) throw new Error('Export failed (' + res.status + ')');
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `login_accounts_management_${new Date().toISOString().slice(0, 10)}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+        if (status) status.textContent = 'downloaded';
+      } catch (e) {
+        if (status) status.textContent = '';
         alert(e.message);
       }
     }
