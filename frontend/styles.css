@@ -1097,6 +1097,18 @@ html[data-theme="dark"] .hover\:text-red-600:hover { color: #f87171; }
    Panchayat Desk (.desk-mode) keeps the classic stacked sidebar untouched.
    ========================================================================== */
 @media (max-width: 1023.98px) {
+  .glass-header { padding-left: 1rem; padding-right: 1rem; }
+  .glass-header > div {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+    column-gap: 0.75rem;
+    justify-content: flex-start;
+  }
+  .glass-header > div > div.flex.items-center.gap-3 {
+    flex-wrap: wrap;
+    row-gap: 0.4rem;
+  }
+
   body:not(.desk-mode) .bespoke-sidebar {
     position: fixed;
     top: 0;
