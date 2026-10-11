@@ -34,6 +34,9 @@
   <!-- Top Tricolor Heritage Accent Strip -->
   <div class="h-1.5 w-full bg-gradient-to-r from-amber-500 via-white to-emerald-600 shadow-sm"></div>
 
+  <!-- Mobile Drawer Backdrop (citizen view only, <1024px) -->
+  <div id="drawer-backdrop" class="hidden lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40" onclick="closeMobileDrawer()" aria-hidden="true"></div>
+
   <!-- Main Application Wrapper (Sidebar + Canvas) -->
   <div class="flex flex-col lg:flex-row min-h-screen w-full">
 
@@ -125,6 +128,11 @@
       <header class="glass-header sticky top-0 z-20 px-6 py-3.5">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
           
+          <!-- Mobile Menu Toggle (citizen view only, <1024px) -->
+          <button id="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar-nav" class="flex lg:hidden w-10 h-10 shrink-0 items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-700 shadow-sm hover:text-emerald-700 transition">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+
           <!-- Live Weather & Panchayat Badge -->
           <div class="flex items-center gap-3">
             <div class="weather-badge" id="weather-badge" title="Live weather — Kumbhari, Kopargaon (Open-Meteo)">
@@ -3347,6 +3355,8 @@
       const isVillager = role === 'villager';
       document.getElementById('view-villager').classList.toggle('hidden', !isVillager);
       document.getElementById('view-admin').classList.toggle('hidden', isVillager);
+      document.body.classList.toggle('desk-mode', !isVillager);
+      if (!isVillager) closeMobileDrawer();
 
       const villagerBtn = document.getElementById('role-villager-btn');
       const adminBtn = document.getElementById('role-admin-btn');
@@ -3377,8 +3387,29 @@
       'section-schemes': 'admin-dashboard'
     };
 
+    function toggleMobileDrawer() {
+      const open = document.body.classList.toggle('drawer-open');
+      const bd = document.getElementById('drawer-backdrop');
+      if (bd) bd.classList.toggle('hidden', !open);
+      const btn = document.getElementById('mobile-menu-btn');
+      if (btn) btn.setAttribute('aria-expanded', String(open));
+    }
+
+    function closeMobileDrawer() {
+      document.body.classList.remove('drawer-open');
+      const bd = document.getElementById('drawer-backdrop');
+      if (bd) bd.classList.add('hidden');
+      const btn = document.getElementById('mobile-menu-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMobileDrawer();
+    });
+
     function handleNav(el) {
       if (!el) return false;
+      closeMobileDrawer();
       setActiveNav(el);
       const target = (el.getAttribute('href') || '#').slice(1);
       if (window.gramSetu.isStaff) {
