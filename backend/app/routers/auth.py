@@ -1,17 +1,25 @@
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request, status
 
 from app.audit_util import log_audit
 from app.supabase_client import supabase
 from app.schemas import RegisterRequest, LoginRequest, ChangePasswordRequest, TokenResponse
-from app.security import hash_password, verify_password, create_access_token, get_current_user, CurrentUser
+from app.security import (
+    hash_password,
+    verify_password,
+    create_access_token,
+    get_current_user,
+    require_roles,
+    CurrentUser,
+)
+from app.villager_export import sync_villagers_excel, VILLAGER_XLSX
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
 @router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
-def register(payload: RegisterRequest, request: Request):
+def register(payload: RegisterRequest, request: Request, background: BackgroundTasks):
     existing = (
         supabase.table("users")
         .select("user_id")
@@ -63,12 +71,15 @@ def register(payload: RegisterRequest, request: Request):
         request=request,
     )
 
+    # Keep the villager login-accounts Excel mirror in sync with the real change.
+    background.add_task(sync_villagers_excel)
+
     token = create_access_token(user_id, "villager")
     return TokenResponse(access_token=token, role="villager", user_id=user_id)
 
 
 @router.post("/login", response_model=TokenResponse)
-def login(payload: LoginRequest, request: Request):
+def login(payload: LoginRequest, request: Request, background: BackgroundTasks):
     result = (
         supabase.table("users")
         .select("user_id, password_hash, role, account_status")
@@ -109,6 +120,10 @@ def login(payload: LoginRequest, request: Request):
         entity_id=user["user_id"],
         request=request,
     )
+
+    # last_login is part of the villager login-accounts Excel mirror.
+    if user["role"] == "villager":
+        background.add_task(sync_villagers_excel)
 
     token = create_access_token(user["user_id"], user["role"])
     return TokenResponse(access_token=token, role=user["role"], user_id=user["user_id"])
@@ -164,3 +179,23 @@ def read_me(current_user: CurrentUser = Depends(get_current_user)):
         profile = villager.data[0]
 
     return {**user, "profile": profile, "panchayat_member": {}}
+
+
+@router.get("/login-accounts-excel")
+def download_login_accounts_excel(
+    current_user: CurrentUser = Depends(
+        require_roles("panchayat_staff", "panchayat_admin", "system_admin")
+    ),
+):
+    """Download the live Excel mirror of villager login accounts."""
+    if not VILLAGER_XLSX.exists():
+        sync_villagers_excel()
+    if not VILLAGER_XLSX.exists():
+        raise HTTPException(status_code=404, detail="Excel sheet not generated yet")
+    from fastapi.responses import FileResponse
+
+    return FileResponse(
+        str(VILLAGER_XLSX),
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        filename="login_accounts_management.xlsx",
+    )
