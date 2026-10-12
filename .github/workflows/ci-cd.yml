@@ -1,0 +1,96 @@
+name: CI/CD
+
+# Runs on every branch push ("any updation"), on pull requests into main,
+# and can be started manually from the Actions tab.
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build & test backend
+    runs-on: ubuntu-latest
+    env:
+      # Dummy values so the app imports without a real database.
+      # /health and /openapi.json do not touch Supabase.
+      SUPABASE_URL: https://example.supabase.co
+      SUPABASE_SERVICE_ROLE_KEY: ci-dummy-key
+      JWT_SECRET: ci-test-secret
+      JWT_ALGORITHM: HS256
+      JWT_EXPIRE_MINUTES: "1440"
+      ALLOWED_ORIGINS: https://example.com
+      KUMBHARI_VILLAGE_ID: 0acdee35-23bd-4b17-adce-33ebdfbfaf18
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11.9"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install dependencies
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Syntax check (byte-compile)
+        working-directory: backend
+        run: python -m compileall -q app
+
+      - name: Smoke test (import app + health)
+        working-directory: backend
+        run: |
+          python - <<'PY'
+          from fastapi.testclient import TestClient
+          from app.main import app
+
+          client = TestClient(app)
+          health = client.get("/health")
+          assert health.status_code == 200 and health.json() == {"status": "ok"}, health.text
+
+          spec = client.get("/openapi.json")
+          assert spec.status_code == 200, spec.text
+          print("Smoke test passed:", len(spec.json().get("paths", {})), "routes")
+          PY
+
+      - name: Frontend files present
+        run: test -f frontend/index.html && test -f frontend/app.js && echo "frontend OK"
+
+  deploy:
+    name: Deploy
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    env:
+      RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+      NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+    steps:
+      - name: Trigger Render (backend) deploy
+        if: ${{ env.RENDER_DEPLOY_HOOK != '' }}
+        run: |
+          echo "Triggering Render deploy..."
+          curl -fsSL -X POST "$RENDER_DEPLOY_HOOK"
+          echo "Render deploy triggered."
+
+      - name: Trigger Netlify (frontend) deploy
+        if: ${{ env.NETLIFY_BUILD_HOOK != '' }}
+        run: |
+          echo "Triggering Netlify build..."
+          curl -fsSL -X POST "$NETLIFY_BUILD_HOOK"
+          echo "Netlify build triggered."
+
+      - name: Deploy summary
+        run: |
+          echo "Render deploy hook configured : $([ -n "$RENDER_DEPLOY_HOOK" ] && echo yes || echo no)"
+          echo "Netlify build hook configured : $([ -n "$NETLIFY_BUILD_HOOK" ] && echo yes || echo no)"
+          if [ -z "$RENDER_DEPLOY_HOOK" ] && [ -z "$NETLIFY_BUILD_HOOK" ]; then
+            echo "No deploy hooks set. Render and Netlify already auto-deploy on push,"
+            echo "so this job is a no-op until you add the deploy-hook secrets."
+          fi
