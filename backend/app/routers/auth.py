@@ -187,9 +187,13 @@ def download_login_accounts_excel(
         require_roles("panchayat_staff", "panchayat_admin", "system_admin")
     ),
 ):
-    """Download the live Excel mirror of villager login accounts."""
-    if not VILLAGER_XLSX.exists():
-        sync_villagers_excel()
+    """Download the live Excel mirror of villager login accounts.
+
+    Always re-syncs before serving so the downloaded file reflects the latest
+    registrations / logins, even if the sheet was generated earlier in the
+    instance's lifetime.
+    """
+    sync_villagers_excel()
     if not VILLAGER_XLSX.exists():
         raise HTTPException(status_code=404, detail="Excel sheet not generated yet")
     from fastapi.responses import FileResponse
@@ -198,4 +202,5 @@ def download_login_accounts_excel(
         str(VILLAGER_XLSX),
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         filename="login_accounts_management.xlsx",
+        headers={"Cache-Control": "no-store"},
     )

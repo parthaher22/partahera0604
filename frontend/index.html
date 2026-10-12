@@ -4096,7 +4096,8 @@
       if (status) status.textContent = 'preparing…';
       try {
         const res = await fetch(`${g.apiBase}/api/auth/login-accounts-excel`, {
-          headers: { 'Authorization': 'Bearer ' + g.token }
+          headers: { 'Authorization': 'Bearer ' + g.token },
+          cache: 'no-store'
         });
         if (!res.ok) throw new Error('Export failed (' + res.status + ')');
         const blob = await res.blob();
