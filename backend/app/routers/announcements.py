@@ -274,6 +274,31 @@ def _sweep_scheduled_notices():
             print(f"[scheduled-notice] sweep failed for {record.get('announcement_id')}: {exc}", flush=True)
 
 
+_MISSING_COL_RE = re.compile(r"Could not find the '([^']+)' column")
+
+
+def _write_notice(action, payload):
+    """Insert/update a notice, tolerating schema drift.
+
+    If PostgREST reports a column that does not exist (PGRST204) — e.g. the
+    optional ``event_date`` column on an older database — drop that column and
+    retry so the desk is never blocked by a missing column.
+    """
+    from postgrest.exceptions import APIError
+
+    data = dict(payload)
+    for _ in range(4):
+        try:
+            return action(data).execute()
+        except APIError as exc:
+            match = _MISSING_COL_RE.search(str(exc))
+            if match and match.group(1) in data:
+                data.pop(match.group(1), None)
+                continue
+            raise
+    return action(data).execute()
+
+
 def _is_live(record: dict) -> bool:
     """True when a Published notice's scheduled publish time has passed (or none)."""
     pub = record.get("published_at")
@@ -359,10 +384,9 @@ def create_announcement(
     raw = payload.model_dump(exclude_unset=True)
     raw.pop("village_id", None)
     raw["village_id"] = KUMBHARI_VILLAGE_ID
-    inserted = (
-        supabase.table("announcements")
-        .insert({**raw, "created_by": current_user.user_id, "status": "Draft"})
-        .execute()
+    inserted = _write_notice(
+        lambda data: supabase.table("announcements").insert(data),
+        {**raw, "created_by": current_user.user_id, "status": "Draft"},
     )
     record = inserted.data[0]
     log_audit(
@@ -416,7 +440,10 @@ def update_announcement(
     if not data:
         raise HTTPException(status_code=400, detail="Nothing to update")
 
-    result = supabase.table("announcements").update(data).eq("announcement_id", announcement_id).execute()
+    result = _write_notice(
+        lambda data: supabase.table("announcements").update(data).eq("announcement_id", announcement_id),
+        data,
+    )
     if not result.data:
         raise HTTPException(status_code=404, detail="Notice not found")
 
