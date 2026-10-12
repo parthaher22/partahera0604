@@ -32,7 +32,7 @@
 <body class="min-h-screen flex flex-col">
 
   <!-- Top Tricolor Heritage Accent Strip -->
-  <div class="h-1.5 w-full bg-gradient-to-r from-amber-500 via-white to-emerald-600 shadow-sm"></div>
+  <div class="h-1.5 w-full bg-gradient-to-r from-amber-500 via-white to-sky-600 shadow-sm"></div>
 
   <!-- Mobile Drawer Backdrop (citizen view only, <1024px) -->
   <div id="drawer-backdrop" class="hidden lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40" onclick="closeMobileDrawer()" aria-hidden="true"></div>
@@ -52,18 +52,18 @@
         </div>
         <div>
           <h1 class="text-lg font-black tracking-tight text-white leading-none">GRAMSETU</h1>
-          <p class="text-[10px] text-emerald-300 font-extrabold uppercase tracking-widest mt-1">Kumbhari Panchayat</p>
+          <p class="text-[10px] text-sky-300 font-extrabold uppercase tracking-widest mt-1">Kumbhari Panchayat</p>
         </div>
       </div>
 
       <!-- Live Portal Heartbeat Indicator -->
       <div class="px-6 py-3">
-        <div class="bg-black/30 border border-emerald-500/20 rounded-xl px-3 py-1.5 flex items-center justify-between text-[11px] text-emerald-200">
+        <div class="bg-black/30 border border-sky-500/20 rounded-xl px-3 py-1.5 flex items-center justify-between text-[11px] text-sky-200">
           <span class="flex items-center gap-1.5 font-bold">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="w-2 h-2 rounded-full bg-sky-400"></span>
             <span>Live Portal Active</span>
           </span>
-          <span class="font-mono text-[10px] text-emerald-200">v1.0</span>
+          <span class="font-mono text-[10px] text-sky-200">v1.0</span>
         </div>
       </div>
 
@@ -100,21 +100,21 @@
       </nav>
 
       <!-- Sidebar Footer Contacts & Info -->
-      <div class="p-5 border-t border-white/10 text-emerald-200 text-[11px] space-y-3 relative z-10">
+      <div class="p-5 border-t border-white/10 text-sky-200 text-[11px] space-y-3 relative z-10">
         <div class="bg-white/5 border border-white/10 rounded-xl p-3 space-y-1">
           <span class="text-[10px] font-bold uppercase tracking-wider text-amber-300 block">Kumbhari Citizen Helpdesk</span>
           <p class="font-bold text-white flex items-center gap-1.5 text-xs">
-            <i data-lucide="phone-call" class="w-3.5 h-3.5 text-emerald-300"></i>
+            <i data-lucide="phone-call" class="w-3.5 h-3.5 text-sky-300"></i>
             <span>+91 94220 12345</span>
           </p>
-          <p class="text-[10px] text-emerald-300">Office: 0217-260-0142</p>
+          <p class="text-[10px] text-sky-300">Office: 0217-260-0142</p>
         </div>
-        <div class="flex items-center justify-between text-[10px] text-emerald-200 pt-1">
+        <div class="flex items-center justify-between text-[10px] text-sky-200 pt-1">
           <span>Site Map</span>
           <span>Privacy</span>
           <span>Panchayat Portal</span>
         </div>
-        <p class="text-[10px] text-emerald-200 font-mono">© 2026 GramSetu • Kumbhari</p>
+        <p class="text-[10px] text-sky-200 font-mono">© 2026 GramSetu • Kumbhari</p>
       </div>
 
     </aside>
@@ -129,20 +129,20 @@
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
           
           <!-- Mobile Menu Toggle (citizen view only, <1024px) -->
-          <button id="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar-nav" class="flex lg:hidden w-10 h-10 shrink-0 items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-700 shadow-sm hover:text-emerald-700 transition">
+          <button id="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar-nav" class="flex lg:hidden w-10 h-10 shrink-0 items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-700 shadow-sm hover:text-sky-700 transition">
             <i data-lucide="menu" class="w-5 h-5"></i>
           </button>
 
           <!-- Live Weather & Panchayat Badge -->
           <div class="flex items-center gap-3">
-            <div class="weather-badge" id="weather-badge" title="Live weather — Kumbhari, Kopargaon (Open-Meteo)">
-              <span class="text-base" id="weather-icon">⛅</span>
+            <div class="weather-badge" id="weather-badge" title="Live weather - Kumbhari, Kopargaon (Open-Meteo)">
+              <i data-lucide="cloud" class="w-4 h-4 text-slate-500" aria-hidden="true"></i>
               <span>Kumbhari: <strong id="weather-temp">--°C</strong> • <span id="weather-cond">Loading…</span></span>
-              <span class="hidden md:inline text-emerald-600">|</span>
+              <span class="hidden md:inline text-sky-600">|</span>
               <span class="hidden md:inline font-normal">Kopargaon, Maharashtra</span>
             </div>
 
-            <div class="weather-badge" title="Live time — Indian Standard Time (GMT+5:30)">
+            <div class="weather-badge" title="Live time - Indian Standard Time (GMT+5:30)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15.5 14"></polyline></svg>
               <span id="live-clock">--:--:--</span>
               <span class="hidden md:inline font-normal">IST</span>
@@ -154,15 +154,15 @@
 
             <!-- Dark / Light Theme Toggle -->
             <button id="theme-toggle" onclick="toggleTheme()" title="Switch to dark mode" aria-label="Toggle dark mode"
-              class="w-9 h-9 flex items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-700 shadow-sm hover:text-emerald-700 transition">
+              class="w-9 h-9 flex items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-700 shadow-sm hover:text-sky-700 transition">
               <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 hidden"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
               <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
             </button>
 
             <!-- Dual Role Switcher -->
             <div class="bg-white/90 p-1 rounded-2xl flex items-center border border-slate-200 shadow-sm">
-              <button id="role-villager-btn" onclick="switchRole('villager')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-800 text-white shadow-sm transition flex items-center gap-1.5">
-                <i data-lucide="user" class="w-3.5 h-3.5 text-emerald-300"></i>
+              <button id="role-villager-btn" onclick="switchRole('villager')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-800 text-white shadow-sm transition flex items-center gap-1.5">
+                <i data-lucide="user" class="w-3.5 h-3.5 text-sky-300"></i>
                 <span>Citizen View</span>
               </button>
               <button id="role-admin-btn" onclick="switchRole('admin')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 transition flex items-center gap-1.5">
@@ -173,7 +173,7 @@
 
             <!-- Language Pill -->
             <div class="flex items-center gap-1.5 bg-white border border-slate-200 rounded-xl px-2.5 py-1 text-xs font-bold text-slate-800 shadow-sm">
-              <i data-lucide="globe" class="w-3.5 h-3.5 text-emerald-700"></i>
+              <i data-lucide="globe" class="w-3.5 h-3.5 text-sky-700"></i>
               <select id="lang-selector" onchange="changeLanguage(this.value)" class="bg-transparent focus:outline-none cursor-pointer font-bold">
                 <option value="en">EN</option>
                 <option value="hi">हिंदी</option>
@@ -183,15 +183,15 @@
 
             <!-- Accessibility Font Sizer -->
             <div class="hidden sm:flex items-center bg-white border border-slate-200 rounded-xl px-2 py-1 text-xs font-bold text-slate-700 shadow-sm">
-              <button onclick="adjustFont(-0.1)" class="px-1.5 hover:text-emerald-700" title="Decrease Font">A-</button>
+              <button onclick="adjustFont(-0.1)" class="px-1.5 hover:text-sky-700" title="Decrease Font">A-</button>
               <span class="text-slate-400">|</span>
-              <button onclick="adjustFont(0, true)" class="px-1.5 hover:text-emerald-700" title="Reset Font">A</button>
+              <button onclick="adjustFont(0, true)" class="px-1.5 hover:text-sky-700" title="Reset Font">A</button>
               <span class="text-slate-400">|</span>
-              <button onclick="adjustFont(0.1)" class="px-1.5 hover:text-emerald-700" title="Increase Font">A+</button>
+              <button onclick="adjustFont(0.1)" class="px-1.5 hover:text-sky-700" title="Increase Font">A+</button>
             </div>
 
             <!-- High Contrast Mode -->
-            <button onclick="toggleHighContrast()" class="p-2 text-slate-700 hover:text-emerald-800 bg-white border border-slate-200 rounded-xl shadow-sm transition" title="Outdoor Sunlight Mode">
+            <button onclick="toggleHighContrast()" class="p-2 text-slate-700 hover:text-sky-800 bg-white border border-slate-200 rounded-xl shadow-sm transition" title="Outdoor Sunlight Mode">
               <i data-lucide="sun" class="w-4 h-4 text-amber-500"></i>
             </button>
 
@@ -199,7 +199,7 @@
             <div class="flex items-center gap-2 pl-2 border-l border-slate-200">
               <div class="relative">
                 <button onclick="toggleProfileMenu(event)" id="profile-btn" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu" data-tip="Account, role & permissions" class="flex items-center gap-2.5 rounded-xl hover:bg-slate-50 transition p-1">
-                  <div id="header-user-avatar" class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 text-white font-black flex items-center justify-center text-xs shadow-md">
+                  <div id="header-user-avatar" class="w-9 h-9 rounded-xl bg-sky-700 text-white font-black flex items-center justify-center text-xs shadow-md">
                     GU
                   </div>
                   <div class="text-left hidden md:block">
@@ -210,8 +210,8 @@
                 <!-- Role & permissions menu -->
                 <div id="profile-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-slate-200 z-[60] overflow-hidden text-left">
                   <div class="px-4 py-3 bg-slate-50 border-b border-slate-200">
-                    <p id="profile-menu-name" class="text-xs font-black text-slate-900">—</p>
-                    <p id="profile-menu-role" class="text-[10px] font-bold text-emerald-700 mt-0.5">—</p>
+                    <p id="profile-menu-name" class="text-xs font-black text-slate-900">-</p>
+                    <p id="profile-menu-role" class="text-[10px] font-bold text-sky-700 mt-0.5">-</p>
                   </div>
                   <div class="px-4 py-3">
                     <p class="text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5" data-i18n="permissionsTitle">Your permissions</p>
@@ -229,19 +229,19 @@
               </div>
               <!-- Citizen inbox: notices sent by the Panchayat Desk -->
             <div class="relative hidden" id="notif-wrap">
-              <button onclick="toggleNotifications()" id="notif-btn" class="p-1.5 text-slate-400 hover:text-emerald-700 transition relative" title="Messages from Panchayat Desk" aria-label="Notifications from Panchayat Desk" data-tip="Notifications from Panchayat Desk">
+              <button onclick="toggleNotifications()" id="notif-btn" class="p-1.5 text-slate-400 hover:text-sky-700 transition relative" title="Messages from Panchayat Desk" aria-label="Notifications from Panchayat Desk" data-tip="Notifications from Panchayat Desk">
                 <i data-lucide="bell" class="w-4 h-4"></i>
                 <span id="notif-badge" class="notif-badge hidden">0</span>
               </button>
               <div id="notif-panel" class="hidden">
                 <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100">
                   <span class="text-xs font-black text-slate-900">Gram Panchayat Messages</span>
-                  <button onclick="markAllRead(event)" class="text-[10px] font-black text-emerald-700 hover:underline">Mark all read</button>
+                  <button onclick="markAllRead(event)" class="text-[10px] font-black text-sky-700 hover:underline">Mark all read</button>
                 </div>
                 <div id="notif-list"><p class="px-4 py-6 text-[11px] text-slate-500 italic">No messages yet.</p></div>
               </div>
             </div>
-              <button onclick="openChangePasswordModal()" id="change-password-btn" class="hidden p-1.5 text-slate-400 hover:text-emerald-700 transition" title="Change my password" aria-label="Change my password" data-tip="Change password">
+              <button onclick="openChangePasswordModal()" id="change-password-btn" class="hidden p-1.5 text-slate-400 hover:text-sky-700 transition" title="Change my password" aria-label="Change my password" data-tip="Change password">
                 <i data-lucide="key" class="w-4 h-4"></i>
               </button>
               <button onclick="doLogout()" id="logout-btn" class="hidden items-center gap-1.5 p-1.5 text-slate-400 hover:text-red-600 transition" title="Sign out" aria-label="Sign out" data-tip="Sign out safely">
@@ -266,20 +266,20 @@
           <!-- Bespoke Dashboard Page Title Banner -->
           <div id="section-dashboard" class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2">
             <div>
-              <div class="inline-flex items-center gap-2 bg-emerald-100/80 border border-emerald-300 text-emerald-900 text-[11px] font-extrabold px-3 py-1 rounded-full mb-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-                <span>Raynagar Model Village • 15th Finance Commission Sanctioned</span>
+              <div class="inline-flex items-center gap-2 bg-sky-100/80 border border-sky-300 text-sky-900 text-[11px] font-extrabold px-3 py-1 rounded-full mb-2">
+                <span class="w-2 h-2 rounded-full bg-sky-600"></span>
+                <span>Kumbhari Gram Panchayat • 15th Finance Commission Sanctioned</span>
               </div>
               <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Citizen Dashboard — <span class="text-emerald-800 font-extrabold" id="dash-user-title">Ramesh Patil</span> <span class="text-slate-500 font-light">|</span> <span class="text-slate-800 font-black">Kumbhari Panchayat</span>
+                Citizen Dashboard - <span class="text-sky-800 font-extrabold" id="dash-user-title">Citizen</span> <span class="text-slate-500 font-light">|</span> <span class="text-slate-800 font-black">Kumbhari Panchayat</span>
               </h2>
               <p class="text-xs text-slate-500 font-medium mt-1">
-                Official Citizen Services & Transparency Platform • Kumbhari, Taluka South Solapur, Dist. Solapur
+                Official Citizen Services & Transparency Platform • Kumbhari, Kopargaon, Maharashtra
               </p>
             </div>
             
             <button onclick="openComplaintModal()" class="btn-luxury-primary">
-              <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-300"></i>
+              <i data-lucide="plus-circle" class="w-4 h-4 text-sky-300"></i>
               <span>Lodge New Grievance</span>
             </button>
           </div>
@@ -298,7 +298,7 @@
                 <div class="flex justify-between items-start mb-3">
                   <div>
                     <h3 class="text-lg font-black text-slate-900">Grievance Tracking</h3>
-                    <p class="text-xs text-slate-600 font-bold mt-0.5">All your grievances — visible only to you &amp; the Panchayat Desk</p>
+                    <p class="text-xs text-slate-600 font-bold mt-0.5">All your grievances - visible only to you &amp; the Panchayat Desk</p>
                   </div>
                   <span class="badge-tag-mint" id="hero-grievance-badge">0 Total</span>
                 </div>
@@ -313,9 +313,9 @@
                     <span class="block text-lg font-black text-blue-700" id="my-stage-in_progress">0</span>
                     <span class="text-[10px] font-extrabold text-blue-800 uppercase">In Progress</span>
                   </div>
-                  <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-2 text-center">
-                    <span class="block text-lg font-black text-emerald-700" id="my-stage-completed">0</span>
-                    <span class="text-[10px] font-extrabold text-emerald-800 uppercase">Completed</span>
+                  <div class="bg-sky-50 border border-sky-200 rounded-xl p-2 text-center">
+                    <span class="block text-lg font-black text-sky-700" id="my-stage-completed">0</span>
+                    <span class="text-[10px] font-extrabold text-sky-800 uppercase">Completed</span>
                   </div>
                 </div>
 
@@ -325,11 +325,11 @@
 
               <!-- Action Bar -->
               <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
-                <button onclick="openComplaintModal()" class="text-xs font-extrabold text-emerald-800 hover:text-emerald-900 flex items-center gap-1.5 transition">
-                  <i data-lucide="plus" class="w-4 h-4 text-emerald-600"></i>
+                <button onclick="openComplaintModal()" class="text-xs font-extrabold text-sky-800 hover:text-sky-900 flex items-center gap-1.5 transition">
+                  <i data-lucide="plus" class="w-4 h-4 text-sky-600"></i>
                   <span>Lodge Another Grievance</span>
                 </button>
-                <button id="hero-track-btn" onclick="trackLatestGrievance()" class="text-xs font-black text-slate-800 hover:text-emerald-800 bg-slate-100 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl transition flex items-center gap-1">
+                <button id="hero-track-btn" onclick="trackLatestGrievance()" class="text-xs font-black text-slate-800 hover:text-sky-800 bg-slate-100 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl transition flex items-center gap-1">
                   <span>Track Full Timeline</span>
                   <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                 </button>
@@ -344,7 +344,7 @@
                 <!-- Card Header -->
                 <div class="flex justify-between items-center mb-1">
                   <div class="flex items-center gap-2">
-                    <div class="w-2.5 h-2.5 rounded-full bg-orange-500 animate-ping"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-orange-500"></div>
                     <h3 class="text-lg font-black text-slate-900">Digital Notice Board</h3>
                   </div>
                   <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500 cursor-pointer" onclick="openAllNotices()"></i>
@@ -358,7 +358,7 @@
               <!-- Action Bar -->
               <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs">
                 <span id="notice-active-count" class="text-slate-500 italic">0 Active Notices Published</span>
-                <button onclick="openAllNotices()" class="font-extrabold text-emerald-800 hover:underline flex items-center gap-1">
+                <button onclick="openAllNotices()" class="font-extrabold text-sky-800 hover:underline flex items-center gap-1">
                   <span>View All Notices & Agenda</span>
                   <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </button>
@@ -373,7 +373,7 @@
                 <!-- Card Header -->
                 <div class="flex justify-between items-center mb-1">
                   <h3 class="text-lg font-black text-slate-900">Welfare Schemes (Cards)</h3>
-                  <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500 cursor-pointer" onclick="scrollToSection('all-schemes')"></i>
+                  <button type="button" onclick="openAllSchemesModal()" class="text-slate-500 hover:text-sky-800" aria-label="Browse all schemes"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
                 </div>
                 <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-4">Direct Benefit Transfer & Subsidies</p>
 
@@ -384,15 +384,15 @@
                   <div class="scheme-card-box" onclick="openSchemeModal('SCH-PMAY-G')">
                     <div class="flex items-center justify-between mb-1">
                       <div class="flex items-center gap-2">
-                        <span class="text-lg">🏠</span>
+                        <i data-lucide="home" class="w-5 h-5 text-slate-600" aria-hidden="true"></i>
                         <h4 class="text-xs font-black text-slate-900">Pradhan Mantri Awas</h4>
                       </div>
-                      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                      <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Housing</span>
                     </div>
                     <p class="text-[11px] text-slate-500 mb-2.5">₹1.20L Pucca House Aid</p>
                     <div class="flex justify-between items-center">
-                      <span class="badge-tag-mint text-[9px]">Applied • In Review</span>
-                      <span class="text-[11px] font-black text-emerald-800">View ➔</span>
+                      <span class="text-[10px] font-semibold text-slate-500">Central Scheme</span>
+                      <span class="text-[11px] font-black text-sky-800 inline-flex items-center gap-1">View <i data-lucide="arrow-right" class="w-3 h-3" aria-hidden="true"></i></span>
                     </div>
                   </div>
 
@@ -400,31 +400,31 @@
                   <div class="scheme-card-box" onclick="openSchemeModal('SCH-PM-KISAN')">
                     <div class="flex items-center justify-between mb-1">
                       <div class="flex items-center gap-2">
-                        <span class="text-lg">🌾</span>
+                        <i data-lucide="wheat" class="w-5 h-5 text-slate-600" aria-hidden="true"></i>
                         <h4 class="text-xs font-black text-slate-900">PM-KISAN Nidhi</h4>
                       </div>
-                      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Farmer</span>
                     </div>
                     <p class="text-[11px] text-slate-500 mb-2.5">₹6,000 Annual Farmer DBT</p>
                     <div class="flex justify-between items-center">
-                      <span class="badge-tag-mint text-[9px]">● Active</span>
-                      <span class="text-[11px] font-black text-emerald-800">View ➔</span>
+                      <span class="text-[10px] font-semibold text-slate-500">Central Scheme</span>
+                      <span class="text-[11px] font-black text-sky-800 inline-flex items-center gap-1">View <i data-lucide="arrow-right" class="w-3 h-3" aria-hidden="true"></i></span>
                     </div>
                   </div>
 
                   <!-- Scheme 3: Ujjwala Yojana -->
-                  <div class="scheme-card-box" onclick="openSchemeModal('SCH-SANJAY-GANDHI')">
+                  <div class="scheme-card-box" onclick="openSchemeModal('SCH-UJJWALA')">
                     <div class="flex items-center justify-between mb-1">
                       <div class="flex items-center gap-2">
-                        <span class="text-lg">🔥</span>
+                        <i data-lucide="flame" class="w-5 h-5 text-slate-600" aria-hidden="true"></i>
                         <h4 class="text-xs font-black text-slate-900">Ujjwala Yojana</h4>
                       </div>
-                      <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                      <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Women</span>
                     </div>
                     <p class="text-[11px] text-slate-500 mb-2.5">Free Gas Connection Aid</p>
                     <div class="flex justify-between items-center">
-                      <span class="badge-tag-terracotta text-[9px]">Apply Available</span>
-                      <span class="text-[11px] font-black text-amber-700">Apply ➔</span>
+                      <span class="text-[10px] font-semibold text-slate-500">Central Scheme</span>
+                      <span class="text-[11px] font-black text-sky-800 inline-flex items-center gap-1">View <i data-lucide="arrow-right" class="w-3 h-3" aria-hidden="true"></i></span>
                     </div>
                   </div>
 
@@ -432,15 +432,15 @@
                   <div class="scheme-card-box" onclick="openSchemeModal('SCH-MAJHI-LADKI')">
                     <div class="flex items-center justify-between mb-1">
                       <div class="flex items-center gap-2">
-                        <span class="text-lg">👩</span>
+                        <i data-lucide="user" class="w-5 h-5 text-slate-600" aria-hidden="true"></i>
                         <h4 class="text-xs font-black text-slate-900">Ladki Bahin Yojana</h4>
                       </div>
-                      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                      <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Women</span>
                     </div>
                     <p class="text-[11px] text-slate-500 mb-2.5">₹1,500/mo Women Aid</p>
                     <div class="flex justify-between items-center">
-                      <span class="badge-tag-mint text-[9px]">● Active</span>
-                      <span class="text-[11px] font-black text-emerald-800">View ➔</span>
+                      <span class="text-[10px] font-semibold text-slate-500">State Scheme</span>
+                      <span class="text-[11px] font-black text-sky-800 inline-flex items-center gap-1">View <i data-lucide="arrow-right" class="w-3 h-3" aria-hidden="true"></i></span>
                     </div>
                   </div>
 
@@ -449,11 +449,11 @@
 
               <!-- Action Bar -->
               <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-500 font-semibold">6 Verified Schemes Live</span>
-                <a href="#all-schemes" class="font-extrabold text-emerald-800 hover:underline flex items-center gap-1">
+                <span class="text-slate-500 font-semibold">Government welfare schemes</span>
+                <button type="button" onclick="openAllSchemesModal()" class="font-extrabold text-sky-800 hover:underline flex items-center gap-1">
                   <span>Browse All Schemes</span>
                   <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                </a>
+                </button>
               </div>
             </div>
 
@@ -465,8 +465,8 @@
                 <!-- Card Header -->
                 <div class="flex justify-between items-center mb-1">
                   <h3 class="text-lg font-black text-slate-900">Financial Transparency</h3>
-                  <span class="inline-flex items-center gap-1 text-[10px] font-black text-emerald-700">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> LIVE
+                  <span class="inline-flex items-center gap-1 text-[10px] font-black text-sky-700">
+                    <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span> LIVE
                   </span>
                 </div>
                 <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-4" id="finance-card-subtitle">Public Village Budget &amp; Work Expenditure</p>
@@ -474,7 +474,7 @@
                 <!-- Live ledger totals (injected via renderFinancials from /api/finance/public-summary) -->
                 <div id="finance-public-stats" class="space-y-3">
                   <div class="flex items-center gap-2 text-slate-400">
-                    <span class="inline-block w-4 h-4 rounded-full border-2 border-slate-200 border-t-emerald-600 animate-spin"></span>
+                    <span class="inline-block w-4 h-4 rounded-full border-2 border-slate-200 border-t-sky-600 animate-spin"></span>
                     <span class="text-[11px] font-bold">Loading live budget…</span>
                   </div>
                 </div>
@@ -482,12 +482,12 @@
 
               <!-- Action Bar -->
               <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="badge-tag-mint font-extrabold text-[10px]">
-                  ✓ Audited Under eGramSwaraj
+                <span class="badge-tag-mint font-extrabold text-[10px] inline-flex items-center gap-1">
+                  <i data-lucide="check" class="w-3 h-3" aria-hidden="true"></i> Audited Under eGramSwaraj
                 </span>
-                <span id="finance-updated-tag" class="font-extrabold text-emerald-800 flex items-center gap-1">
+                <span id="finance-updated-tag" class="font-extrabold text-sky-800 flex items-center gap-1">
                   <i data-lucide="calendar-check" class="w-3.5 h-3.5"></i>
-                  <span>Updated —</span>
+                  <span>Updated -</span>
                 </span>
               </div>
             </div>
@@ -501,12 +501,12 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-slate-200 gap-3">
               <div>
                 <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
-                  <i data-lucide="credit-card" class="w-5 h-5 text-emerald-700"></i>
+                  <i data-lucide="credit-card" class="w-5 h-5 text-sky-700"></i>
                   <span>Citizen Tax & Dues Portal (Ghar Patti & Pani Patti)</span>
                 </h3>
                 <p class="text-xs text-slate-500 mt-0.5">Pay official Kumbhari Gram Panchayat property and utility taxes online with instant downloadable receipts.</p>
               </div>
-<span class="bg-emerald-50 text-emerald-900 font-black text-xs px-3.5 py-1.5 rounded-xl border border-emerald-200" id="tax-property-badge">
+<span class="bg-sky-50 text-sky-900 font-black text-xs px-3.5 py-1.5 rounded-xl border border-sky-200" id="tax-property-badge">
                   Property: House No. 142, Ward 3
                 </span>
               </div>
@@ -517,9 +517,9 @@
                   <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wide">Total Assessed</span>
                   <span class="block text-lg font-black text-slate-900 font-mono" id="tax-sum-assessed">₹0</span>
                 </div>
-                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5">
-                  <span class="text-[11px] text-emerald-700 font-bold uppercase tracking-wide">Total Paid</span>
-                  <span class="block text-lg font-black text-emerald-800 font-mono" id="tax-sum-paid">₹0</span>
+                <div class="bg-sky-50 border border-sky-200 rounded-2xl p-3.5">
+                  <span class="text-[11px] text-sky-700 font-bold uppercase tracking-wide">Total Paid</span>
+                  <span class="block text-lg font-black text-sky-800 font-mono" id="tax-sum-paid">₹0</span>
                 </div>
                 <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5">
                   <span class="text-[11px] text-amber-700 font-bold uppercase tracking-wide">Outstanding</span>
@@ -560,7 +560,7 @@
           <div class="luxury-card" id="section-members">
             <div class="pb-4 border-b border-slate-200">
               <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
-                <i data-lucide="users" class="w-5 h-5 text-emerald-700"></i>
+                <i data-lucide="users" class="w-5 h-5 text-sky-700"></i>
                 <span>Panchayat Leadership & Member Contacts</span>
               </h3>
               <p class="text-xs text-slate-500 mt-0.5">Elected representatives and administrative officers serving Kumbhari village.</p>
@@ -584,9 +584,9 @@
                   Authorized Administrative Layer
                 </span>
                 <h2 class="text-2xl font-black mt-2">Kumbhari Gram Panchayat Operational Desk</h2>
-                <p class="text-xs text-emerald-300 font-medium">Logged in as: <strong id="admin-logged-in-as">—</strong></p>
+                <p class="text-xs text-sky-300 font-medium">Logged in as: <strong id="admin-logged-in-as">-</strong></p>
                 <p class="text-[11px] text-slate-400 font-bold mt-1 flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="w-2 h-2 rounded-full bg-sky-400"></span>
                   <span>LIVE</span>
                   <span class="text-slate-500 font-mono" id="desk-live-stamp">auto-refreshes every 12s</span>
                 </p>
@@ -618,7 +618,7 @@
               <button onclick="gotoGrievanceView('')" class="kpi-card bg-slate-800/90 p-4 rounded-2xl border border-slate-700 text-left">
                 <span class="text-slate-300 text-xs">Total Grievances</span>
                 <span id="admin-total-complaints" class="text-2xl font-black text-white block mt-1">0</span>
-                <span class="text-[10px] font-bold text-emerald-400 mt-1 inline-flex items-center gap-1">View all <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                <span class="text-[10px] font-bold text-sky-400 mt-1 inline-flex items-center gap-1">View all <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
               </button>
               <button onclick="gotoGrievanceView('submitted')" class="kpi-card bg-slate-800/90 p-4 rounded-2xl border border-slate-700 text-left">
                 <span class="text-amber-400 text-xs">Pending Review</span>
@@ -626,9 +626,9 @@
                 <span class="text-[10px] font-bold text-amber-400/80 mt-1 inline-flex items-center gap-1">Open submitted <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
               </button>
               <button onclick="gotoGrievanceView('in_progress')" class="kpi-card bg-slate-800/90 p-4 rounded-2xl border border-slate-700 text-left">
-                <span class="text-emerald-300 text-xs">In Progress Works</span>
-                <span id="admin-progress-complaints" class="text-2xl font-black text-emerald-300 block mt-1">0</span>
-                <span class="text-[10px] font-bold text-emerald-400/80 mt-1 inline-flex items-center gap-1">Open in progress <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                <span class="text-sky-300 text-xs">In Progress Works</span>
+                <span id="admin-progress-complaints" class="text-2xl font-black text-sky-300 block mt-1">0</span>
+                <span class="text-[10px] font-bold text-sky-400/80 mt-1 inline-flex items-center gap-1">Open in progress <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
               </button>
               <button onclick="gotoGrievanceView('completed')" class="kpi-card bg-slate-800/90 p-4 rounded-2xl border border-slate-700 text-left">
                 <span class="text-sky-400 text-xs">Resolved &amp; Closed</span>
@@ -642,7 +642,7 @@
               <button onclick="scrollToSection('admin-staff')" class="kpi-card bg-slate-800/90 p-4 rounded-2xl border border-slate-700 text-left">
                 <span class="text-slate-300 text-xs">Total Staff</span>
                 <span id="admin-total-staff" class="text-2xl font-black text-white block mt-1">–</span>
-                <span class="text-[10px] font-bold text-emerald-400 mt-1 inline-flex items-center gap-1">Manage <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                <span class="text-[10px] font-bold text-sky-400 mt-1 inline-flex items-center gap-1">Manage <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
               </button>
               <button onclick="scrollToSection('admin-staff')" class="kpi-card bg-slate-800/90 p-4 rounded-2xl border border-slate-700 text-left">
                 <span class="text-amber-400 text-xs">Active Staff</span>
@@ -650,9 +650,9 @@
                 <span class="text-[10px] font-bold text-amber-400/80 mt-1 inline-flex items-center gap-1">Manage <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
               </button>
               <button onclick="scrollToSection('admin-staff')" class="kpi-card bg-slate-800/90 p-4 rounded-2xl border border-slate-700 text-left">
-                <span class="text-emerald-300 text-xs">Admin Accounts</span>
-                <span id="admin-admin-count" class="text-2xl font-black text-emerald-300 block mt-1">–</span>
-                <span class="text-[10px] font-bold text-emerald-400/80 mt-1 inline-flex items-center gap-1">Manage <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                <span class="text-sky-300 text-xs">Admin Accounts</span>
+                <span id="admin-admin-count" class="text-2xl font-black text-sky-300 block mt-1">–</span>
+                <span class="text-[10px] font-bold text-sky-400/80 mt-1 inline-flex items-center gap-1">Manage <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
               </button>
               <button onclick="scrollToSection('admin-audit')" class="kpi-card bg-slate-800/90 p-4 rounded-2xl border border-slate-700 text-left">
                 <span class="text-sky-400 text-xs">Audit Events</span>
@@ -680,7 +680,7 @@
                 </div>
                 <div class="bg-slate-800/90 p-3 rounded-2xl border border-slate-700">
                   <span class="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Avg resolution</span>
-                  <span id="trend-avg-resolution" class="text-xl font-black text-emerald-300 block mt-0.5">–</span>
+                  <span id="trend-avg-resolution" class="text-xl font-black text-sky-300 block mt-0.5">–</span>
                 </div>
                 <div class="bg-slate-800/90 p-3 rounded-2xl border border-slate-700">
                   <span class="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Overdue (SLA)</span>
@@ -695,7 +695,7 @@
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-[10px] font-black text-slate-300 uppercase tracking-wider">Received vs resolved (daily)</span>
                   <span class="flex items-center gap-3 text-[10px] font-bold text-slate-400">
-                    <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-400"></span>Received</span>
+                    <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-sky-400"></span>Received</span>
                     <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-sky-400"></span>Resolved</span>
                   </span>
                 </div>
@@ -709,7 +709,7 @@
                 <span class="text-xs font-black text-slate-200 uppercase tracking-wider">Grievance Pipeline (by status)</span>
                 <div class="flex items-center gap-3">
                   <span class="text-[10px] text-slate-400 font-mono">Live from backend</span>
-                  <button onclick="gotoGrievanceView('')" class="text-[10px] font-black text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1">View all <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
+                  <button onclick="gotoGrievanceView('')" class="text-[10px] font-black text-sky-400 hover:text-sky-300 inline-flex items-center gap-1">View all <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
                 </div>
               </div>
               <div id="admin-status-chart" class="space-y-2.5"></div>
@@ -721,7 +721,7 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
               <div>
                 <h3 class="text-base font-black text-slate-900 mb-1">Grievance Management Desk</h3>
-                <p class="text-xs text-slate-500">Manage every grievance in three parts — Submitted, In Progress, Completed.</p>
+                <p class="text-xs text-slate-500">Manage every grievance in three parts - Submitted, In Progress, Completed.</p>
               </div>
               <!-- Three-part stage filter -->
               <div class="flex flex-wrap gap-1.5" id="grievance-stage-tabs">
@@ -816,7 +816,7 @@
             <!-- Pagination bar -->
             <div class="flex flex-wrap items-center justify-between gap-3 mt-3 pt-3 border-t border-slate-100" id="grievance-pagination">
               <div class="flex items-center gap-2 text-[11px] text-slate-500 font-semibold">
-                <span id="gt-range-label">—</span>
+                <span id="gt-range-label">-</span>
                 <label class="flex items-center gap-1">
                   <span class="text-slate-400">per page</span>
                   <select id="gt-page-size" onchange="setGrievancePageSize(this.value)" aria-label="Rows per page" class="rounded-lg border-slate-200 text-[11px] py-1">
@@ -885,7 +885,7 @@
                   </thead>
                   <tbody class="text-slate-700 font-semibold">
                     <tr class="border-t border-slate-200">
-                      <td class="py-1.5 pr-3 font-black text-emerald-700">Panchayat Admin</td>
+                      <td class="py-1.5 pr-3 font-black text-sky-700">Panchayat Admin</td>
                       <td class="py-1.5 pr-3">View, assign, update, close</td>
                       <td class="py-1.5 pr-3">Draft, publish, schedule, archive, delete</td>
                       <td class="py-1.5 pr-3">Add, edit, promote, deactivate</td>
@@ -904,9 +904,9 @@
                       <td class="py-1.5 pr-3 font-black text-slate-700">Villager</td>
                       <td class="py-1.5 pr-3">Lodge &amp; track own only</td>
                       <td class="py-1.5 pr-3">Read notices only</td>
-                      <td class="py-1.5 pr-3">—</td>
-                      <td class="py-1.5 pr-3">—</td>
-                      <td class="py-1.5">—</td>
+                      <td class="py-1.5 pr-3">-</td>
+                      <td class="py-1.5 pr-3">-</td>
+                      <td class="py-1.5">-</td>
                     </tr>
                   </tbody>
                 </table>
@@ -1008,7 +1008,7 @@
           <div id="admin-notices" class="luxury-card">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
               <div>
-                <h3 class="text-base font-black text-slate-900 mb-1">Digital Notice Board — Panchayat Desk</h3>
+                <h3 class="text-base font-black text-slate-900 mb-1">Digital Notice Board - Panchayat Desk</h3>
                 <p class="text-xs text-slate-500">Draft, publish, archive or delete official notices. Published items appear instantly to citizens.</p>
               </div>
               <div class="flex items-center gap-2">
@@ -1022,7 +1022,7 @@
             <div class="grid grid-cols-4 gap-3 mb-4">
               <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
                 <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Published</span>
-                <span id="admin-notice-published" class="text-xl font-black text-emerald-700 block mt-0.5">0</span>
+                <span id="admin-notice-published" class="text-xl font-black text-sky-700 block mt-0.5">0</span>
               </div>
               <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
                 <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Drafts</span>
@@ -1062,7 +1062,7 @@
           <div id="admin-finance" class="luxury-card">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
               <div>
-                <h3 class="text-base font-black text-slate-900 mb-1">Financial Ledger — Income &amp; Expenditure</h3>
+                <h3 class="text-base font-black text-slate-900 mb-1">Financial Ledger - Income &amp; Expenditure</h3>
                 <p class="text-xs text-slate-500">Record village income and expenditure, verify entries, and export the ledger for audits.</p>
               </div>
               <div class="flex items-center gap-2">
@@ -1080,7 +1080,7 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
               <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
                 <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Total Income</span>
-                <span id="fin-kpi-income" class="text-xl font-black text-emerald-700 block mt-0.5 font-mono">₹0</span>
+                <span id="fin-kpi-income" class="text-xl font-black text-sky-700 block mt-0.5 font-mono">₹0</span>
               </div>
               <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
                 <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Total Expenditure</span>
@@ -1098,7 +1098,7 @@
 
             <!-- Filters -->
             <div class="flex flex-wrap items-center gap-2 mb-3">
-              <input id="fin-search" type="text" placeholder="Search description / reference / fund…" class="flex-1 min-w-[180px] p-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-600 focus:outline-none" onkeydown="if(event.key==='Enter'){event.preventDefault();applyFinanceFilters();}">
+              <input id="fin-search" type="text" placeholder="Search description / reference / fund…" class="flex-1 min-w-[180px] p-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-600 focus:outline-none" onkeydown="if(event.key==='Enter'){event.preventDefault();applyFinanceFilters();}">
               <select id="fin-type-filter" class="p-2 rounded-xl border border-slate-300 text-xs font-bold" onchange="applyFinanceFilters()">
                 <option value="">All types</option>
                 <option value="Income">Income</option>
@@ -1142,7 +1142,7 @@
             </div>
 
             <div class="flex items-center justify-between mt-3">
-              <span id="finance-page-info" class="text-[11px] font-mono text-slate-500">—</span>
+              <span id="finance-page-info" class="text-[11px] font-mono text-slate-500">-</span>
               <div class="flex items-center gap-2">
                 <button id="fin-prev" onclick="financePage(-1)" class="gt-btn">Prev</button>
                 <button id="fin-next" onclick="financePage(1)" class="gt-btn">Next</button>
@@ -1161,23 +1161,22 @@
   <!-- ======================================================== -->
   <!-- AUTH SCREEN (LOGIN / REGISTER)                          -->
   <!-- ======================================================== -->
-  <div id="auth-screen" class="hidden fixed inset-0 z-[70] flex items-center justify-center p-4" style="background: radial-gradient(1200px 600px at 20% -10%, rgba(16,229,153,0.25), transparent 60%), linear-gradient(160deg, #031b17 0%, #062f28 55%, #09473d 100%);">
+  <div id="auth-screen" class="hidden fixed inset-0 z-[70] flex items-center justify-center p-4" style="background:#0b2137;">
     <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] overflow-y-auto">
       <!-- Auth Header -->
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-emerald-950 font-black flex items-center justify-center shadow-lg">
+      <div class="bg-sky-900 text-white p-5 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-sky-700 text-white font-black flex items-center justify-center shadow-lg">
           <i data-lucide="landmark" class="w-5 h-5"></i>
         </div>
         <div class="flex-grow">
-          <h2 class="font-black text-base leading-tight">GramSetu — Kumbhari Panchayat</h2>
-          <p class="text-[11px] text-emerald-200 font-semibold">Villager & Panchayat Digital Gateway</p>
+          <h2 class="font-black text-base leading-tight">GramSetu - Kumbhari Panchayat</h2>
+          <p class="text-[11px] text-sky-200 font-semibold">Villager & Panchayat Digital Gateway</p>
         </div>
-        <span id="auth-backend-pill" class="hidden sm:inline-block text-[10px] font-mono text-emerald-200 border border-emerald-500/30 bg-black/20 px-2 py-1 rounded-lg"></span>
       </div>
 
       <!-- Tabs -->
       <div class="flex p-2 gap-1 bg-slate-50 border-b border-slate-200">
-        <button id="auth-tab-login" onclick="showAuthMode('login')" class="flex-1 py-2 rounded-xl text-xs font-black bg-emerald-800 text-white transition">Sign In</button>
+        <button id="auth-tab-login" onclick="showAuthMode('login')" class="flex-1 py-2 rounded-xl text-xs font-black bg-sky-800 text-white transition">Sign In</button>
         <button id="auth-tab-register" onclick="showAuthMode('register')" class="flex-1 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition">Create Citizen Account</button>
       </div>
 
@@ -1189,61 +1188,60 @@
         <form id="auth-form-login" onsubmit="submitLogin(event)" class="space-y-4">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Mobile Number *</label>
-            <input type="tel" id="login-mobile" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="tel" id="login-mobile" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Password *</label>
-            <input type="password" id="login-password" required minlength="6" placeholder="Your password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="password" id="login-password" required minlength="6" placeholder="Your password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <button type="submit" class="btn-luxury-primary w-full justify-center py-3">
-            <i data-lucide="log-in" class="w-4 h-4 text-emerald-300"></i>
+            <i data-lucide="log-in" class="w-4 h-4 text-sky-300"></i>
             <span>Sign In to Dashboard</span>
           </button>
-          <p class="text-center text-[11px] text-slate-500">Backend: <span id="auth-backend-login-url" class="font-mono text-emerald-700"></span></p>
         </form>
 
         <!-- REGISTER FORM -->
         <form id="auth-form-register" onsubmit="submitRegister(event)" class="space-y-4 hidden">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Full Name *</label>
-            <input type="text" id="reg-name" required minlength="2" placeholder="e.g. Ramesh Patil" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="text" id="reg-name" required minlength="2" placeholder="Full name as per Aadhaar" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Mobile Number *</label>
-            <input type="tel" id="reg-mobile" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="tel" id="reg-mobile" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Email (optional)</label>
-            <input type="email" id="reg-email" placeholder="you@example.com" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="email" id="reg-email" placeholder="you@example.com" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Village *</label>
-            <select id="reg-village" required onchange="loadWardsForRegister()" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-bold">
+            <select id="reg-village" required onchange="loadWardsForRegister()" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none font-bold">
               <option value="">Select village…</option>
             </select>
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Ward *</label>
-            <select id="reg-ward" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-bold">
+            <select id="reg-ward" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none font-bold">
               <option value="">Select ward…</option>
             </select>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block font-bold text-slate-700 mb-1">House Number</label>
-              <input type="text" id="reg-house" placeholder="e.g. 142" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+              <input type="text" id="reg-house" placeholder="e.g. 142" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
             </div>
             <div>
               <label class="block font-bold text-slate-700 mb-1">Address</label>
-              <input type="text" id="reg-address" placeholder="Street / locality" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+              <input type="text" id="reg-address" placeholder="Street / locality" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
             </div>
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Password (min 6 chars) *</label>
-            <input type="password" id="reg-password" required minlength="6" placeholder="Create a password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="password" id="reg-password" required minlength="6" placeholder="Create a password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <button type="submit" class="btn-luxury-primary w-full justify-center py-3">
-            <i data-lucide="user-plus" class="w-4 h-4 text-emerald-300"></i>
+            <i data-lucide="user-plus" class="w-4 h-4 text-sky-300"></i>
             <span>Register & Open Dashboard</span>
           </button>
         </form>
@@ -1262,13 +1260,13 @@
   <!-- MODAL 1: LODGE GRIEVANCE -->
   <div id="modal-complaint" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 flex justify-between items-center">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center">
         <div>
           <h3 class="font-black text-base flex items-center gap-2">
             <i data-lucide="edit-3" class="w-5 h-5 text-amber-400"></i>
             <span>Lodge Citizen Grievance</span>
           </h3>
-          <p class="text-xs text-emerald-200 mt-0.5">Submit civic issues directly to Kumbhari Gram Panchayat.</p>
+          <p class="text-xs text-sky-200 mt-0.5">Submit civic issues directly to Kumbhari Gram Panchayat.</p>
         </div>
         <button onclick="closeComplaintModal()" class="text-white/80 hover:text-white p-1">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -1278,24 +1276,24 @@
       <form id="form-lodge-complaint" onsubmit="handleComplaintSubmit(event)" class="p-6 space-y-4 text-xs">
         <div>
           <label class="block font-bold text-slate-700 mb-1">Grievance Category *</label>
-          <select id="comp-category" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-bold">
-            <option value="Water Supply">💧 Water Supply & Pipeline</option>
-            <option value="Street Lighting">💡 Streetlights & Electricity</option>
-            <option value="Sanitation">🧹 Sanitation & Drainage</option>
-            <option value="Roads">🛣️ Village Roads & Potholes</option>
-            <option value="Agriculture">🌾 Agriculture & Irrigation</option>
-            <option value="Health">🏥 Public Health & Anganwadi</option>
+          <select id="comp-category" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none font-bold">
+            <option value="Water Supply">Water Supply &amp; Pipeline</option>
+            <option value="Street Lighting">Streetlights &amp; Electricity</option>
+            <option value="Sanitation">Sanitation &amp; Drainage</option>
+            <option value="Roads">Village Roads &amp; Potholes</option>
+            <option value="Agriculture">Agriculture &amp; Irrigation</option>
+            <option value="Health">Public Health &amp; Anganwadi</option>
           </select>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Ward Number *</label>
-            <select id="comp-ward" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-bold">
+            <select id="comp-ward" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none font-bold">
               <option value="Ward 1">Ward 1 (Mandir Parisar)</option>
               <option value="Ward 2">Ward 2 (Bazaar Area)</option>
               <option value="Ward 3" selected>Ward 3 (Hanuman Nagar)</option>
-              <option value="Ward 4">Ward 4 (Raynagar Vasti)</option>
+                    <option value="Ward 4">Ward 4</option>
               <option value="Ward 5">Ward 5 (Market Lane)</option>
               <option value="Ward 6">Ward 6 (Vikas Nagar)</option>
               <option value="Ward 7">Ward 7 (Shindewadi)</option>
@@ -1303,7 +1301,7 @@
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Priority</label>
-            <select id="comp-priority" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-bold">
+            <select id="comp-priority" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none font-bold">
               <option value="Medium">Medium</option>
               <option value="High">High (Urgent)</option>
               <option value="Low">Low</option>
@@ -1313,17 +1311,17 @@
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Issue Subject / Title *</label>
-          <input type="text" id="comp-title" required placeholder="e.g. Broken water tap near temple" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="text" id="comp-title" required placeholder="e.g. Broken water tap near temple" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Specific Landmark / Location *</label>
-          <input type="text" id="comp-location" required placeholder="e.g. In front of Hanuman Mandir, Pole #12" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="text" id="comp-location" required placeholder="e.g. In front of Hanuman Mandir, Pole #12" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Detailed Description *</label>
-          <textarea id="comp-desc" rows="3" required placeholder="Explain the issue clearly..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
+          <textarea id="comp-desc" rows="3" required placeholder="Explain the issue clearly..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none"></textarea>
         </div>
 
         <div class="pt-2 flex justify-end gap-2 border-t border-slate-100">
@@ -1339,7 +1337,7 @@
     <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
       <div class="bg-slate-900 text-white p-5 flex justify-between items-center">
         <div>
-          <span class="text-[10px] font-mono text-emerald-300 uppercase tracking-wider font-black" id="modal-track-id">GS-2026-W3-0104</span>
+          <span class="text-[10px] font-mono text-sky-300 uppercase tracking-wider font-black" id="modal-track-id">-</span>
           <h3 class="font-black text-base" id="modal-track-title">Broken Drinking Water Pipeline</h3>
         </div>
         <button onclick="closeTimelineModal()" class="text-white/80 hover:text-white p-1">
@@ -1361,7 +1359,7 @@
             </div>
             <div>
               <span class="text-slate-500 block text-[10px]">Assigned Officer</span>
-              <strong id="modal-track-officer" class="text-slate-900 font-black">Er. Rajesh Kadam</strong>
+              <strong id="modal-track-officer" class="text-slate-900 font-black">-</strong>
             </div>
           </div>
           <div>
@@ -1372,7 +1370,7 @@
 
         <div>
           <h4 class="font-bold text-slate-700 mb-2.5 text-[11px] uppercase tracking-wider">Official Action Trail</h4>
-          <div id="modal-track-history" class="space-y-3 border-l-2 border-emerald-600 pl-4 ml-2"></div>
+          <div id="modal-track-history" class="space-y-3 border-l-2 border-sky-600 pl-4 ml-2"></div>
         </div>
       </div>
 
@@ -1395,22 +1393,22 @@
           </button>
         </div>
 
-        <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200">
+        <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
           <div class="flex justify-between items-center mb-1">
             <span class="text-slate-700 font-bold" id="pay-tax-name">House Tax (Ghar Patti)</span>
-            <span class="font-mono font-black text-emerald-800 text-base" id="pay-tax-amount">₹850.00</span>
+            <span class="font-mono font-black text-sky-800 text-base" id="pay-tax-amount">₹0.00</span>
           </div>
-          <span class="text-[11px] text-emerald-800 font-semibold block" id="pay-tax-year">FY 2026-27 • House No. 142</span>
+          <span class="text-[11px] text-sky-800 font-semibold block" id="pay-tax-year">FY 2026-27 • House No. 142</span>
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-2">Select Payment Method</label>
           <div class="space-y-2">
-            <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-600 cursor-pointer">
+            <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-sky-600 cursor-pointer">
               <input type="radio" name="pay-method" value="UPI" checked onchange="toggleQrPanel()">
               <span class="font-bold text-slate-800">UPI (Google Pay / PhonePe / BHIM)</span>
             </label>
-            <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-600 cursor-pointer">
+            <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-sky-600 cursor-pointer">
               <input type="radio" name="pay-method" value="NetBanking" onchange="toggleQrPanel()">
               <span class="font-bold text-slate-800">Net Banking (SBI / BOM / HDFC)</span>
             </label>
@@ -1418,13 +1416,13 @@
         </div>
 
         <!-- UPI QR Scan -->
-        <div id="pay-qr-panel" class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 text-center space-y-2">
-          <span class="text-[10px] font-black text-emerald-900 uppercase tracking-wider block">Scan with any UPI app</span>
+        <div id="pay-qr-panel" class="bg-sky-50/70 border border-sky-200 rounded-2xl p-4 text-center space-y-2">
+          <span class="text-[10px] font-black text-sky-900 uppercase tracking-wider block">Scan with any UPI app</span>
           <img id="pay-qr-img" alt="UPI QR code" class="mx-auto rounded-xl bg-white p-2" style="width:9.5rem;height:9.5rem;object-fit:contain">
-          <p id="pay-upi-id" class="text-[11px] font-mono font-bold text-emerald-900">gramsetukumbhari@okhdfcbank</p>
+          <p id="pay-upi-id" class="text-[11px] font-mono font-bold text-sky-900">gramsetukumbhari@okhdfcbank</p>
           <p class="text-[10px] text-slate-500 font-medium">Open GPay / PhonePe / BHIM and scan to pay. Then tap "I've Paid" to verify.</p>
           <button onclick="processPayment()" class="btn-luxury-primary w-full justify-center py-2.5">
-            I've Paid — Verify & Generate Receipt
+            I've Paid - Verify & Generate Receipt
           </button>
         </div>
 
@@ -1439,7 +1437,7 @@
         <div id="printable-receipt" class="bg-white p-5 rounded-2xl border-2 border-slate-900 shadow-sm space-y-4">
           <div class="text-center pb-3 border-b-2 border-slate-900">
             <h2 class="font-black text-base text-slate-900 uppercase">Kumbhari Gram Panchayat</h2>
-            <p class="text-[11px] text-slate-600">Taluka South Solapur, District Solapur - 413006</p>
+            <p class="text-[11px] text-slate-600">Kumbhari, Taluka Kopargaon, Maharashtra</p>
             <span class="inline-block mt-1 font-bold text-xs bg-slate-100 px-3 py-0.5 rounded border border-slate-300">
               OFFICIAL e-TAX RECEIPT
             </span>
@@ -1456,7 +1454,7 @@
             </div>
             <div>
               <span class="text-slate-500 block">Taxpayer:</span>
-              <strong id="receipt-taxpayer" class="text-slate-900">Ramesh Patil</strong>
+              <strong id="receipt-taxpayer" class="text-slate-900">-</strong>
             </div>
             <div class="text-right">
               <span class="text-slate-500 block">Property:</span>
@@ -1466,18 +1464,18 @@
 
           <div class="border-t border-b border-slate-300 py-2 flex justify-between font-black text-xs">
             <span id="receipt-item-name">House Tax FY 26-27</span>
-            <span id="receipt-item-amount">₹850.00</span>
+            <span id="receipt-item-amount">₹0.00</span>
           </div>
 
           <div class="flex justify-between items-center text-[10px] text-slate-500 pt-2">
-            <span>Status: <strong class="text-emerald-700">SUCCESSFUL</strong></span>
+            <span>Status: <strong class="text-sky-700">SUCCESSFUL</strong></span>
             <span class="border border-slate-300 px-2 py-1 font-mono">[QR VERIFIED]</span>
           </div>
         </div>
 
         <div class="flex gap-2 pt-2 no-print">
           <button onclick="window.print()" class="w-1/2 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow">Print Receipt</button>
-          <button onclick="closePaymentModal()" class="w-1/2 py-2.5 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded-xl shadow">Done</button>
+          <button onclick="closePaymentModal()" class="w-1/2 py-2.5 bg-sky-700 hover:bg-sky-600 text-white font-bold rounded-xl shadow">Done</button>
         </div>
       </div>
 
@@ -1489,7 +1487,7 @@
     <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
       <div class="bg-slate-900 text-white p-5 flex justify-between items-center">
         <div>
-          <span class="text-[10px] text-amber-400 font-mono font-bold" id="admin-update-id">GS-2026-W3-0104</span>
+          <span class="text-[10px] text-amber-400 font-mono font-bold" id="admin-update-id">-</span>
           <h3 class="font-black text-base">Update Complaint Lifecycle</h3>
         </div>
         <button onclick="closeAdminUpdateModal()" class="text-white/80 hover:text-white">
@@ -1510,7 +1508,7 @@
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Assign Officer *</label>
-          <input type="text" id="admin-assigned-to" required placeholder="e.g. Er. Rajesh Kadam" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold">
+          <input type="text" id="admin-assigned-to" required placeholder="Enter officer name" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold">
         </div>
 
         <div>
@@ -1526,10 +1524,26 @@
     </div>
   </div>
 
+  <!-- MODAL 5b: ALL WELFARE SCHEMES LIST -->
+  <div id="modal-all-schemes" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[85vh]">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center">
+        <div>
+          <span class="text-[10px] text-sky-100 uppercase tracking-wider font-black">Government Welfare</span>
+          <h3 class="font-black text-base">All Welfare Schemes</h3>
+        </div>
+        <button onclick="closeAllSchemesModal()" class="text-white/80 hover:text-white" aria-label="Close">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-4 overflow-y-auto space-y-2.5" id="all-schemes-list"></div>
+    </div>
+  </div>
+
   <!-- MODAL 5: SCHEME DETAIL -->
   <div id="modal-scheme" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 flex justify-between items-center">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center">
         <div>
           <span class="text-[10px] text-amber-300 uppercase tracking-wider font-black" id="scheme-modal-cat">Farmer Welfare</span>
           <h3 class="font-black text-base" id="scheme-modal-title">PM-Kisan Samman Nidhi</h3>
@@ -1540,8 +1554,8 @@
       </div>
 
       <div class="p-6 space-y-4 text-xs">
-        <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200">
-          <span class="text-emerald-900 font-black block mb-0.5">Key Financial Benefit:</span>
+        <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
+          <span class="text-sky-900 font-black block mb-0.5">Key Financial Benefit:</span>
           <p id="scheme-modal-benefit" class="text-slate-900 font-black text-sm">₹6,000 per year</p>
         </div>
 
@@ -1556,7 +1570,7 @@
         </div>
 
         <div class="pt-3 flex justify-between items-center border-t border-slate-100">
-          <a id="scheme-modal-link" href="#" target="_blank" class="text-emerald-800 font-black hover:underline flex items-center gap-1">
+          <a id="scheme-modal-link" href="#" target="_blank" class="text-sky-800 font-black hover:underline flex items-center gap-1">
             <span>Official Portal</span>
             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
           </a>
@@ -1570,13 +1584,13 @@
   <!-- MODAL: ADD STAFF -->
   <div id="modal-staff" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 flex justify-between items-center">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center">
         <div>
           <h3 class="font-black text-base flex items-center gap-2">
             <i data-lucide="user-plus" class="w-5 h-5 text-amber-400"></i>
             <span>Add Panchayat Staff</span>
           </h3>
-          <p class="text-xs text-emerald-200 mt-0.5">Create a staff/admin login for the Panchayat Desk.</p>
+          <p class="text-xs text-sky-200 mt-0.5">Create a staff/admin login for the Panchayat Desk.</p>
         </div>
         <button onclick="closeAddStaffModal()" class="text-white/80 hover:text-white p-1">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -1586,15 +1600,15 @@
       <form id="form-add-staff" onsubmit="handleAddStaff(event)" class="p-6 space-y-4 text-xs">
         <div>
           <label class="block font-bold text-slate-700 mb-1">Full Name *</label>
-          <input type="text" id="staff-name" required minlength="2" placeholder="e.g. Ramesh Patil" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="text" id="staff-name" required minlength="2" placeholder="Enter staff full name" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Mobile Number *</label>
-          <input type="tel" id="staff-mobile" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="tel" id="staff-mobile" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Password (min 6 chars) *</label>
-          <input type="password" id="staff-password" required minlength="6" placeholder="Create a password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="password" id="staff-password" required minlength="6" placeholder="Create a password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Role *</label>
@@ -1605,7 +1619,7 @@
         </div>
         <div id="staff-error" class="hidden bg-red-50 border border-red-200 text-red-700 font-bold px-3 py-2 rounded-xl text-[11px]"></div>
         <button type="submit" class="btn-luxury-primary w-full justify-center py-3">
-          <i data-lucide="user-plus" class="w-4 h-4 text-emerald-300"></i>
+          <i data-lucide="user-plus" class="w-4 h-4 text-sky-300"></i>
           <span>Create Staff Account</span>
         </button>
       </form>
@@ -1616,13 +1630,13 @@
   <!-- Change My Password -->
   <div id="modal-change-password" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 flex justify-between items-center sticky top-0 z-10">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center sticky top-0 z-10">
         <div>
           <h3 class="font-black text-base flex items-center gap-2">
             <i data-lucide="key" class="w-5 h-5 text-amber-400"></i>
             Change My Password
           </h3>
-          <p class="text-xs text-emerald-200 mt-0.5">Enter your current password and set a new one.</p>
+          <p class="text-xs text-sky-200 mt-0.5">Enter your current password and set a new one.</p>
         </div>
         <button onclick="closeChangePasswordModal()" class="text-white/80 hover:text-white p-1">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -1631,21 +1645,21 @@
       <form id="form-change-password" onsubmit="submitChangePassword(event)" class="p-6 space-y-4 text-xs">
         <div>
           <label class="block font-bold text-slate-700 mb-1">Current Password *</label>
-          <input type="password" id="cp-current" required minlength="6" placeholder="Your existing password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="password" id="cp-current" required minlength="6" placeholder="Your existing password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">New Password *</label>
-          <input type="password" id="cp-new" required minlength="6" placeholder="Minimum 6 characters" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="password" id="cp-new" required minlength="6" placeholder="Minimum 6 characters" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Confirm New Password *</label>
-          <input type="password" id="cp-confirm" required minlength="6" placeholder="Repeat the new password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="password" id="cp-confirm" required minlength="6" placeholder="Repeat the new password" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
         </div>
         <div id="cp-error" class="hidden bg-red-50 border border-red-200 text-red-700 font-bold px-3 py-2 rounded-xl text-[11px]"></div>
         <div class="flex gap-2">
           <button type="button" onclick="closeChangePasswordModal()" class="flex-1 rounded-xl border-2 border-slate-300 text-slate-600 font-black text-xs py-3 bg-white hover:bg-slate-50 transition">Cancel</button>
           <button type="submit" class="flex-1 btn-luxury-primary justify-center py-3">
-            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <i data-lucide="check" class="w-4 h-4 text-sky-300"></i>
             <span>Update Password</span>
           </button>
         </div>
@@ -1676,13 +1690,13 @@
 
   <div id="modal-notice" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] overflow-y-auto">
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 flex justify-between items-center sticky top-0 z-10">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center sticky top-0 z-10">
         <div>
           <h3 class="font-black text-base flex items-center gap-2">
             <i data-lucide="megaphone" class="w-5 h-5 text-amber-400"></i>
             <span id="notice-modal-title">Publish New Notice</span>
           </h3>
-          <p class="text-xs text-emerald-200 mt-0.5">Notices are saved as Draft and published when you choose.</p>
+          <p class="text-xs text-sky-200 mt-0.5">Notices are saved as Draft and published when you choose.</p>
         </div>
         <button onclick="closeNoticeModal()" class="text-white/80 hover:text-white p-1">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -1693,7 +1707,7 @@
         <input type="hidden" id="notice-id">
         <div>
           <label class="block font-bold text-slate-700 mb-1">Notice Title *</label>
-          <input type="text" id="notice-title" required minlength="3" placeholder="e.g. Water Supply Schedule for Ward 3" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="text" id="notice-title" required minlength="3" placeholder="e.g. Water Supply Schedule for Ward 3" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -1721,56 +1735,56 @@
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Village</label>
-          <div id="notice-village-chip" class="w-full p-2.5 rounded-xl border border-emerald-200 bg-emerald-50 font-bold text-emerald-900">Kumbhari Gram Panchayat</div>
+          <div id="notice-village-chip" class="w-full p-2.5 rounded-xl border border-sky-200 bg-sky-50 font-bold text-sky-900">Kumbhari Gram Panchayat</div>
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Notice Date *</label>
-          <input type="date" id="notice-date" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-          <p class="text-[10px] text-slate-400 mt-1">The date shown on the board badge — notices are listed newest first by this date.</p>
+          <input type="date" id="notice-date" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
+          <p class="text-[10px] text-slate-400 mt-1">The date shown on the board badge - notices are listed newest first by this date.</p>
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Expiry Date (optional)</label>
-          <input type="date" id="notice-expiry" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="date" id="notice-expiry" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           <p class="text-[10px] text-slate-400 mt-1">After this date the notice auto-hides from citizens.</p>
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Publish later (optional)</label>
-          <input type="datetime-local" id="notice-schedule" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-          <p class="text-[10px] text-slate-400 mt-1">Set a date &amp; time to schedule the notice — it stays hidden from citizens until then.</p>
+          <input type="datetime-local" id="notice-schedule" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
+          <p class="text-[10px] text-slate-400 mt-1">Set a date &amp; time to schedule the notice - it stays hidden from citizens until then.</p>
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Attachment link (optional)</label>
-          <input type="url" id="notice-attachment" placeholder="https://… (PDF, order copy, form)" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          <input type="url" id="notice-attachment" placeholder="https://… (PDF, order copy, form)" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           <p class="text-[10px] text-slate-400 mt-1">Citizens will see a “View attachment” link on the notice.</p>
         </div>
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Notice Text — English *</label>
-          <textarea id="notice-desc" required minlength="10" rows="4" placeholder="Full official notice text..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
+          <label class="block font-bold text-slate-700 mb-1">Notice Text - English *</label>
+          <textarea id="notice-desc" required minlength="10" rows="4" placeholder="Full official notice text..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none"></textarea>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">मराठी (optional)</label>
-            <textarea id="notice-desc-mr" rows="3" placeholder="नोटीचा मराठी मजकूर…" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
+            <textarea id="notice-desc-mr" rows="3" placeholder="नोटीचा मराठी मजकूर…" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none"></textarea>
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">हिन्दी (optional)</label>
-            <textarea id="notice-desc-hi" rows="3" placeholder="सूचना का हिंदी पाठ…" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
+            <textarea id="notice-desc-hi" rows="3" placeholder="सूचना का हिंदी पाठ…" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none"></textarea>
           </div>
         </div>
-        <div id="notice-preview" class="hidden rounded-2xl border border-emerald-200 bg-emerald-50/60 p-3">
-          <p class="text-[10px] font-black uppercase tracking-wider text-emerald-700 mb-1.5">Citizen preview (current language)</p>
+        <div id="notice-preview" class="hidden rounded-2xl border border-sky-200 bg-sky-50/60 p-3">
+          <p class="text-[10px] font-black uppercase tracking-wider text-sky-700 mb-1.5">Citizen preview (current language)</p>
           <p id="notice-preview-title" class="font-black text-slate-900 text-xs mb-1"></p>
           <p id="notice-preview-body" class="text-[11px] text-slate-700 whitespace-pre-wrap leading-relaxed"></p>
-          <p id="notice-preview-attach" class="hidden text-[11px] font-bold text-emerald-700 underline mt-1.5"></p>
+          <p id="notice-preview-attach" class="hidden text-[11px] font-bold text-sky-700 underline mt-1.5"></p>
         </div>
         <div id="notice-error" class="hidden bg-red-50 border border-red-200 text-red-700 font-bold px-3 py-2 rounded-xl text-[11px]"></div>
         <div class="flex gap-2">
           <button type="button" onclick="toggleNoticePreview()" class="inline-flex items-center gap-1.5 rounded-xl border-2 border-slate-300 text-slate-600 font-black text-xs py-3 px-4 bg-white hover:bg-slate-50 transition">
             <i data-lucide="eye" class="w-3.5 h-3.5"></i> Preview
           </button>
-          <button type="button" onclick="noticeDraftSubmit()" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border-2 border-emerald-900 text-emerald-900 font-black text-xs py-3 px-4 bg-white hover:bg-emerald-50 transition">Save as Draft</button>
+          <button type="button" onclick="noticeDraftSubmit()" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border-2 border-sky-900 text-sky-900 font-black text-xs py-3 px-4 bg-white hover:bg-sky-50 transition">Save as Draft</button>
           <button type="submit" class="flex-1 btn-luxury-primary justify-center py-3">
-            <i data-lucide="send" class="w-4 h-4 text-emerald-300"></i>
+            <i data-lucide="send" class="w-4 h-4 text-sky-300"></i>
             <span>Save</span>
           </button>
         </div>
@@ -1781,13 +1795,13 @@
   <!-- Financial entry modal (add / edit) -->
   <div id="modal-finance" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] overflow-y-auto">
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 flex justify-between items-center sticky top-0 z-10">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center sticky top-0 z-10">
         <div>
           <h3 class="font-black text-base flex items-center gap-2">
             <i data-lucide="wallet" class="w-5 h-5 text-amber-400"></i>
             <span id="finance-modal-title">Add Financial Entry</span>
           </h3>
-          <p class="text-xs text-emerald-200 mt-0.5">Income and expenditure are recorded in the village ledger.</p>
+          <p class="text-xs text-sky-200 mt-0.5">Income and expenditure are recorded in the village ledger.</p>
         </div>
         <button onclick="closeFinanceModal()" class="text-white/80 hover:text-white p-1">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -1799,7 +1813,7 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Date *</label>
-            <input type="date" id="fin-date" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="date" id="fin-date" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Type *</label>
@@ -1812,42 +1826,42 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Category *</label>
-            <input type="text" id="fin-category" required placeholder="e.g. Drainage, Water Supply" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="text" id="fin-category" required placeholder="e.g. Drainage, Water Supply" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Amount (₹) *</label>
-            <input type="number" id="fin-amount" required min="0.01" step="0.01" placeholder="0.00" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="number" id="fin-amount" required min="0.01" step="0.01" placeholder="0.00" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Description *</label>
-          <textarea id="fin-desc" required rows="2" placeholder="What was this income / expenditure for?" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
+          <textarea id="fin-desc" required rows="2" placeholder="What was this income / expenditure for?" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none"></textarea>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Fund Source</label>
-            <input type="text" id="fin-source" placeholder="e.g. 15th Finance Commission" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="text" id="fin-source" placeholder="e.g. 15th Finance Commission" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Financial Year</label>
-            <input type="text" id="fin-fy" placeholder="auto e.g. 2025-2026" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="text" id="fin-fy" placeholder="auto e.g. 2025-2026" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Reference (optional)</label>
-            <input type="text" id="fin-ref" placeholder="auto if blank" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="text" id="fin-ref" placeholder="auto if blank" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Document link (optional)</label>
-            <input type="url" id="fin-doc" placeholder="https://…" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <input type="url" id="fin-doc" placeholder="https://…" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
           </div>
         </div>
         <div id="finance-error" class="hidden bg-red-50 border border-red-200 text-red-700 font-bold px-3 py-2 rounded-xl text-[11px]"></div>
         <div class="flex gap-2">
           <button type="button" onclick="closeFinanceModal()" class="flex-1 rounded-xl border-2 border-slate-300 text-slate-600 font-black text-xs py-3 bg-white hover:bg-slate-50 transition">Cancel</button>
           <button type="submit" class="flex-1 btn-luxury-primary justify-center py-3">
-            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <i data-lucide="check" class="w-4 h-4 text-sky-300"></i>
             <span>Save Entry</span>
           </button>
         </div>
@@ -1858,13 +1872,13 @@
   <!-- Citizen Notice Board (all published notices) -->
   <div id="modal-notices-list" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-200 overflow-hidden max-h-[90vh] flex flex-col">
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 flex justify-between items-center">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center">
         <div>
           <h3 class="font-black text-base flex items-center gap-2">
             <i data-lucide="megaphone" class="w-5 h-5 text-amber-400"></i>
-            <span>Official Notices & Alerts — Kumbhari GP</span>
+            <span>Official Notices & Alerts - Kumbhari GP</span>
           </h3>
-          <p class="text-xs text-emerald-200 mt-0.5" id="notices-list-subtitle"></p>
+          <p class="text-xs text-sky-200 mt-0.5" id="notices-list-subtitle"></p>
         </div>
         <button onclick="closeAllNotices()" class="text-white/80 hover:text-white p-1">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -1913,23 +1927,22 @@
     // ---- Live weather for Kumbhari, Kopargaon (Open-Meteo, no API key) ------
     const WEATHER_LAT = 19.885, WEATHER_LON = 74.478;
     const WEATHER_CODES = {
-      0: ['☀️', 'Clear'], 1: ['🌤️', 'Mainly clear'], 2: ['⛅', 'Partly cloudy'], 3: ['☁️', 'Overcast'],
-      45: ['🌫️', 'Fog'], 48: ['🌫️', 'Rime fog'],
-      51: ['🌦️', 'Light drizzle'], 53: ['🌦️', 'Drizzle'], 55: ['🌦️', 'Heavy drizzle'],
-      56: ['🌧️', 'Freezing drizzle'], 57: ['🌧️', 'Freezing drizzle'],
-      61: ['🌧️', 'Light rain'], 63: ['🌧️', 'Rain'], 65: ['🌧️', 'Heavy rain'],
-      66: ['🌧️', 'Freezing rain'], 67: ['🌧️', 'Freezing rain'],
-      71: ['❄️', 'Light snow'], 73: ['❄️', 'Snow'], 75: ['❄️', 'Heavy snow'], 77: ['❄️', 'Snow grains'],
-      80: ['🌦️', 'Light showers'], 81: ['🌦️', 'Showers'], 82: ['⛈️', 'Violent showers'],
-      85: ['🌨️', 'Snow showers'], 86: ['🌨️', 'Heavy snow showers'],
-      95: ['⛈️', 'Thunderstorm'], 96: ['⛈️', 'Storm with hail'], 99: ['⛈️', 'Storm with hail']
+      0: 'Clear', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+      45: 'Fog', 48: 'Rime fog',
+      51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
+      56: 'Freezing drizzle', 57: 'Freezing drizzle',
+      61: 'Light rain', 63: 'Rain', 65: 'Heavy rain',
+      66: 'Freezing rain', 67: 'Freezing rain',
+      71: 'Light snow', 73: 'Snow', 75: 'Heavy snow', 77: 'Snow grains',
+      80: 'Light showers', 81: 'Showers', 82: 'Violent showers',
+      85: 'Snow showers', 86: 'Heavy snow showers',
+      95: 'Thunderstorm', 96: 'Storm with hail', 99: 'Storm with hail'
     };
-    function weatherInfo(code) { return WEATHER_CODES[code] || ['⛅', 'Cloudy']; }
+    function weatherInfo(code) { return WEATHER_CODES[code] || 'Cloudy'; }
 
     async function loadWeather() {
       const tempEl = document.getElementById('weather-temp');
       const condEl = document.getElementById('weather-cond');
-      const iconEl = document.getElementById('weather-icon');
       if (!tempEl || !condEl) return;
       try {
         const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + WEATHER_LAT +
@@ -1937,11 +1950,9 @@
         const res = await fetch(url);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const cur = ((await res.json()).current) || {};
-        const info = weatherInfo(cur.weather_code);
-        const out = { t: Math.round(cur.temperature_2m) + '°C', c: info[1], i: info[0] };
+        const out = { t: Math.round(cur.temperature_2m) + '°C', c: weatherInfo(cur.weather_code) };
         tempEl.textContent = out.t;
         condEl.textContent = out.c;
-        if (iconEl) iconEl.textContent = out.i;
         try { localStorage.setItem('gramsetu_weather', JSON.stringify(out)); } catch (_) {}
       } catch (e) {
         let cached = null;
@@ -1949,7 +1960,6 @@
         if (cached && cached.t) {
           tempEl.textContent = cached.t;
           condEl.textContent = cached.c;
-          if (iconEl) iconEl.textContent = cached.i;
         } else {
           tempEl.textContent = '--°C';
           condEl.textContent = 'Unavailable';
@@ -2046,7 +2056,7 @@
       if (wardEl) {
         if (window.gramSetu.isStaff) {
           wardEl.textContent = 'Signed in as: ' + roleLabel(window.gramSetu.role);
-          wardEl.classList.add('text-emerald-700');
+          wardEl.classList.add('text-sky-700');
         } else {
           const line = [u.ward, u.village].filter(Boolean).join(' • ');
           wardEl.textContent = line || 'Citizen Account';
@@ -2091,8 +2101,8 @@
       document.getElementById('auth-form-register').classList.toggle('hidden', mode !== 'register');
       const t1 = document.getElementById('auth-tab-login');
       const t2 = document.getElementById('auth-tab-register');
-      if (t1) t1.className = mode === 'login' ? 'flex-1 py-2 rounded-xl text-xs font-black bg-emerald-800 text-white transition' : 'flex-1 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition';
-      if (t2) t2.className = mode === 'register' ? 'flex-1 py-2 rounded-xl text-xs font-black bg-emerald-800 text-white transition' : 'flex-1 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition';
+      if (t1) t1.className = mode === 'login' ? 'flex-1 py-2 rounded-xl text-xs font-black bg-sky-800 text-white transition' : 'flex-1 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition';
+      if (t2) t2.className = mode === 'register' ? 'flex-1 py-2 rounded-xl text-xs font-black bg-sky-800 text-white transition' : 'flex-1 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition';
     }
 
     async function submitLogin(e) {
@@ -2128,7 +2138,7 @@
         return `<option value="${id}">${name}</option>`;
       }).join('');
       if (villages.length === 0) {
-        sel.innerHTML = '<option value="">— No villages served by backend —</option>';
+        sel.innerHTML = '<option value="">- No villages served by backend -</option>';
       }
     }
 
@@ -2144,7 +2154,7 @@
         return `<option value="${id}">${name}</option>`;
       }).join('');
       if (filtered.length === 0) {
-        sel.innerHTML = '<option value="">— No wards available —</option>';
+        sel.innerHTML = '<option value="">- No wards available -</option>';
       }
     }
 
@@ -2347,7 +2357,7 @@
         const isUrgent = n.is_urgent || n.priority === 'High';
         return `
           <div class="flex items-center gap-3.5 p-3 rounded-2xl hover:bg-slate-50 transition cursor-pointer border border-transparent hover:border-slate-200" onclick="showNoticeDetail('${n.id}')">
-            <div class="notice-badge-date ${isUrgent ? '' : 'green-accent'}">
+            <div class="notice-badge-date ${isUrgent ? '' : 'sky-accent'}">
               <div class="notice-day">${day}</div>
               <div class="notice-month">${month}</div>
             </div>
@@ -2391,7 +2401,7 @@
       if (wardEl) {
         if (window.gramSetu.isStaff) {
           wardEl.textContent = 'Signed in as: ' + roleLabel(window.gramSetu.role);
-          wardEl.classList.add('text-emerald-700');
+          wardEl.classList.add('text-sky-700');
         } else {
           wardEl.textContent = [u.ward, u.village].filter(Boolean).join(' • ') || '';
         }
@@ -2448,7 +2458,7 @@
         'Read your Panchayat inbox'
       ];
       ul.innerHTML = items.map(t =>
-        `<li class="flex items-start gap-1.5"><i data-lucide="check" class="w-3 h-3 text-emerald-600 mt-0.5 shrink-0"></i><span>${t}</span></li>`
+        `<li class="flex items-start gap-1.5"><i data-lucide="check" class="w-3 h-3 text-sky-600 mt-0.5 shrink-0"></i><span>${t}</span></li>`
       ).join('');
       if (typeof safeCreateIcons === 'function') safeCreateIcons();
     }
@@ -2657,9 +2667,9 @@
         <span class="sla-chip ${s.cls}"><i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.text}</span></span>`;
     }
     function relTime(ts) {
-      if (!ts) return '—';
+      if (!ts) return '-';
       const t = new Date(ts).getTime();
-      if (isNaN(t)) return '—';
+      if (isNaN(t)) return '-';
       const s = Math.max(0, Math.round((Date.now() - t) / 1000));
       if (s < 60) return 'just now';
       const m = Math.round(s / 60); if (m < 60) return `${m}m ago`;
@@ -2685,7 +2695,7 @@
               <i data-lucide="${hasFilters ? 'search-x' : 'inbox'}" class="w-7 h-7 text-slate-300 mx-auto"></i>
               <p class="text-xs font-black text-slate-700 mt-2">${hasFilters ? 'No grievances match this view' : 'The desk queue is clear'}</p>
               <p class="text-[11px] text-slate-500 mt-1">${hasFilters
-                ? 'Try a different keyword, status or date range — the full queue still has cases.'
+                ? 'Try a different keyword, status or date range - the full queue still has cases.'
                 : 'New grievances from villagers appear here instantly, no refresh needed.'}</p>
               <div class="flex items-center justify-center gap-2 mt-3">
                 <button onclick="clearGrievanceFilters()" class="gt-btn" ${hasFilters ? '' : 'disabled'}>Clear filters</button>
@@ -2696,7 +2706,7 @@
       } else {
         table.innerHTML = rows.map(c => `
           <tr class="hover:bg-slate-50 transition border-b border-slate-100">
-            <td class="py-3 px-4 sticky-col"><span class="font-mono font-black text-emerald-800">${c.id}</span><span class="block text-[10px] text-slate-400 font-semibold">${fmtDate(c.submitted_at)}</span></td>
+            <td class="py-3 px-4 sticky-col"><span class="font-mono font-black text-sky-800">${c.id}</span><span class="block text-[10px] text-slate-400 font-semibold">${fmtDate(c.submitted_at)}</span></td>
             <td class="py-3 px-4 font-bold text-slate-900">${c.applicant}<span class="block text-[10px] text-slate-500 font-semibold">${c.ward || ''}</span></td>
             <td class="py-3 px-4 text-slate-800 font-medium max-w-[14rem] truncate" title="${(c.title || '').replace(/"/g, '&quot;')}">${c.title}</td>
             <td class="py-3 px-4 text-slate-600 font-semibold">${c.category}</td>
@@ -2781,7 +2791,7 @@
           <tr class="hover:bg-slate-50 transition border-b border-slate-100">
             <td class="py-2.5 px-3 font-bold text-slate-800">${l.id}</td>
             <td class="py-2.5 px-3 text-slate-500 whitespace-nowrap" title="${l.timestamp || ''}">${l.timestamp ? new Date(l.timestamp).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-'}</td>
-            <td class="py-2.5 px-3"><button onclick="filterAuditActor('${(l.actor || '').replace(/'/g, '')}')" class="text-emerald-700 font-bold hover:underline" title="Filter by this actor">${actorLabel(l.actor)}</button></td>
+            <td class="py-2.5 px-3"><button onclick="filterAuditActor('${(l.actor || '').replace(/'/g, '')}')" class="text-sky-700 font-bold hover:underline" title="Filter by this actor">${actorLabel(l.actor)}</button></td>
             <td class="py-2.5 px-3 font-bold text-slate-800">${l.action}</td>
             <td class="py-2.5 px-3 font-mono text-slate-600">${l.entity_id || '-'}</td>
             <td class="py-2.5 px-3 text-slate-500 whitespace-nowrap" title="${(l.ip || '') + ' ' + (l.device || '')}">${l.ip || '-'}<span class="block text-[10px] text-slate-400">${deviceShort(l.device)}</span></td>
@@ -2859,7 +2869,7 @@
         byStatus.reduce((s, r) => s + Number(r.total || 0), 0) || 1;
       const colors = {
         'Submitted': '#f59e0b', 'Under Review': '#38bdf8', 'Assigned': '#818cf8',
-        'In Progress': '#34d399', 'Resolved': '#22c55e', 'Closed': '#94a3b8', 'Rejected': '#f87171'
+        'In Progress': '#38bdf8', 'Resolved': '#0ea5e9', 'Closed': '#94a3b8', 'Rejected': '#f87171'
       };
       chart.innerHTML = byStatus.map(r => {
         const n = Number(r.total || 0);
@@ -2871,7 +2881,7 @@
             <span class="font-mono text-slate-300">${n.toLocaleString('en-IN')} · ${pct}%</span>
           </div>
           <div class="h-2 rounded-full bg-slate-700 overflow-hidden">
-            <div style="width:${Math.max(pct, 0.4)}%;background:${colors[r.status] || '#34d399'}" class="h-full rounded-full"></div>
+            <div style="width:${Math.max(pct, 0.4)}%;background:${colors[r.status] || '#38bdf8'}" class="h-full rounded-full"></div>
           </div>
         </div>`;
       }).join('');
@@ -2920,7 +2930,7 @@
         const x = pad + i * slot;
         const hR = (Number(d.received) / maxV) * (H - 22);
         const hS = (Number(d.resolved) / maxV) * (H - 22);
-        bars += `<rect x="${x.toFixed(1)}" y="${(H - 14 - hR).toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(hR, d.received ? 1.5 : 0).toFixed(1)}" rx="1.5" fill="#34d399"><title>${d.date}: ${d.received} received</title></rect>`;
+        bars += `<rect x="${x.toFixed(1)}" y="${(H - 14 - hR).toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(hR, d.received ? 1.5 : 0).toFixed(1)}" rx="1.5" fill="#38bdf8"><title>${d.date}: ${d.received} received</title></rect>`;
         bars += `<rect x="${(x + barW + 1).toFixed(1)}" y="${(H - 14 - hS).toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(hS, d.resolved ? 1.5 : 0).toFixed(1)}" rx="1.5" fill="#38bdf8"><title>${d.date}: ${d.resolved} resolved</title></rect>`;
       });
       const first = String(data[0].date).slice(5);
@@ -3037,15 +3047,15 @@
         return `
           <tr class="hover:bg-slate-50/80 transition border-b border-slate-100">
             <td class="py-3.5 px-4 font-black text-slate-900">${t.type}<span class="block text-[10px] text-slate-400 font-semibold">${t.frequency || ''}</span></td>
-            <td class="py-3.5 px-4 font-mono text-[11px] text-slate-600">${t.property_no || '—'}</td>
-            <td class="py-3.5 px-4 text-slate-600 font-semibold">${t.year || '—'}</td>
-            <td class="py-3.5 px-4 text-slate-600 font-semibold">${t.due_date || '—'}${overdue ? '<span class="block text-[10px] text-rose-600 font-black">Overdue</span>' : ''}</td>
+            <td class="py-3.5 px-4 font-mono text-[11px] text-slate-600">${t.property_no || '-'}</td>
+            <td class="py-3.5 px-4 text-slate-600 font-semibold">${t.year || '-'}</td>
+            <td class="py-3.5 px-4 text-slate-600 font-semibold">${t.due_date || '-'}${overdue ? '<span class="block text-[10px] text-rose-600 font-black">Overdue</span>' : ''}</td>
             <td class="py-3.5 px-4 font-mono font-bold text-slate-900">${money(t.amount_due)}</td>
-            <td class="py-3.5 px-4 font-mono font-bold text-emerald-700">${money(t.amount_paid)}</td>
+            <td class="py-3.5 px-4 font-mono font-bold text-sky-700">${money(t.amount_paid)}</td>
             <td class="py-3.5 px-4 font-mono font-black ${Number(t.balance || 0) > 0 ? 'text-amber-700' : 'text-slate-400'}">${money(t.balance)}</td>
             <td class="py-3.5 px-4">
               ${isPaid
-                ? '<span class="badge-tag-mint">✓ Paid</span>'
+                ? '<span class="badge-tag-mint">Paid</span>'
                 : overdue
                   ? '<span class="badge-tag-terracotta">Overdue</span>'
                   : '<span class="badge-tag-terracotta">Pending</span>'}
@@ -3084,13 +3094,13 @@
       grid.innerHTML = members.map(m => `
         <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200 text-center hover:bg-white hover:shadow-lg transition">
           ${m.img
-            ? `<img src="${m.img}" alt="${m.name}" class="w-16 h-16 rounded-full mx-auto object-cover ring-4 ring-emerald-500/20 mb-2">`
-            : `<div class="w-16 h-16 rounded-full mx-auto bg-gradient-to-br from-emerald-600 to-emerald-800 text-white font-black flex items-center justify-center text-sm shadow ring-4 ring-emerald-500/20 mb-2">${initialsOf(m.name)}</div>`}
+            ? `<img src="${m.img}" alt="${m.name}" class="w-16 h-16 rounded-full mx-auto object-cover ring-4 ring-sky-500/20 mb-2">`
+            : `<div class="w-16 h-16 rounded-full mx-auto bg-sky-700 text-white font-black flex items-center justify-center text-sm shadow ring-4 ring-sky-500/20 mb-2">${initialsOf(m.name)}</div>`}
           <span class="badge-tag-mint text-[9px]">${m.badge}</span>
           <h4 class="font-black text-xs text-slate-900 mt-2">${m.name}</h4>
           <p class="text-[11px] text-slate-600 font-semibold">${m.role}</p>
           <div class="mt-2 pt-2 border-t border-slate-200 text-[11px]">
-            <a href="tel:${m.phone.replace(/\s/g, '')}" class="text-emerald-800 font-black hover:underline block">${m.phone}</a>
+            <a href="tel:${m.phone.replace(/\s/g, '')}" class="text-sky-800 font-black hover:underline block">${m.phone}</a>
             <span class="text-[10px] text-slate-500 font-medium block">${m.hours}</span>
           </div>
         </div>
@@ -3156,7 +3166,7 @@
       const nm = String(s.full_name || 'this staff member').replace(/'/g, '').replace(/"/g, '');
       const btns = [];
       if (s.role !== 'panchayat_admin') {
-        btns.push(`<button onclick="staffAction('${s.user_id}','make-admin','${nm}')" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-[10px] px-2 py-1 rounded-lg mr-1">Make Admin</button>`);
+        btns.push(`<button onclick="staffAction('${s.user_id}','make-admin','${nm}')" class="bg-sky-700 hover:bg-sky-600 text-white font-bold text-[10px] px-2 py-1 rounded-lg mr-1">Make Admin</button>`);
       }
       if (s.role !== 'system_admin') {
         btns.push(`<button onclick="staffAction('${s.user_id}','make-staff','${nm}')" class="bg-slate-700 hover:bg-slate-600 text-white font-bold text-[10px] px-2 py-1 rounded-lg mr-1">Make Staff</button>`);
@@ -3164,7 +3174,7 @@
       if (s.account_status === 'active') {
         btns.push(`<button onclick="staffAction('${s.user_id}','deactivate','${nm}')" class="bg-red-600 hover:bg-red-500 text-white font-bold text-[10px] px-2 py-1 rounded-lg mr-1">Deactivate</button>`);
       } else {
-        btns.push(`<button onclick="staffAction('${s.user_id}','activate','${nm}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] px-2 py-1 rounded-lg mr-1">Activate</button>`);
+        btns.push(`<button onclick="staffAction('${s.user_id}','activate','${nm}')" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] px-2 py-1 rounded-lg mr-1">Activate</button>`);
       }
       btns.push(`<button onclick="staffAction('${s.user_id}','demote','${nm}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-[10px] px-2 py-1 rounded-lg">Demote to Citizen</button>`);
       return btns.join('');
@@ -3378,10 +3388,10 @@
       const adminBtn = document.getElementById('role-admin-btn');
 
       if (isVillager) {
-        villagerBtn.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-800 text-white shadow-sm transition flex items-center gap-1.5";
+        villagerBtn.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-800 text-white shadow-sm transition flex items-center gap-1.5";
         adminBtn.className = "px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 transition flex items-center gap-1.5";
       } else {
-        adminBtn.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-800 text-white shadow-sm transition flex items-center gap-1.5";
+        adminBtn.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-800 text-white shadow-sm transition flex items-center gap-1.5";
         villagerBtn.className = "px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 transition flex items-center gap-1.5";
       }
       renderAll();
@@ -3533,11 +3543,11 @@
       const stepper = document.getElementById('modal-stepper');
       stepper.innerHTML = `
         <div class="space-y-1">
-          <div class="w-8 h-8 mx-auto rounded-full flex items-center justify-center font-bold text-xs ${stageIndex >= 1 ? 'bg-emerald-600 text-white' : 'bg-slate-200'}">1</div>
+          <div class="w-8 h-8 mx-auto rounded-full flex items-center justify-center font-bold text-xs ${stageIndex >= 1 ? 'bg-sky-600 text-white' : 'bg-slate-200'}">1</div>
           <span class="text-[10px] font-bold block">Submitted</span>
         </div>
         <div class="space-y-1">
-          <div class="w-8 h-8 mx-auto rounded-full flex items-center justify-center font-bold text-xs ${stageIndex >= 2 ? 'bg-emerald-600 text-white' : 'bg-slate-200'}">2</div>
+          <div class="w-8 h-8 mx-auto rounded-full flex items-center justify-center font-bold text-xs ${stageIndex >= 2 ? 'bg-sky-600 text-white' : 'bg-slate-200'}">2</div>
           <span class="text-[10px] font-bold block">Review</span>
         </div>
         <div class="space-y-1">
@@ -3545,7 +3555,7 @@
           <span class="text-[10px] font-bold block">Field Work</span>
         </div>
         <div class="space-y-1">
-          <div class="w-8 h-8 mx-auto rounded-full flex items-center justify-center font-bold text-xs ${stageIndex >= 4 ? 'bg-emerald-600 text-white' : 'bg-slate-200'}">4</div>
+          <div class="w-8 h-8 mx-auto rounded-full flex items-center justify-center font-bold text-xs ${stageIndex >= 4 ? 'bg-sky-600 text-white' : 'bg-slate-200'}">4</div>
           <span class="text-[10px] font-bold block">Resolved</span>
         </div>
       `;
@@ -3628,10 +3638,10 @@
 
     function fillReceipt(tax, ref, paidAt) {
       const prof = window.gramSetu.state.taxProfile || {};
-      document.getElementById('receipt-no').innerText = ref || tax.payment_ref || '—';
-      document.getElementById('receipt-date').innerText = paidAt || tax.paid_at || '—';
-      document.getElementById('receipt-taxpayer').innerText = prof.name || (window.gramSetu.state.currentUser || {}).name || '—';
-      document.getElementById('receipt-property').innerText = tax.property_no || '—';
+      document.getElementById('receipt-no').innerText = ref || tax.payment_ref || '-';
+      document.getElementById('receipt-date').innerText = paidAt || tax.paid_at || '-';
+      document.getElementById('receipt-taxpayer').innerText = prof.name || (window.gramSetu.state.currentUser || {}).name || '-';
+      document.getElementById('receipt-property').innerText = tax.property_no || '-';
       document.getElementById('receipt-item-name').innerText = `${tax.type} ${tax.year}`;
       document.getElementById('receipt-item-amount').innerText =
         `₹${Number(tax.amount_paid || tax.amount || 0).toLocaleString('en-IN')}.00`;
@@ -3704,6 +3714,34 @@
       document.getElementById('modal-scheme').classList.add('hidden');
     }
 
+    function openAllSchemesModal() {
+      const list = document.getElementById('all-schemes-list');
+      const modal = document.getElementById('modal-all-schemes');
+      if (!list || !modal) return;
+      const schemes = (window.gramSetu.state.schemes || []);
+      if (!schemes.length) {
+        list.innerHTML = `<div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center">
+          <i data-lucide="info" class="w-6 h-6 text-slate-300 mx-auto"></i>
+          <p class="text-xs font-black text-slate-700 mt-2">No schemes published yet</p>
+          <p class="text-[11px] text-slate-500 mt-1">Welfare scheme details will appear here once available.</p>
+        </div>`;
+      } else {
+        list.innerHTML = schemes.map(s => `
+          <button type="button" onclick="closeAllSchemesModal(); openSchemeModal('${s.id}')" class="w-full text-left p-3.5 rounded-2xl border border-slate-200 hover:border-sky-300 hover:bg-sky-50/50 transition">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-black text-slate-900">${s.title}</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <span class="block text-[11px] text-slate-500 mt-0.5">${s.category || ''} - ${s.department || ''}</span>
+          </button>`).join('');
+      }
+      modal.classList.remove('hidden');
+      safeCreateIcons();
+    }
+    function closeAllSchemesModal() {
+      document.getElementById('modal-all-schemes').classList.add('hidden');
+    }
+
     function showNoticeDetail(noticeId) {
       openAllNotices(noticeId || '');
     }
@@ -3712,7 +3750,7 @@
 
     function noticeStatusPill(s) {
       const map = {
-        'Published': 'bg-emerald-100 text-emerald-800 border-emerald-200',
+        'Published': 'bg-sky-100 text-sky-800 border-sky-200',
         'Draft': 'bg-amber-100 text-amber-800 border-amber-200',
         'Archived': 'bg-slate-100 text-slate-500 border-slate-200'
       };
@@ -3728,7 +3766,7 @@
 
     function noticeActionBtn(n, action) {
       const labels = {
-        publish: ['Publish', 'bg-emerald-800 text-white hover:bg-emerald-700'],
+        publish: ['Publish', 'bg-sky-800 text-white hover:bg-sky-700'],
         unpublish: ['Unpublish', 'bg-amber-500 text-white hover:bg-amber-400'],
         archive: ['Archive', 'bg-slate-600 text-white hover:bg-slate-500'],
         edit: ['Edit', 'bg-slate-900 text-white hover:bg-slate-700']
@@ -3782,9 +3820,9 @@
       const util = income > 0 ? Math.min(100, Math.round((expense / income) * 100)) : 0;
       box.innerHTML = `
         <div class="grid grid-cols-3 gap-3">
-          <div class="rounded-2xl border border-emerald-100 bg-emerald-50 p-3">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Funds Received</span>
-            <span class="block text-base sm:text-lg font-black text-emerald-800 font-mono mt-0.5">${money(income)}</span>
+          <div class="rounded-2xl border border-sky-100 bg-sky-50 p-3">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-700">Funds Received</span>
+            <span class="block text-base sm:text-lg font-black text-sky-800 font-mono mt-0.5">${money(income)}</span>
           </div>
           <div class="rounded-2xl border border-rose-100 bg-rose-50 p-3">
             <span class="text-[10px] font-bold uppercase tracking-wider text-rose-700">Expenditure</span>
@@ -3801,7 +3839,7 @@
             <span>${util}%</span>
           </div>
           <div class="progress-track-glow">
-            <div class="progress-bar-glow-green" style="width: ${util}%;"></div>
+            <div class="progress-bar-glow-sky" style="width: ${util}%;"></div>
           </div>
         </div>`;
       safeCreateIcons();
@@ -3821,7 +3859,7 @@
 
     function financeStatusPill(s) {
       const map = {
-        Verified: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+        Verified: 'bg-sky-100 text-sky-800 border-sky-200',
         Pending: 'bg-amber-100 text-amber-800 border-amber-200',
         Rejected: 'bg-rose-100 text-rose-800 border-rose-200'
       };
@@ -3836,7 +3874,7 @@
       const btn = 'inline-flex items-center justify-center w-7 h-7 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-100 transition';
       let html = `<button onclick="openFinanceModal('${id}')" title="Edit entry" class="${btn}"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>`;
       if (r.verification_status !== 'Verified') {
-        html += ` <button onclick="financeAction('${id}','Verified')" title="Mark verified" class="${btn} text-emerald-700 hover:bg-emerald-50"><i data-lucide="check" class="w-3.5 h-3.5"></i></button>`;
+        html += ` <button onclick="financeAction('${id}','Verified')" title="Mark verified" class="${btn} text-sky-700 hover:bg-sky-50"><i data-lucide="check" class="w-3.5 h-3.5"></i></button>`;
       }
       if (r.verification_status !== 'Rejected') {
         html += ` <button onclick="financeAction('${id}','Rejected')" title="Reject entry" class="${btn} text-amber-700 hover:bg-amber-50"><i data-lucide="ban" class="w-3.5 h-3.5"></i></button>`;
@@ -3849,18 +3887,18 @@
 
     function financeRow(r) {
       const isIncome = r.transaction_type === 'Income';
-      const dt = r.transaction_date ? new Date(r.transaction_date).toLocaleDateString('en-GB') : '—';
+      const dt = r.transaction_date ? new Date(r.transaction_date).toLocaleDateString('en-GB') : '-';
       const typeTag = isIncome
         ? '<span class="badge-tag-mint">Income</span>'
         : '<span class="badge-tag-terracotta">Expenditure</span>';
       return `<tr class="hover:bg-slate-50 transition border-b border-slate-100">
         <td class="py-3 px-3 whitespace-nowrap text-slate-600">${dt}</td>
         <td class="py-3 px-3">${typeTag}</td>
-        <td class="py-3 px-3 text-slate-700 font-semibold">${escapeHtml(r.category || '—')}</td>
-        <td class="py-3 px-3 max-w-[220px]"><div class="text-slate-900 truncate" title="${escapeHtml(r.description || '')}">${escapeHtml(r.description || '—')}</div></td>
-        <td class="py-3 px-3 text-slate-600">${escapeHtml(r.source_of_fund || '—')}</td>
-        <td class="py-3 px-3 text-slate-500 font-mono text-[10px]">${escapeHtml(r.source_reference || '—')}</td>
-        <td class="py-3 px-3 text-right font-mono font-black whitespace-nowrap ${isIncome ? 'text-emerald-700' : 'text-rose-700'}">${financeMoney(r.amount)}</td>
+        <td class="py-3 px-3 text-slate-700 font-semibold">${escapeHtml(r.category || '-')}</td>
+        <td class="py-3 px-3 max-w-[220px]"><div class="text-slate-900 truncate" title="${escapeHtml(r.description || '')}">${escapeHtml(r.description || '-')}</div></td>
+        <td class="py-3 px-3 text-slate-600">${escapeHtml(r.source_of_fund || '-')}</td>
+        <td class="py-3 px-3 text-slate-500 font-mono text-[10px]">${escapeHtml(r.source_reference || '-')}</td>
+        <td class="py-3 px-3 text-right font-mono font-black whitespace-nowrap ${isIncome ? 'text-sky-700' : 'text-rose-700'}">${financeMoney(r.amount)}</td>
         <td class="py-3 px-3">${financeStatusPill(r.verification_status)}</td>
         <td class="py-3 px-3 text-right whitespace-nowrap">${financeActions(r)}</td>
       </tr>`;
@@ -3896,7 +3934,7 @@
             <div class="mx-auto max-w-sm">
               <i data-lucide="wallet" class="w-7 h-7 text-slate-300 mx-auto"></i>
               <p class="text-xs font-black text-slate-700 mt-2">No financial entries</p>
-              <p class="text-[11px] text-slate-500 mt-1">Add village income and expenditure — the ledger feeds the finance KPIs above.</p>
+              <p class="text-[11px] text-slate-500 mt-1">Add village income and expenditure - the ledger feeds the finance KPIs above.</p>
               ${g.isStaff ? '<button onclick="openFinanceModal(\'\')" class="gt-btn gt-btn-primary mt-3">Add the first entry</button>' : ''}
             </div>
           </td></tr>`;
@@ -4047,7 +4085,7 @@
         if (action === 'delete') {
           const ok = await confirmAction('Delete this financial entry? This cannot be undone.', {
             title: 'Delete entry', confirmText: 'Delete', danger: true,
-            detail: rec ? `${rec.category || ''} — ${rec.description || ''}` : ''
+            detail: rec ? `${rec.category || ''} - ${rec.description || ''}` : ''
           });
           if (!ok) return;
           await g.deleteFinance(id);
@@ -4143,14 +4181,14 @@
             <div class="mx-auto max-w-sm">
               <i data-lucide="megaphone" class="w-7 h-7 text-slate-300 mx-auto"></i>
               <p class="text-xs font-black text-slate-700 mt-2">No notices yet</p>
-              <p class="text-[11px] text-slate-500 mt-1">Draft an official notice — citizens see it on the village board the moment you publish.</p>
+              <p class="text-[11px] text-slate-500 mt-1">Draft an official notice - citizens see it on the village board the moment you publish.</p>
               ${window.gramSetu.canManageAnnouncements ? '<button onclick="openNoticeModal(\'\')" class="gt-btn gt-btn-primary mt-3">Create the first notice</button>' : ''}
             </div>
           </td></tr>`;
         } else {
           table.innerHTML = rows.map(n => {
             const scheduled = n.status === 'Published' && n.published_on && new Date(n.published_on) > new Date();
-            let expiryCell = n.expiry ? new Date(n.expiry).toLocaleDateString('en-GB') : '—';
+            let expiryCell = n.expiry ? new Date(n.expiry).toLocaleDateString('en-GB') : '-';
             if (n.expiry) {
               const daysLeft = Math.ceil((new Date(n.expiry).setHours(0,0,0,0) - today.getTime()) / 86400000);
               if (daysLeft < 0) expiryCell += '<span class="block text-[10px] text-red-600 font-black">Expired</span>';
@@ -4160,14 +4198,14 @@
               ? `<span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black border bg-sky-100 text-sky-800 border-sky-200">Scheduled</span>
                  <span class="block text-[10px] text-sky-700 font-bold mt-0.5">${new Date(n.published_on).toLocaleString('en-GB', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })}</span>`
               : (n.status === 'Published'
-                  ? `${noticeStatusPill(n.status)}<span class="block text-[10px] text-slate-400 mt-0.5">${n.published_on ? new Date(n.published_on).toLocaleDateString('en-GB') : '—'}</span>`
+                  ? `${noticeStatusPill(n.status)}<span class="block text-[10px] text-slate-400 mt-0.5">${n.published_on ? new Date(n.published_on).toLocaleDateString('en-GB') : '-'}</span>`
                   : noticeStatusPill(n.status));
             return `
           <tr class="hover:bg-slate-50 transition border-b border-slate-100">
             <td class="py-3 px-4">
               <div class="font-bold text-slate-900 max-w-xs">${n.title}</div>
               <div class="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1">
-                ${n.attachment_url ? '<i data-lucide="paperclip" class="w-3 h-3 text-emerald-700"></i><span class="text-emerald-700 font-bold">Attachment</span> ·' : ''}
+                ${n.attachment_url ? '<i data-lucide="paperclip" class="w-3 h-3 text-sky-700"></i><span class="text-sky-700 font-bold">Attachment</span> ·' : ''}
                 ${n.village_name || 'All GP areas'} · ${n.date ? new Date(n.date).toLocaleDateString('en-GB') : (n.created_on ? new Date(n.created_on).toLocaleDateString('en-GB') : '-')}
               </div>
             </td>
@@ -4175,7 +4213,7 @@
             <td class="py-3 px-4">${noticePriorityBadge(n.priority)}</td>
             <td class="py-3 px-4">${publishedCell}</td>
             <td class="py-3 px-4 text-slate-600 font-medium">${expiryCell}</td>
-            <td class="py-3 px-4 text-slate-600 font-medium">${n.published_on && !scheduled ? new Date(n.published_on).toLocaleDateString('en-GB') : '—'}</td>
+            <td class="py-3 px-4 text-slate-600 font-medium">${n.published_on && !scheduled ? new Date(n.published_on).toLocaleDateString('en-GB') : '-'}</td>
             <td class="py-3 px-4 text-right whitespace-nowrap">${noticeActions(n)}</td>
           </tr>
         `;
@@ -4336,7 +4374,7 @@
               patch.publish_at = publishAt;                      // (re)schedule the release
             } else if (current && current.status === 'Published' &&
                        current.published_on && new Date(current.published_on) > new Date()) {
-              patch.publish_at = new Date().toISOString();       // schedule removed → publish now
+              patch.publish_at = new Date().toISOString();       // schedule removed -> publish now
             }
           }
           await window.gramSetu.updateAnnouncement(editingNoticeId, patch);
@@ -4425,9 +4463,9 @@
           const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
           const urgent = n.is_urgent;
           return `
-          <div id="notice-item-${n.id}" class="bg-white rounded-2xl border ${urgent ? 'border-terracotta-300 border-l-4' : 'border-slate-200 border-l-4 border-l-emerald-600'} p-4 shadow-sm">
+          <div id="notice-item-${n.id}" class="bg-white rounded-2xl border ${urgent ? 'border-terracotta-300 border-l-4' : 'border-slate-200 border-l-4 border-l-sky-600'} p-4 shadow-sm">
             <div class="flex items-start gap-3.5">
-              <div class="notice-badge-date ${urgent ? '' : 'green-accent'}">
+              <div class="notice-badge-date ${urgent ? '' : 'sky-accent'}">
                 <div class="notice-day">${day}</div>
                 <div class="notice-month">${month}</div>
               </div>
@@ -4442,8 +4480,8 @@
                   ${n.expiry ? `<span class="inline-block bg-slate-100 text-slate-500 px-2 py-0.5 rounded-lg text-[10px] font-semibold">Until ${new Date(n.expiry).toLocaleDateString('en-GB')}</span>` : ''}
                 </div>
                 <p class="text-xs text-slate-600 mt-2 leading-relaxed">${escapeHtml(noticeLangText(n.description))}</p>
-                ${n.attachment_url ? `<a href="${escapeHtml(n.attachment_url)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 mt-2 text-[11px] font-black text-emerald-700 hover:underline"><i data-lucide="paperclip" class="w-3.5 h-3.5"></i> View attachment</a>` : ''}
-                <p class="text-[10px] text-slate-400 mt-2 font-mono">Official — Kumbhari Gram Panchayat · ${n.village_name || 'All areas'}</p>
+                ${n.attachment_url ? `<a href="${escapeHtml(n.attachment_url)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 mt-2 text-[11px] font-black text-sky-700 hover:underline"><i data-lucide="paperclip" class="w-3.5 h-3.5"></i> View attachment</a>` : ''}
+                <p class="text-[10px] text-slate-400 mt-2 font-mono">Official - Kumbhari Gram Panchayat · ${n.village_name || 'All areas'}</p>
               </div>
             </div>
           </div>`;

@@ -9,9 +9,11 @@
 
 const GRAMSETU_API = (typeof window !== 'undefined' && window.GRAMSETU_API) || 'http://localhost:5000';
 
-// ---- Demo/placeholder data for modules not yet backed by API endpoints ----
-// (schemes, taxes, finance). Swap these for real GETs once the
-// corresponding routers exist in the backend.
+// ---- Static reference / placeholder data ----
+// Taxes and the financial ledger are intentionally empty until the live API
+// returns data (GET /api/tax/my-taxes, GET /api/finance/public-summary).
+// The schemes catalog is factual public-scheme reference information used by
+// the scheme detail popup; no per-citizen application status is fabricated.
 const DEMO_SCHEMES = [
   {
     id: 'SCH-PM-KISAN', title: 'PM-Kisan Samman Nidhi Yojana', category: 'Farmer',
@@ -54,48 +56,25 @@ const DEMO_SCHEMES = [
     eligibility: 'Permanent female residents with annual family income under ₹2.5 Lakhs.',
     documents: ['Aadhaar Card', 'Domicile / Ration Card', 'Aadhaar Seeded Bank Account', 'Income Declaration'],
     link: 'https://ladakibahin.maharashtra.gov.in'
+  },
+  {
+    id: 'SCH-UJJWALA', title: 'Pradhan Mantri Ujjwala Yojana', category: 'Women',
+    department: 'Ministry of Petroleum & Natural Gas', benefit: 'Free LPG gas connection with the first refill and a stove at no cost for eligible women from below-poverty-line households',
+    eligibility: 'Adult women from poor households that do not already have an LPG connection, holding a BPL/Antyodaya or SECC-2011 record.',
+    documents: ['Aadhaar Card', 'BPL / Ration Card', 'Bank Passbook', 'Address Proof'],
+    link: 'https://www.pmuy.gov.in'
   }
 ];
 
-const DEMO_TAXES = [
-  {
-    id: 'TAX-2026-HP-304', type: 'House Tax (Ghar Patti)', year: 'FY 2026-27',
-    villager_id: 'Ramesh Patil', property_no: 'House No. 142, Ward 3', amount: 850,
-    due_date: '31 Oct 2026', status: 'Pending', payment_ref: null, paid_at: null
-  },
-  {
-    id: 'TAX-2026-WP-304', type: 'Water Supply Cess (Pani Patti)', year: 'FY 2026-27',
-    villager_id: 'Ramesh Patil', property_no: 'House No. 142, Ward 3', amount: 450,
-    due_date: '15 Nov 2026', status: 'Pending', payment_ref: null, paid_at: null
-  },
-  {
-    id: 'TAX-2025-HP-304', type: 'House Tax (Ghar Patti)', year: 'FY 2025-26',
-    villager_id: 'Ramesh Patil', property_no: 'House No. 142, Ward 3', amount: 800,
-    due_date: '31 Oct 2025', status: 'Paid', payment_ref: 'PAY-GS-982143', paid_at: '2025-10-14 11:20 AM'
-  }
-];
+const DEMO_TAXES = [];
 
-const DEMO_FINANCIALS = {
-  totalGrant: 4250000,
-  allocatedWorks: 3590000,
-  spentToDate: 2840000,
-  unspentBalance: 660000,
-  source: '15th Central Finance Commission & State Untied Grants (Public eGramSwaraj Audit)',
-  updated_at: 'September 2026',
-  projects: [
-    { id: 'PRJ-2026-01', title: 'Concrete Cement Road Paving (Bazaar to School Link)', ward: 'Ward 2 & 3', budget: 850000, spent: 850000, percent: 100, status: 'Completed', contractor: 'Shree Ganesh Infra Works', completion_date: 'August 2026' },
-    { id: 'PRJ-2026-02', title: 'Solar High-Mast Streetlighting Installation (35 Poles)', ward: 'Ward 1, 3 & 6', budget: 520000, spent: 416000, percent: 80, status: 'In Progress', contractor: 'Urja Green Energy Systems', completion_date: 'Target: Oct 2026' },
-    { id: 'PRJ-2026-03', title: 'Overhead Water Tank & Feeder Pipeline Upgradation', ward: 'Ward 4 & 5', budget: 1400000, spent: 1050000, percent: 75, status: 'In Progress', contractor: 'Sahyadri Jal Contractors', completion_date: 'Target: Nov 2026' },
-    { id: 'PRJ-2026-04', title: 'Anganwadi Center Smart Modernization & Child Playscape', ward: 'Ward 1', budget: 480000, spent: 240000, percent: 50, status: 'In Progress', contractor: 'Panchayat Works Committee', completion_date: 'Target: Dec 2026' },
-    { id: 'PRJ-2026-05', title: 'Solid Waste Segregation Shed & Biocompost Pits', ward: 'Ward 7 (Village Outskirts)', budget: 340000, spent: 284000, percent: 85, status: 'In Progress', contractor: 'Swachh Gram Yojna Taskforce', completion_date: 'Target: Oct 2026' }
-  ]
-};
+const DEMO_FINANCIALS = { projects: [] };
 
 // Multilingual Dictionary (kept for the dashboard language switcher)
 const I18N = {
   en: {
     portalName: 'GramSetu', tagline: 'Digital Bridge Between Villagers & Gram Panchayat',
-    panchayatName: 'Kumbhari Gram Panchayat', district: 'Taluka South Solapur, Dist. Solapur',
+    panchayatName: 'Kumbhari Gram Panchayat', district: 'Kumbhari, Kopargaon, Maharashtra',
     villagerRole: 'Villager (Citizen)', adminRole: 'Panchayat Staff / Admin', switchRole: 'Switch Role',
     navHome: 'Dashboard', navComplaints: 'Grievance Redressal', navAnnouncements: 'Notice Board',
     navMembers: 'Panchayat Members', navSchemes: 'Welfare Schemes', navTax: 'Tax & Payments',
@@ -109,7 +88,7 @@ const I18N = {
   },
   hi: {
     portalName: 'ग्रामसेतू', tagline: 'ग्रामीणों और ग्राम पंचायत के बीच डिजिटल सेतु',
-    panchayatName: 'कुंभारी ग्राम पंचायत', district: 'तालुका दक्षिण सोलापूर, जिला सोलापूर',
+    panchayatName: 'कुंभारी ग्राम पंचायत', district: 'कुंभारी, कोपरगाव, महाराष्ट्र',
     villagerRole: 'ग्रामीण (नागरिक)', adminRole: 'पंचायत कर्मचारी / प्रशासन', switchRole: 'भूमिका बदलें',
     navHome: 'डैशबोर्ड', navComplaints: 'शिकायत निवारण', navAnnouncements: 'सूचना पटल',
     navMembers: 'पंचायत पदाधिकारी', navSchemes: 'कल्याणकारी योजनाएं', navTax: 'कर एवं भुगतान',
@@ -123,7 +102,7 @@ const I18N = {
   },
   mr: {
     portalName: 'ग्रामसेतू', tagline: 'ग्रामस्थ आणि ग्रामपंचायत यांच्यातील डिजिटल सेतू',
-    panchayatName: 'कुंभारी ग्रामपंचायत', district: 'तालुका दक्षिण सोलापूर, जि. सोलापूर',
+    panchayatName: 'कुंभारी ग्रामपंचायत', district: 'कुंभारी, कोपरगाव, महाराष्ट्र',
     villagerRole: 'ग्रामस्थ (नागरिक)', adminRole: 'ग्रामपंचायत कर्मचारी / प्रशासन', switchRole: 'भूमिका बदला',
     navHome: 'डॅशबोर्ड', navComplaints: 'तक्रार निवारण', navAnnouncements: 'सूचना फलक',
     navMembers: 'पंचायत पदाधिकारी', navSchemes: 'शासकीय योजना', navTax: 'कर व देयके',
@@ -240,7 +219,7 @@ class GramSetuClient {
 
     if (res.status === 401) {
       this.logoutLocal();
-      throw new Error(data && data.detail ? data.detail : 'Session expired — please log in again.');
+      throw new Error(data && data.detail ? data.detail : 'Session expired. Please log in again.');
     }
     if (!res.ok) {
       const msg = data ? (data.detail || data.message || JSON.stringify(data)) : `Request failed (${res.status})`;
@@ -350,7 +329,7 @@ class GramSetuClient {
         mobile: this.user.mobile_number,
         village: this._villageName(p.village_id),
         ward: this._wardName(p.ward_id),
-        district: 'Solapur, Maharashtra'
+        district: 'Kopargaon, Maharashtra'
       };
     } catch (e) {
       // keep whatever is already stored
