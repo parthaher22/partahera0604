@@ -1874,6 +1874,7 @@
   <!-- Application Scripts -->
   <script src="config.js"></script>
   <script src="app.js"></script>
+  <script src="i18n.js"></script>
   <script>
     let activeTaxForPayment = null;
     let activeComplaintForAdmin = null;
@@ -3437,6 +3438,8 @@
           if (dict[key]) el.textContent = dict[key];
         });
       }
+      // Translate the whole UI (static markup + dynamic content).
+      if (window.GramSetuI18N) window.GramSetuI18N.apply(lang);
       // Re-render anything that embeds language-dependent copy (notices, board).
       try { renderAnnouncements(); } catch (e) { /* optional */ }
       try { renderNoticesAdmin(); } catch (e) { /* optional */ }
