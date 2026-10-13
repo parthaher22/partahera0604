@@ -13,6 +13,20 @@
   <link rel="stylesheet" href="shim.css">
   <link rel="stylesheet" href="tailwind.min.css">
   <link rel="stylesheet" href="styles.css">
+  <!-- Auth gate: unauthenticated visitors see only the sign-in screen.
+       Runs before the body renders so the dashboard never flashes. -->
+  <script>
+    (function () {
+      var locked = true;
+      try { locked = !localStorage.getItem('gramsetu_token'); } catch (e) { locked = true; }
+      if (locked) document.documentElement.classList.add('auth-locked');
+    })();
+  </script>
+  <style>
+    html.auth-locked body > *:not(#auth-screen) { display: none !important; }
+    html.auth-locked #auth-screen { display: flex !important; }
+    html.auth-locked { overflow: hidden; }
+  </style>
   <!-- Lucide Icons Library -->
   <script src="lucide.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -2207,6 +2221,7 @@
       if (urlEl) urlEl.textContent = url;
 
       if (window.gramSetu.loggedIn) {
+        document.documentElement.classList.remove('auth-locked');
         const startRole = window.gramSetu.isStaff ? 'admin' : 'villager';
         switchRole(startRole);
         applySession();
@@ -2217,6 +2232,7 @@
         renderFreshness();
         renderSystemStatus();
       } else {
+        document.documentElement.classList.add('auth-locked');
         refreshRegisterReference();
         showAuthScreen();
       }
@@ -2301,6 +2317,7 @@
         );
         switchRole(window.gramSetu.isStaff ? 'admin' : 'villager');
         applySession();
+        document.documentElement.classList.remove('auth-locked');
         hideAuthScreen();
         startLiveUpdates();
         document.getElementById('auth-form-login').reset();
@@ -2378,6 +2395,7 @@
         await window.gramSetu.register(payload);
         switchRole('villager');
         applySession();
+        document.documentElement.classList.remove('auth-locked');
         hideAuthScreen();
         document.getElementById('auth-form-register').reset();
       } catch (err) {
@@ -2391,6 +2409,7 @@
       stopLiveUpdates();
       closeNotifications();
       window.gramSetu.logout();
+      document.documentElement.classList.add('auth-locked');
       location.reload();
     }
 

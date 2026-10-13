@@ -224,6 +224,7 @@ class GramSetuClient {
 
     if (res.status === 401) {
       this.logoutLocal();
+      if (typeof document !== 'undefined') document.documentElement.classList.add('auth-locked');
       throw new Error(data && data.detail ? data.detail : 'Session expired. Please log in again.');
     }
     if (!res.ok) {
