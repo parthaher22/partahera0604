@@ -155,6 +155,11 @@ class GramSetuClient {
           financial_year: '', date_from: '', date_to: ''
         }
       },
+      payments: {
+        records: [], total: 0, summary: null, page: 1, pageSize: 25,
+        filters: { q: '', payment_status: '', payment_method: '', date_from: '', date_to: '' },
+        taxTypes: []
+      },
       publicFinance: null,
       auditLogs: [],
       auditTotal: 0,
@@ -351,6 +356,8 @@ class GramSetuClient {
       this.loadFinance().catch(() => {}),
       this.loadFinanceSummary().catch(() => {}),
       this.loadPublicFinance().catch(() => {}),
+      this.loadPayments().catch(() => {}),
+      this.loadPaymentsSummary().catch(() => {}),
       this.loadMyTaxes().catch(() => {}),
       this.loadNotifications().catch(() => {})
     ]);
@@ -371,6 +378,8 @@ class GramSetuClient {
         this.loadFinance().catch(() => {}),
         this.loadFinanceSummary().catch(() => {}),
         this.loadPublicFinance().catch(() => {}),
+        this.loadPayments().catch(() => {}),
+        this.loadPaymentsSummary().catch(() => {}),
         this.loadMyTaxes().catch(() => {}),
         this.loadNotifications().catch(() => {})
       ]);
@@ -594,8 +603,10 @@ class GramSetuClient {
           amount_paid: t.amount_paid,
           balance: t.remaining_amount,
           due_date: t.due_date,
-          status: t.status === 'Paid' ? 'Paid' : 'Pending',
+          status: t.status || 'Pending',
           is_overdue: !!t.is_overdue,
+          pending: !!t.pending_payment,
+          pending_payment: t.pending_payment || null,
           payment_ref: t.last_payment ? t.last_payment.receipt_number : null,
           paid_at: t.last_payment ? t.last_payment.payment_date : null,
           payment_method: t.last_payment ? t.last_payment.payment_method : null,
@@ -790,6 +801,86 @@ class GramSetuClient {
     }
   }
 
+  // Fee-payment ledger (Panchayat Desk) ------------------------------------
+  _paymentsQuery() {
+    const f = this.state.payments.filters;
+    const q = new URLSearchParams();
+    ['q', 'payment_status', 'payment_method', 'date_from', 'date_to']
+      .forEach(k => { if (f[k]) q.set(k, f[k]); });
+    return q;
+  }
+
+  async loadPayments() {
+    if (!this.isStaff) { this.state.payments.records = []; this.state.payments.total = 0; return []; }
+    const q = this._paymentsQuery();
+    q.set('limit', String(this.state.payments.pageSize));
+    q.set('offset', String((this.state.payments.page - 1) * this.state.payments.pageSize));
+    try {
+      const d = await this.api(`/api/payments?${q.toString()}`);
+      this.state.payments.records = (d && d.results) || [];
+      this.state.payments.total = d && typeof d.total === 'number' ? d.total : this.state.payments.records.length;
+      return this.state.payments.records;
+    } catch (e) {
+      this.state.payments.records = [];
+      this.state.payments.total = 0;
+      throw e;
+    }
+  }
+
+  async loadPaymentsSummary() {
+    if (!this.isStaff) { this.state.payments.summary = null; return null; }
+    const q = this._paymentsQuery();
+    try {
+      const d = await this.api(`/api/payments/summary?${q.toString()}`);
+      this.state.payments.summary = d;
+      return d;
+    } catch (e) {
+      return this.state.payments.summary; // keep last good snapshot
+    }
+  }
+
+  async verifyPayment(paymentId, status, reason) {
+    const body = { status };
+    if (reason) body.reason = reason;
+    return this.api(`/api/payments/${encodeURIComponent(paymentId)}/verification`, { method: 'POST', body });
+  }
+
+  async recordManualPayment(payload) {
+    return this.api('/api/payments/manual', { method: 'POST', body: payload });
+  }
+
+  async raiseFeeDemand(payload) {
+    return this.api('/api/payments/demands', { method: 'POST', body: payload });
+  }
+
+  async loadTaxTypes(force) {
+    if (!this.isStaff) return [];
+    if (this.state.payments.taxTypes.length && !force) return this.state.payments.taxTypes;
+    try {
+      const d = await this.api('/api/payments/tax-types');
+      this.state.payments.taxTypes = Array.isArray(d) ? d : [];
+    } catch (e) {
+      this.state.payments.taxTypes = this.state.payments.taxTypes || [];
+    }
+    return this.state.payments.taxTypes;
+  }
+
+  async searchVillagers(q) {
+    const p = new URLSearchParams();
+    if (q) p.set('q', q);
+    p.set('limit', '50');
+    try { return (await this.api(`/api/payments/villagers?${p.toString()}`)) || []; }
+    catch (e) { return []; }
+  }
+
+  async loadDues(q) {
+    const p = new URLSearchParams();
+    if (q) p.set('q', q);
+    p.set('limit', '100');
+    try { return (await this.api(`/api/payments/dues?${p.toString()}`)) || []; }
+    catch (e) { return []; }
+  }
+
   upiQrUrl(amount, note) {
     const q = new URLSearchParams({ amount: String(amount || 0), name: 'Kumbhari Gram Panchayat' });
     if (note) q.set('note', String(note).slice(0, 50));
@@ -845,6 +936,7 @@ class GramSetuClient {
       ref: p.receipt_number || '',
       txn: p.transaction_reference || '',
       paid_at: p.payment_date || new Date().toISOString(),
+      status: p.payment_status || '',
       upi: (paymentMethod || 'UPI') === 'UPI',
       qr_url: this.upiQrUrl(updated.balance || updated.amount, `${updated.type} ${updated.year}`)
     };

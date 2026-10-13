@@ -73,6 +73,7 @@ def my_taxes(current_user: CurrentUser = Depends(get_current_user)):
         status = t.get("status") or "Overdue"
         txns = payments_by_tax.get(t.get("tax_id"), [])
         last = txns[0] if txns else None
+        pending = next((p for p in txns if (p.get("payment_status") or "") == "Initiated"), None)
         records.append({
             "tax_id": t.get("tax_id"),
             "type": tt.get("name") or "Tax",
@@ -94,6 +95,14 @@ def my_taxes(current_user: CurrentUser = Depends(get_current_user)):
                 "gateway_name": last.get("gateway_name") if last else None,
                 "amount": last.get("amount") if last else None,
             } if last else None,
+            "pending_payment": {
+                "receipt_number": pending.get("receipt_number"),
+                "transaction_reference": pending.get("transaction_reference"),
+                "payment_date": pending.get("payment_date"),
+                "payment_method": pending.get("payment_method"),
+                "gateway_name": pending.get("gateway_name"),
+                "amount": pending.get("amount"),
+            } if pending else None,
             "payments": [{
                 "receipt_number": p.get("receipt_number"),
                 "transaction_reference": p.get("transaction_reference"),
@@ -130,6 +139,11 @@ def my_taxes(current_user: CurrentUser = Depends(get_current_user)):
 
 @router.post("/{tax_id}/pay", status_code=201)
 def pay_tax(tax_id: str, payload: TaxPaymentRequest, request: Request, current_user: CurrentUser = Depends(get_current_user)):
+    """Citizen initiates an online fee payment.
+
+    The payment is recorded as PENDING and the tax balance is left untouched
+    until the Panchayat Desk confirms it (POST /api/payments/{id}/verification).
+    """
     if current_user.role != "villager":
         raise HTTPException(status_code=403, detail="Only citizens can pay taxes")
 
@@ -144,6 +158,21 @@ def pay_tax(tax_id: str, payload: TaxPaymentRequest, request: Request, current_u
     remaining = float(tax.get("remaining_amount") or (float(tax.get("amount_due") or 0) - float(tax.get("amount_paid") or 0)))
     if remaining <= 0:
         raise HTTPException(status_code=400, detail="This tax is already fully paid")
+
+    pending_rows = (
+        supabase.table("payments")
+        .select("payment_id, receipt_number")
+        .eq("tax_id", tax_id)
+        .eq("payment_status", "Initiated")
+        .execute()
+        .data
+        or []
+    )
+    if pending_rows:
+        raise HTTPException(
+            status_code=409,
+            detail="A payment for this tax is already awaiting confirmation by the Panchayat Desk.",
+        )
 
     amount = float(payload.amount) if payload.amount else remaining
     if amount <= 0 or amount > remaining:
@@ -163,7 +192,7 @@ def pay_tax(tax_id: str, payload: TaxPaymentRequest, request: Request, current_u
         "gateway_name": payload.gateway_name or "UPI QR",
         "transaction_reference": transaction_reference,
         "gateway_reference": None,
-        "payment_status": "Successful",
+        "payment_status": "Initiated",
         "payment_date": now,
         "receipt_number": receipt_number,
         "failure_reason": None,
@@ -172,25 +201,14 @@ def pay_tax(tax_id: str, payload: TaxPaymentRequest, request: Request, current_u
     }
     supabase.table("payments").insert(payment).execute()
 
-    new_paid = round(float(tax.get("amount_paid") or 0) + amount, 2)
-    new_remaining = round(max(remaining - amount, 0), 2)
-    tax_update = {
-        "amount_paid": new_paid,
-        "status": "Paid" if new_remaining <= 0 else "Overdue",
-        "updated_at": now,
-        # remaining_amount is a GENERATED column (amount_due - amount_paid):
-        # PostgREST rejects writing it, it recalculates automatically.
-    }
-    supabase.table("tax_records").update(tax_update).eq("tax_id", tax_id).execute()
-
     log_audit(
         actor_id=current_user.user_id,
-        action="Pay Tax",
+        action="Initiate Tax Payment",
         entity_type="tax_record",
         entity_id=tax_id,
         new_values={"amount": amount, "receipt_number": receipt_number, "method": payload.payment_method},
         request=request,
     )
 
-    updated = dict(tax) | tax_update | {"remaining_amount": new_remaining}
-    return {"payment": payment, "tax": updated}
+    # The tax balance is credited only after the Panchayat confirms the payment.
+    return {"payment": payment, "tax": dict(tax)}

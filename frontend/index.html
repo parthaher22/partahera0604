@@ -1130,6 +1130,101 @@
               </div>
             </div>
           </div>
+
+          <!-- ================= FEE PAYMENTS & DEMANDS ================= -->
+          <div id="admin-payments" class="luxury-card">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+              <div>
+                <h3 class="text-base font-black text-slate-900 mb-1">Fee Payments &amp; Demands</h3>
+                <p class="text-xs text-slate-500">Every citizen fee payment in one register. Confirm online payments, record counter (cash/cheque) payments, and raise new demands.</p>
+              </div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-[10px] font-mono text-slate-400" data-freshness="payments">not loaded yet</span>
+                <button onclick="exportPaymentsXlsx()" class="gt-btn">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i> Download Excel
+                </button>
+                <button onclick="openManualPaymentModal()" class="gt-btn">
+                  <i data-lucide="banknote" class="w-3.5 h-3.5"></i> Record Offline Payment
+                </button>
+                <button id="admin-add-demand-btn" onclick="openDemandModal()" class="btn-luxury-primary hidden">
+                  <i data-lucide="plus" class="w-4 h-4"></i> Raise Fee Demand
+                </button>
+              </div>
+            </div>
+
+            <!-- Fee payment KPIs -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+              <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
+                <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Collected</span>
+                <span id="pay-kpi-collected" class="text-xl font-black text-sky-700 block mt-0.5 font-mono">₹0</span>
+              </div>
+              <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
+                <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Collected Today</span>
+                <span id="pay-kpi-today" class="text-xl font-black text-slate-900 block mt-0.5 font-mono">₹0</span>
+              </div>
+              <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
+                <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Pending Confirmation</span>
+                <span id="pay-kpi-pending" class="text-xl font-black text-amber-600 block mt-0.5 font-mono">₹0</span>
+                <span id="pay-kpi-pending-count" class="text-[10px] text-slate-500 font-semibold block">0 payment(s)</span>
+              </div>
+              <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200">
+                <span class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Rejected / Failed</span>
+                <span id="pay-kpi-rejected" class="text-xl font-black text-rose-700 block mt-0.5 font-mono">₹0</span>
+                <span id="pay-kpi-rejected-count" class="text-[10px] text-slate-500 font-semibold block">0 payment(s)</span>
+              </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <input id="pay-search" type="text" placeholder="Search citizen / receipt / reference / tax…" class="flex-1 min-w-[200px] p-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-600 focus:outline-none" onkeydown="if(event.key==='Enter'){event.preventDefault();applyPaymentFilters();}">
+              <select id="pay-status-filter" class="p-2 rounded-xl border border-slate-300 text-xs font-bold" onchange="applyPaymentFilters()">
+                <option value="">All statuses</option>
+                <option value="Initiated">Pending confirmation</option>
+                <option value="Successful">Successful</option>
+                <option value="Failed">Rejected / Failed</option>
+              </select>
+              <select id="pay-method-filter" class="p-2 rounded-xl border border-slate-300 text-xs font-bold" onchange="applyPaymentFilters()">
+                <option value="">All methods</option>
+                <option value="UPI">UPI</option>
+                <option value="NetBanking">Net Banking</option>
+                <option value="Cash">Cash</option>
+                <option value="Cheque">Cheque</option>
+              </select>
+              <input id="pay-date-from" type="date" class="p-2 rounded-xl border border-slate-300 text-xs text-slate-600" onchange="applyPaymentFilters()">
+              <input id="pay-date-to" type="date" class="p-2 rounded-xl border border-slate-300 text-xs text-slate-600" onchange="applyPaymentFilters()">
+              <button onclick="applyPaymentFilters()" class="gt-btn">
+                <i data-lucide="search" class="w-3.5 h-3.5"></i> Filter
+              </button>
+              <button onclick="resetPaymentFilters()" class="gt-btn">Reset</button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider">
+                    <th class="py-3 px-3">Receipt / Date</th>
+                    <th class="py-3 px-3">Citizen</th>
+                    <th class="py-3 px-3">Fee Head</th>
+                    <th class="py-3 px-3 text-right">Amount</th>
+                    <th class="py-3 px-3">Method</th>
+                    <th class="py-3 px-3">Status</th>
+                    <th class="py-3 px-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="payments-table-body" class="divide-y divide-slate-100 text-slate-900 font-medium">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="flex items-center justify-between mt-3">
+              <span id="payments-page-info" class="text-[11px] font-mono text-slate-500">-</span>
+              <div class="flex items-center gap-2">
+                <button id="pay-prev" onclick="paymentsPage(-1)" class="gt-btn">Prev</button>
+                <button id="pay-next" onclick="paymentsPage(1)" class="gt-btn">Next</button>
+              </div>
+            </div>
+          </div>
         </div>
 
       </main>
@@ -1449,9 +1544,13 @@
           </div>
 
           <div class="flex justify-between items-center text-[10px] text-slate-500 pt-2">
-            <span>Status: <strong class="text-sky-700">SUCCESSFUL</strong></span>
-            <span class="border border-slate-300 px-2 py-1 font-mono">[QR VERIFIED]</span>
+            <span>Status: <strong id="receipt-status" class="text-amber-600">PENDING CONFIRMATION</strong></span>
+            <span id="receipt-tag" class="border border-slate-300 px-2 py-1 font-mono">AWAITING PANCHAYAT</span>
           </div>
+
+          <p id="receipt-note" class="text-[10px] text-slate-500 leading-snug border-t border-slate-200 pt-2">
+            Your payment has been recorded. The Panchayat Desk will verify it against the bank/UPI statement - the fee balance updates once confirmed.
+          </p>
         </div>
 
         <div class="flex gap-2 pt-2 no-print">
@@ -1844,6 +1943,129 @@
           <button type="submit" class="flex-1 btn-luxury-primary justify-center py-3">
             <i data-lucide="check" class="w-4 h-4 text-sky-300"></i>
             <span>Save Entry</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: RAISE FEE DEMAND -->
+  <div id="modal-demand" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] overflow-y-auto">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center sticky top-0 z-10">
+        <div>
+          <h3 class="font-black text-base flex items-center gap-2">
+            <i data-lucide="file-plus" class="w-5 h-5 text-amber-400"></i>
+            <span>Raise Fee Demand</span>
+          </h3>
+          <p class="text-xs text-sky-200 mt-0.5">Assess a fee on a citizen. It appears in their "My Taxes" and can be paid online or at the counter.</p>
+        </div>
+        <button onclick="closeDemandModal()" class="text-white/80 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-demand" onsubmit="handleDemandSubmit(event)" class="p-6 space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Citizen *</label>
+          <select id="demand-villager" required class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold">
+            <option value="">Loading citizens…</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Fee Head *</label>
+            <select id="demand-tax-type" required class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold">
+              <option value="">Loading fee types…</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Amount (₹) *</label>
+            <input type="number" id="demand-amount" required min="1" step="0.01" placeholder="0.00" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Due Date *</label>
+            <input type="date" id="demand-due-date" required class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Financial Year</label>
+            <input type="text" id="demand-fy" placeholder="auto e.g. 2026-2027" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Assessment No. (optional)</label>
+          <input type="text" id="demand-assessment" placeholder="auto if blank" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
+        </div>
+        <div id="demand-error" class="hidden bg-red-50 border border-red-200 text-red-700 font-bold px-3 py-2 rounded-xl text-[11px]"></div>
+        <div class="flex gap-2">
+          <button type="button" onclick="closeDemandModal()" class="flex-1 rounded-xl border-2 border-slate-300 text-slate-600 font-black text-xs py-3 bg-white hover:bg-slate-50 transition">Cancel</button>
+          <button type="submit" class="flex-1 btn-luxury-primary justify-center py-3">
+            <i data-lucide="check" class="w-4 h-4 text-sky-300"></i>
+            <span>Raise Demand</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: RECORD OFFLINE FEE PAYMENT -->
+  <div id="modal-manual-payment" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] overflow-y-auto">
+      <div class="bg-sky-900 text-white p-5 flex justify-between items-center sticky top-0 z-10">
+        <div>
+          <h3 class="font-black text-base flex items-center gap-2">
+            <i data-lucide="banknote" class="w-5 h-5 text-amber-400"></i>
+            <span>Record Offline Payment</span>
+          </h3>
+          <p class="text-xs text-sky-200 mt-0.5">Use when a citizen paid at the counter or an online payment never synced. The fee balance is credited immediately.</p>
+        </div>
+        <button onclick="closeManualPaymentModal()" class="text-white/80 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-manual-payment" onsubmit="handleManualPaymentSubmit(event)" class="p-6 space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Outstanding Fee Due *</label>
+          <select id="manual-due" required onchange="onManualDueChange()" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold">
+            <option value="">Loading outstanding dues…</option>
+          </select>
+          <p id="manual-due-hint" class="text-[11px] text-slate-500 mt-1"></p>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Amount Received (₹) *</label>
+            <input type="number" id="manual-amount" required min="1" step="0.01" placeholder="0.00" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Payment Mode *</label>
+            <select id="manual-method" required class="w-full p-2.5 rounded-xl border border-slate-300 font-bold">
+              <option value="Cash" selected>Cash</option>
+              <option value="Cheque">Cheque</option>
+              <option value="UPI">UPI</option>
+              <option value="NetBanking">Net Banking</option>
+              <option value="DD">Demand Draft</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Reference / Cheque No. (optional)</label>
+            <input type="text" id="manual-ref" placeholder="auto if blank" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Note (optional)</label>
+            <input type="text" id="manual-note" placeholder="e.g. counter receipt #12" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-600 focus:outline-none">
+          </div>
+        </div>
+        <div id="manual-error" class="hidden bg-red-50 border border-red-200 text-red-700 font-bold px-3 py-2 rounded-xl text-[11px]"></div>
+        <div class="flex gap-2">
+          <button type="button" onclick="closeManualPaymentModal()" class="flex-1 rounded-xl border-2 border-slate-300 text-slate-600 font-black text-xs py-3 bg-white hover:bg-slate-50 transition">Cancel</button>
+          <button type="submit" class="flex-1 btn-luxury-primary justify-center py-3">
+            <i data-lucide="check" class="w-4 h-4 text-sky-300"></i>
+            <span>Record Payment</span>
           </button>
         </div>
       </form>
@@ -3005,6 +3227,7 @@
       tbody.innerHTML = rows.map(t => {
         const isPaid = t.status === 'Paid' || Number(t.balance || 0) <= 0;
         const overdue = !isPaid && t.is_overdue;
+        const pending = !isPaid && !!t.pending;
         return `
           <tr class="hover:bg-slate-50/80 transition border-b border-slate-100">
             <td class="py-3.5 px-4 font-black text-slate-900">${t.type}<span class="block text-[10px] text-slate-400 font-semibold">${t.frequency || ''}</span></td>
@@ -3017,16 +3240,22 @@
             <td class="py-3.5 px-4">
               ${isPaid
                 ? '<span class="badge-tag-mint">Paid</span>'
-                : overdue
-                  ? '<span class="badge-tag-terracotta">Overdue</span>'
-                  : '<span class="badge-tag-terracotta">Pending</span>'}
+                : pending
+                  ? '<span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black border bg-amber-100 text-amber-800 border-amber-200">Pending Confirmation</span>'
+                  : overdue
+                    ? '<span class="badge-tag-terracotta">Overdue</span>'
+                    : '<span class="badge-tag-terracotta">Pending</span>'}
             </td>
             <td class="py-3.5 px-4 text-right">
               ${isPaid
                 ? `<button onclick="viewReceipt('${t.id}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-[11px] px-3 py-1.5 rounded-xl transition">
                      Receipt
                    </button>`
-                : `<button onclick="openPaymentModal('${t.id}')" class="btn-luxury-primary py-1 px-3 text-[11px]">
+                : pending
+                  ? `<button disabled title="Waiting for the Panchayat Desk to confirm your payment" class="bg-amber-50 text-amber-700 border border-amber-200 font-bold text-[11px] px-3 py-1.5 rounded-xl cursor-not-allowed">
+                       Awaiting Confirmation
+                     </button>`
+                  : `<button onclick="openPaymentModal('${t.id}')" class="btn-luxury-primary py-1 px-3 text-[11px]">
                      Pay ${money(t.balance || t.amount)}
                    </button>`}
             </td>
@@ -3077,6 +3306,7 @@
       renderSystemStatus();
       renderFreshness();
       renderFinance();
+      renderPayments();
     }
 
     function roleLabel(r) {
@@ -3589,7 +3819,7 @@
       try {
         const result = await window.gramSetu.payTax(activeTaxForPayment.id, 'UPI');
         if (!result) return;
-        fillReceipt(result.tax, result.ref, result.paid_at);
+        fillReceipt(result.tax, result.ref, result.paid_at, result.status);
 
         document.getElementById('pay-screen-checkout').classList.add('hidden');
         document.getElementById('pay-screen-success').classList.remove('hidden');
@@ -3599,22 +3829,38 @@
       }
     }
 
-    function fillReceipt(tax, ref, paidAt) {
+    function fillReceipt(tax, ref, paidAt, status) {
       const prof = window.gramSetu.state.taxProfile || {};
       document.getElementById('receipt-no').innerText = ref || tax.payment_ref || '-';
-      document.getElementById('receipt-date').innerText = paidAt || tax.paid_at || '-';
+      let when = paidAt || tax.paid_at || '-';
+      try { if (when && when !== '-') when = new Date(when).toLocaleString('en-GB'); } catch (e) { /* keep raw */ }
+      document.getElementById('receipt-date').innerText = when;
       document.getElementById('receipt-taxpayer').innerText = prof.name || (window.gramSetu.state.currentUser || {}).name || '-';
       document.getElementById('receipt-property').innerText = tax.property_no || '-';
       document.getElementById('receipt-item-name').innerText = `${tax.type} ${tax.year}`;
       document.getElementById('receipt-item-amount').innerText =
-        `₹${Number(tax.amount_paid || tax.amount || 0).toLocaleString('en-IN')}.00`;
+        `₹${Number(tax.amount_paid || tax.balance || tax.amount || 0).toLocaleString('en-IN')}.00`;
+
+      const st = status || 'Successful';
+      const statusEl = document.getElementById('receipt-status');
+      const tagEl = document.getElementById('receipt-tag');
+      const noteEl = document.getElementById('receipt-note');
+      if (st === 'Initiated') {
+        if (statusEl) { statusEl.innerText = 'PENDING CONFIRMATION'; statusEl.className = 'text-amber-600'; }
+        if (tagEl) tagEl.innerText = 'AWAITING PANCHAYAT';
+        if (noteEl) noteEl.classList.remove('hidden');
+      } else {
+        if (statusEl) { statusEl.innerText = 'SUCCESSFUL'; statusEl.className = 'text-sky-700'; }
+        if (tagEl) tagEl.innerText = '[PAYMENT VERIFIED]';
+        if (noteEl) noteEl.classList.add('hidden');
+      }
     }
 
     function viewReceipt(taxId) {
       const tax = window.gramSetu.state.taxes.find(t => t.id === taxId);
       if (!tax) return;
 
-      fillReceipt(tax, tax.payment_ref, tax.paid_at);
+      fillReceipt(tax, tax.payment_ref, tax.paid_at, tax.status === 'Paid' ? 'Successful' : 'Initiated');
 
       document.getElementById('pay-screen-checkout').classList.add('hidden');
       document.getElementById('pay-screen-success').classList.remove('hidden');
@@ -3918,6 +4164,334 @@
       const next = document.getElementById('fin-next');
       if (prev) prev.disabled = page <= 1;
       if (next) next.disabled = to >= total;
+    }
+
+    // ---- Fee payments & demands (Panchayat Desk) -----------------------------
+    function paymentStatusPill(s) {
+      const map = {
+        Successful: 'bg-sky-100 text-sky-800 border-sky-200',
+        Initiated: 'bg-amber-100 text-amber-800 border-amber-200',
+        Failed: 'bg-rose-100 text-rose-800 border-rose-200'
+      };
+      const label = { Initiated: 'Pending', Successful: 'Successful', Failed: 'Failed' }[s] || s || '-';
+      const cls = map[s] || 'bg-slate-100 text-slate-700 border-slate-200';
+      return `<span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black border ${cls}">${escapeHtml(label)}</span>`;
+    }
+
+    function paymentActions(r) {
+      const id = String(r.payment_id || '').replace(/'/g, '');
+      const g = window.gramSetu;
+      const btn = 'inline-flex items-center justify-center w-7 h-7 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-100 transition';
+      if (!g.isStaff || r.payment_status !== 'Initiated') {
+        return `<span class="text-[10px] text-slate-400 font-mono">${r.payment_status === 'Successful' ? 'settled' : 'closed'}</span>`;
+      }
+      return `<button onclick="paymentAction('${id}','Successful')" title="Confirm payment" class="${btn} text-sky-700 hover:bg-sky-50"><i data-lucide="check" class="w-3.5 h-3.5"></i></button> <button onclick="paymentAction('${id}','Failed')" title="Reject payment" class="${btn} text-rose-600 hover:bg-rose-50"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>`;
+    }
+
+    function paymentRow(r) {
+      const dt = r.payment_date
+        ? new Date(r.payment_date).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+        : '-';
+      const citizen = escapeHtml(r.citizen_name || 'Unknown citizen');
+      const meta = [r.mobile_number && ('+91 ' + r.mobile_number), r.house_number && ('House ' + r.house_number)].filter(Boolean).join(' · ');
+      const head = escapeHtml(r.tax_type || 'Fee') + (r.financial_year
+        ? `<span class="block text-[10px] text-slate-400 font-semibold">${escapeHtml(r.financial_year)}${r.assessment_number ? ' · ' + escapeHtml(r.assessment_number) : ''}</span>`
+        : '');
+      const method = escapeHtml(r.payment_method || '-') + (r.gateway_name && r.gateway_name !== r.payment_method
+        ? `<span class="block text-[10px] text-slate-400 font-semibold">${escapeHtml(r.gateway_name)}</span>`
+        : '');
+      return `<tr class="hover:bg-slate-50 transition border-b border-slate-100">
+        <td class="py-3 px-3 whitespace-nowrap"><span class="font-mono text-[11px] text-slate-800">${escapeHtml(r.receipt_number || '-')}</span><span class="block text-[10px] text-slate-400 font-semibold">${dt}</span></td>
+        <td class="py-3 px-3"><span class="font-bold text-slate-900">${citizen}</span>${meta ? `<span class="block text-[10px] text-slate-500 font-semibold">${escapeHtml(meta)}</span>` : ''}</td>
+        <td class="py-3 px-3 text-slate-700 font-semibold">${head}</td>
+        <td class="py-3 px-3 text-right font-mono font-black whitespace-nowrap text-slate-900">${financeMoney(r.amount)}</td>
+        <td class="py-3 px-3 text-slate-600 font-semibold">${method}</td>
+        <td class="py-3 px-3">${paymentStatusPill(r.payment_status)}</td>
+        <td class="py-3 px-3 text-right whitespace-nowrap">${paymentActions(r)}</td>
+      </tr>`;
+    }
+
+    function renderPayments() {
+      const g = window.gramSetu;
+      const pay = g.state.payments || {};
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
+
+      const addBtn = document.getElementById('admin-add-demand-btn');
+      if (addBtn) addBtn.classList.toggle('hidden', !g.isStaff);
+
+      const s = pay.summary;
+      if (s) {
+        const c = s.counts || {};
+        set('pay-kpi-collected', financeMoney(s.total_collected));
+        set('pay-kpi-today', financeMoney(s.today_collected));
+        set('pay-kpi-pending', financeMoney(s.pending_amount));
+        set('pay-kpi-pending-count', `${Number(c.pending || 0).toLocaleString('en-IN')} payment(s)`);
+        set('pay-kpi-rejected', financeMoney(s.rejected_amount));
+        set('pay-kpi-rejected-count', `${Number(c.rejected || 0).toLocaleString('en-IN')} payment(s)`);
+      } else {
+        ['pay-kpi-collected', 'pay-kpi-today', 'pay-kpi-pending', 'pay-kpi-rejected'].forEach(id => set(id, financeMoney(0)));
+        set('pay-kpi-pending-count', '0 payment(s)');
+        set('pay-kpi-rejected-count', '0 payment(s)');
+      }
+
+      const tbody = document.getElementById('payments-table-body');
+      const rows = pay.records || [];
+      if (tbody) {
+        if (!rows.length) {
+          tbody.innerHTML = `<tr><td colspan="7" class="py-8 px-4 text-center">
+            <div class="mx-auto max-w-sm">
+              <i data-lucide="receipt" class="w-7 h-7 text-slate-300 mx-auto"></i>
+              <p class="text-xs font-black text-slate-700 mt-2">No fee payments yet</p>
+              <p class="text-[11px] text-slate-500 mt-1">Raise a fee demand so citizens can pay online, or record an offline payment. Every confirmed fee lands here and downloads as Excel.</p>
+              ${g.isStaff ? '<button onclick="openDemandModal()" class="gt-btn gt-btn-primary mt-3">Raise the first demand</button>' : ''}
+            </div></td></tr>`;
+        } else {
+          tbody.innerHTML = rows.map(paymentRow).join('');
+        }
+      }
+
+      const total = pay.total || 0;
+      const page = pay.page || 1;
+      const size = pay.pageSize || 25;
+      const from = total ? (page - 1) * size + 1 : 0;
+      const to = Math.min(page * size, total);
+      set('payments-page-info', total
+        ? `Showing ${from.toLocaleString('en-IN')}–${to.toLocaleString('en-IN')} of ${total.toLocaleString('en-IN')}`
+        : 'No payments');
+      const prev = document.getElementById('pay-prev');
+      const next = document.getElementById('pay-next');
+      if (prev) prev.disabled = page <= 1;
+      if (next) next.disabled = to >= total;
+    }
+
+    async function applyPaymentFilters() {
+      const g = window.gramSetu;
+      const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+      g.state.payments.filters = {
+        q: val('pay-search'),
+        payment_status: val('pay-status-filter'),
+        payment_method: val('pay-method-filter'),
+        date_from: val('pay-date-from'),
+        date_to: val('pay-date-to')
+      };
+      g.state.payments.page = 1;
+      try { await g.loadPayments(); } catch (e) { /* banner handles it */ }
+      await g.loadPaymentsSummary();
+      renderPayments();
+      safeCreateIcons();
+    }
+
+    async function resetPaymentFilters() {
+      ['pay-search', 'pay-status-filter', 'pay-method-filter', 'pay-date-from', 'pay-date-to'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      await applyPaymentFilters();
+    }
+
+    async function paymentsPage(delta) {
+      const g = window.gramSetu;
+      const pay = g.state.payments;
+      const maxPage = Math.max(1, Math.ceil((pay.total || 0) / pay.pageSize));
+      const target = Math.min(maxPage, Math.max(1, pay.page + delta));
+      if (target === pay.page) return;
+      pay.page = target;
+      try { await g.loadPayments(); } catch (e) { /* ignore */ }
+      renderPayments();
+      safeCreateIcons();
+    }
+
+    async function paymentAction(id, action) {
+      const g = window.gramSetu;
+      if (!g.isStaff) return;
+      const ok = await confirmAction(
+        action === 'Successful'
+          ? 'Confirm this fee payment? The amount will be credited to the citizen fee balance.'
+          : 'Reject this fee payment? The citizen fee balance will not be credited.',
+        {
+          title: action === 'Successful' ? 'Confirm payment' : 'Reject payment',
+          confirmText: action === 'Successful' ? 'Confirm' : 'Reject',
+          danger: action !== 'Successful'
+        }
+      );
+      if (!ok) return;
+      try {
+        await g.verifyPayment(id, action, action === 'Failed' ? 'Rejected by Panchayat Desk' : undefined);
+      } catch (e) {
+        alert(e.message || 'Could not update payment');
+        return;
+      }
+      try { await g.loadPayments(); } catch (e) { /* ignore */ }
+      await g.loadPaymentsSummary();
+      renderPayments();
+      safeCreateIcons();
+    }
+
+    async function exportPaymentsXlsx() {
+      const g = window.gramSetu;
+      const f = g.state.payments.filters || {};
+      const q = new URLSearchParams();
+      Object.keys(f).forEach(k => { if (f[k]) q.set(k, f[k]); });
+      try {
+        const res = await fetch(`${g.apiBase}/api/payments/export?${q.toString()}`, {
+          headers: { 'Authorization': 'Bearer ' + g.token },
+          cache: 'no-store'
+        });
+        if (!res.ok) throw new Error('Export failed (' + res.status + ')');
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `kumbhari-fee-payments-${new Date().toISOString().slice(0, 10)}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    function setPayError(id, msg) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (msg) { el.textContent = msg; el.classList.remove('hidden'); }
+      else { el.textContent = ''; el.classList.add('hidden'); }
+    }
+
+    async function openDemandModal() {
+      const g = window.gramSetu;
+      if (!g.isStaff) { alert('Only Panchayat staff/admins can raise fee demands.'); return; }
+      const form = document.getElementById('form-demand');
+      if (form) form.reset();
+      setPayError('demand-error', '');
+      const due = document.getElementById('demand-due-date');
+      if (due) due.value = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+      const m = document.getElementById('modal-demand');
+      if (m) m.classList.remove('hidden');
+      safeCreateIcons();
+
+      const vsel = document.getElementById('demand-villager');
+      const tsel = document.getElementById('demand-tax-type');
+      if (vsel) vsel.innerHTML = '<option value="">Loading citizens…</option>';
+      if (tsel) tsel.innerHTML = '<option value="">Loading fee types…</option>';
+      const villagers = await g.searchVillagers('');
+      const types = await g.loadTaxTypes();
+      if (vsel) {
+        vsel.innerHTML = villagers.length
+          ? '<option value="">Select a citizen…</option>' + villagers.map(v => `<option value="${v.villager_id}">${escapeHtml(v.name)}${v.house_number ? ' - House ' + escapeHtml(v.house_number) : ''}${v.mobile_number ? ' (' + escapeHtml(v.mobile_number) + ')' : ''}</option>`).join('')
+          : '<option value="">No citizens found</option>';
+      }
+      if (tsel) {
+        tsel.innerHTML = types.length
+          ? '<option value="">Select a fee head…</option>' + types.map(t => `<option value="${t.tax_type_id}">${escapeHtml(t.name)}${t.frequency ? ' (' + escapeHtml(t.frequency) + ')' : ''}</option>`).join('')
+          : '<option value="">No fee types available</option>';
+      }
+      safeCreateIcons();
+    }
+
+    function closeDemandModal() {
+      const m = document.getElementById('modal-demand');
+      if (m) m.classList.add('hidden');
+    }
+
+    async function handleDemandSubmit(e) {
+      e.preventDefault();
+      const g = window.gramSetu;
+      const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+      const payload = {
+        villager_id: val('demand-villager'),
+        tax_type_id: val('demand-tax-type'),
+        amount: parseFloat(val('demand-amount')),
+        financial_year: val('demand-fy') || undefined,
+        due_date: val('demand-due-date') || undefined,
+        assessment_number: val('demand-assessment') || undefined
+      };
+      if (!payload.villager_id || !payload.tax_type_id) { setPayError('demand-error', 'Please select a citizen and a fee head.'); return; }
+      if (!(payload.amount > 0)) { setPayError('demand-error', 'Enter a valid amount greater than 0.'); return; }
+      const btn = e.target.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      try {
+        await g.raiseFeeDemand(payload);
+        closeDemandModal();
+        try { await g.loadPayments(); } catch (err) { /* ignore */ }
+        await g.loadPaymentsSummary();
+        renderPayments();
+        safeCreateIcons();
+      } catch (err) {
+        setPayError('demand-error', err.message || 'Could not raise demand');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    async function openManualPaymentModal() {
+      const g = window.gramSetu;
+      if (!g.isStaff) { alert('Only Panchayat staff/admins can record payments.'); return; }
+      const form = document.getElementById('form-manual-payment');
+      if (form) form.reset();
+      setPayError('manual-error', '');
+      const hint = document.getElementById('manual-due-hint');
+      if (hint) hint.textContent = '';
+      const m = document.getElementById('modal-manual-payment');
+      if (m) m.classList.remove('hidden');
+      safeCreateIcons();
+
+      const dsel = document.getElementById('manual-due');
+      if (dsel) dsel.innerHTML = '<option value="">Loading outstanding dues…</option>';
+      const dues = await g.loadDues('');
+      window.__payDues = dues;
+      if (dsel) {
+        dsel.innerHTML = dues.length
+          ? '<option value="">Select an outstanding fee…</option>' + dues.map(d => `<option value="${d.tax_id}">${escapeHtml(d.citizen_name)} - ${escapeHtml(d.tax_type)} ${escapeHtml(d.financial_year || '')} · ₹${Number(d.remaining_amount || 0).toLocaleString('en-IN')} due</option>`).join('')
+          : '<option value="">No outstanding dues</option>';
+      }
+      safeCreateIcons();
+    }
+
+    function closeManualPaymentModal() {
+      const m = document.getElementById('modal-manual-payment');
+      if (m) m.classList.add('hidden');
+    }
+
+    function onManualDueChange() {
+      const sel = document.getElementById('manual-due');
+      const hint = document.getElementById('manual-due-hint');
+      const amount = document.getElementById('manual-amount');
+      if (!sel || !sel.value) { if (hint) hint.textContent = ''; return; }
+      const d = (window.__payDues || []).find(x => x.tax_id === sel.value);
+      if (!d) return;
+      if (hint) hint.textContent = `${d.tax_type} · ${d.financial_year || ''} - outstanding ₹${Number(d.remaining_amount || 0).toLocaleString('en-IN')}${d.mobile_number ? ' · +91 ' + d.mobile_number : ''}`;
+      if (amount && !amount.value) amount.value = Number(d.remaining_amount || 0).toFixed(2);
+    }
+
+    async function handleManualPaymentSubmit(e) {
+      e.preventDefault();
+      const g = window.gramSetu;
+      const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+      const payload = {
+        tax_id: val('manual-due'),
+        amount: parseFloat(val('manual-amount')),
+        payment_method: val('manual-method'),
+        transaction_reference: val('manual-ref') || undefined,
+        note: val('manual-note') || undefined
+      };
+      if (!payload.tax_id) { setPayError('manual-error', 'Please select an outstanding fee.'); return; }
+      if (!(payload.amount > 0)) { setPayError('manual-error', 'Enter a valid amount greater than 0.'); return; }
+      const btn = e.target.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      try {
+        await g.recordManualPayment(payload);
+        closeManualPaymentModal();
+        try { await g.loadPayments(); } catch (err) { /* ignore */ }
+        await g.loadPaymentsSummary();
+        renderPayments();
+        safeCreateIcons();
+      } catch (err) {
+        setPayError('manual-error', err.message || 'Could not record payment');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
     }
 
     async function applyFinanceFilters() {

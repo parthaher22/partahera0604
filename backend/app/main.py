@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import ALLOWED_ORIGINS
-from app.routers import auth, complaints, announcements, dashboard, reference, audit, staff, pay, tax, notifications, finance
+from app.routers import auth, complaints, announcements, dashboard, reference, audit, staff, pay, tax, notifications, finance, payments
 
 app = FastAPI(title="E-GramPanchayat API")
 
@@ -25,6 +25,7 @@ app.include_router(pay.router)
 app.include_router(tax.router)
 app.include_router(notifications.router)
 app.include_router(finance.router)
+app.include_router(payments.router)
 
 
 @app.get("/health")
