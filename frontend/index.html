@@ -3,19 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#031b17">
-  <script>
-    // Apply the saved/system theme before first paint to avoid a flash.
-    (function () {
-      try {
-        var saved = localStorage.getItem('gramsetu_theme');
-        var theme = saved || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-      } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'light');
-      }
-    })();
-  </script>
+  <meta name="theme-color" content="#ffffff">
   <title>GramSetu - Kumbhari Gram Panchayat Digital Portal</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -151,13 +139,6 @@
 
           <!-- Top Action Controls -->
           <div class="flex items-center gap-3">
-
-            <!-- Dark / Light Theme Toggle -->
-            <button id="theme-toggle" onclick="toggleTheme()" title="Switch to dark mode" aria-label="Toggle dark mode"
-              class="w-9 h-9 flex items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-700 shadow-sm hover:text-sky-700 transition">
-              <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 hidden"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
-              <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
-            </button>
 
             <!-- Dual Role Switcher -->
             <div class="bg-white/90 p-1 rounded-2xl flex items-center border border-slate-200 shadow-sm">
@@ -1985,26 +1966,6 @@
       setInterval(tick, 1000);
     }
 
-    // ---- Dark / light theme ------------------------------------------------
-    function applyTheme(theme) {
-      const t = theme === 'dark' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', t);
-      try { localStorage.setItem('gramsetu_theme', t); } catch (_) {}
-      const sun = document.getElementById('theme-icon-sun');
-      const moon = document.getElementById('theme-icon-moon');
-      const btn = document.getElementById('theme-toggle');
-      if (sun && moon) {
-        sun.classList.toggle('hidden', t !== 'dark');
-        moon.classList.toggle('hidden', t === 'dark');
-      }
-      if (btn) btn.title = t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', t === 'dark' ? '#060f0d' : '#031b17');
-    }
-    function toggleTheme() {
-      applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    }
-
     async function boot() {
       if (bootStarted) return;
       bootStarted = true;
@@ -2012,7 +1973,6 @@
       loadWeather();
       setInterval(loadWeather, 15 * 60 * 1000);
       startClock();
-      applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
 
       try { await window.gramSetu.init(); }
       catch (e) { console.warn('Backend reachable?:', e.message); }
