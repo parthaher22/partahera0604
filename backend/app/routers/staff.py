@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 from app.audit_util import log_audit
 from app.supabase_client import supabase
-from app.security import hash_password, require_roles, CurrentUser
+from app.security import hash_password, require_roles, get_current_user, CurrentUser
 
 router = APIRouter(prefix="/api/staff", tags=["staff"])
 
@@ -42,6 +42,20 @@ def list_staff(current_user: CurrentUser = Depends(require_roles(*VIEW_ROLES))):
     active = sum(1 for s in staff if s.get("account_status") == "active")
     admins = sum(1 for s in staff if s.get("role") in ("panchayat_admin", "system_admin"))
     return {"staff": staff, "total": len(staff), "active": active, "admins": admins}
+
+
+@router.get("/directory")
+def staff_directory(current_user: CurrentUser = Depends(get_current_user)):
+    # Read-only member directory for citizens: names, roles and public contact.
+    result = (
+        supabase.table("users")
+        .select("user_id, full_name, mobile_number, role, account_status")
+        .neq("role", "villager")
+        .eq("account_status", "active")
+        .order("created_at", desc=True)
+        .execute()
+    )
+    return {"staff": result.data}
 
 
 @router.post("", status_code=201)

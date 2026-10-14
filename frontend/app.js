@@ -677,15 +677,24 @@ class GramSetuClient {
   // ---- Panchayat staff & dashboard ------------------------------------------
 
   async loadStaff() {
-    if (!this.isStaff) { this.state.staff = []; return []; }
-    try {
-      const d = await this.api('/api/staff');
-      this.state.staff = (d && d.staff) || [];
-      return this.state.staff;
-    } catch (e) {
-      this.state.staff = [];
-      return [];
+    if (this.isStaff) {
+      try {
+        const d = await this.api('/api/staff');
+        this.state.staff = (d && d.staff) || [];
+        return this.state.staff;
+      } catch (e) {
+        this.state.staff = [];
+        return [];
+      }
     }
+    // Citizens see the read-only member directory; admin/staff keep full records.
+    try {
+      const d = await this.api('/api/staff/directory');
+      this.state.staff = (d && d.staff) || [];
+    } catch (e) {
+      this.state.staff = this.state.staff || [];
+    }
+    return this.state.staff;
   }
 
   async addStaff(payload) {
