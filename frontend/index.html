@@ -984,15 +984,18 @@
                 <h3 class="text-base font-black text-slate-900 mb-1">Immutable Administrative Audit Trail</h3>
                 <p class="text-xs text-slate-500">All status changes and actions recorded permanently with timestamps (FR-13).</p>
               </div>
-              <div class="flex items-center gap-2">
-                <span class="text-[10px] font-mono text-slate-400" data-freshness="audit">not loaded yet</span>
-                <button onclick="exportAuditCSV()" class="gt-btn" title="Download visible audit rows as CSV" aria-label="Export audit trail as CSV">
-                  <i data-lucide="download" class="w-3.5 h-3.5"></i> CSV
-                </button>
-                <button onclick="printAudit()" class="gt-btn" title="Print audit trail" aria-label="Print audit trail">
-                  <i data-lucide="printer" class="w-3.5 h-3.5"></i> Print
-                </button>
-              </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-[10px] font-mono text-slate-400" data-freshness="audit">not loaded yet</span>
+            <button onclick="exportAuditCSV()" class="gt-btn" title="Download visible audit rows as CSV" aria-label="Export audit trail as CSV">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> CSV
+            </button>
+            <button onclick="printAudit()" class="gt-btn" title="Print audit trail" aria-label="Print audit trail">
+              <i data-lucide="printer" class="w-3.5 h-3.5"></i> Print
+            </button>
+            <button onclick="toggleAuditPanel()" id="audit-toggle-btn" class="gt-btn" title="Toggle audit panel" aria-label="Toggle audit panel">
+              <i data-lucide="minimize-2" class="w-3.5 h-3.5"></i> Minimize
+            </button>
+          </div>
             </div>
 
             <!-- Audit filter toolbar -->
@@ -1028,24 +1031,26 @@
               </div>
             </div>
 
-            <div class="overflow-x-auto font-mono text-[11px] print-area">
-              <table class="w-full text-left desk-table" aria-describedby="audit-caption">
-                <caption id="audit-caption" class="sr-only">Audit trail events matching the current filters</caption>
-                <thead>
-                  <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold">
-                    <th scope="col" class="py-2.5 px-3 sticky-col">Log ID</th>
-                    <th scope="col" class="py-2.5 px-3">Timestamp</th>
-                    <th scope="col" class="py-2.5 px-3">Actor</th>
-                    <th scope="col" class="py-2.5 px-3">Action</th>
-                    <th scope="col" class="py-2.5 px-3">Reference</th>
-                    <th scope="col" class="py-2.5 px-3">Device</th>
-                    <th scope="col" class="py-2.5 px-3">Details</th>
-                  </tr>
-                </thead>
-                <tbody id="admin-audit-table" class="divide-y divide-slate-100">
-                  <!-- Injected via JS -->
-                </tbody>
-              </table>
+            <div id="audit-body">
+              <div class="overflow-x-auto font-mono text-[11px] print-area">
+                <table class="w-full text-left desk-table" aria-describedby="audit-caption">
+                  <caption id="audit-caption" class="sr-only">Audit trail events matching the current filters</caption>
+                  <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold">
+                      <th scope="col" class="py-2.5 px-3 sticky-col">Log ID</th>
+                      <th scope="col" class="py-2.5 px-3">Timestamp</th>
+                      <th scope="col" class="py-2.5 px-3">Actor</th>
+                      <th scope="col" class="py-2.5 px-3">Action</th>
+                      <th scope="col" class="py-2.5 px-3">Reference</th>
+                      <th scope="col" class="py-2.5 px-3">Device</th>
+                      <th scope="col" class="py-2.5 px-3">Details</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-audit-table" class="divide-y divide-slate-100">
+                    <!-- Injected via JS -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
@@ -2032,9 +2037,15 @@
       <form id="form-demand" onsubmit="handleDemandSubmit(event)" class="p-6 space-y-4 text-xs">
         <div>
           <label class="block font-bold text-slate-700 mb-1">Citizen *</label>
-          <select id="demand-villager" required class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold">
-            <option value="">Loading citizens…</option>
-          </select>
+          <div class="space-y-2">
+            <label class="gt-field gt-search">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
+              <input type="search" id="demand-villager-search" placeholder="Search citizen by name, mobile, or house…" oninput="debouncedSearchDemandVillagers(this.value)">
+            </label>
+            <select id="demand-villager" required class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold">
+              <option value="">Loading citizens…</option>
+            </select>
+          </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -3026,6 +3037,18 @@
       return '#' + String(id).slice(0, 8);
     }
 
+        let auditCollapsed = false;
+    function toggleAuditPanel() {
+      const body = document.getElementById('audit-body');
+      const btn = document.getElementById('audit-toggle-btn');
+      if (!body) return;
+      auditCollapsed = !auditCollapsed;
+      body.classList.toggle('hidden', auditCollapsed);
+      if (btn) {
+        btn.innerHTML = auditCollapsed ? '<i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Maximize' : '<i data-lucide="minimize-2" class="w-3.5 h-3.5"></i> Minimize';
+        safeCreateIcons();
+      }
+    }
     function renderAuditTable() {
       const auditTable = document.getElementById('admin-audit-table');
       if (!auditTable) return;
@@ -4520,9 +4543,12 @@
 
       const vsel = document.getElementById('demand-villager');
       const tsel = document.getElementById('demand-tax-type');
+      const vsearch = document.getElementById('demand-villager-search');
       if (vsel) vsel.innerHTML = '<option value="">Loading citizens…</option>';
+      if (vsearch) vsearch.value = '';
       if (tsel) tsel.innerHTML = '<option value="">Loading fee types…</option>';
       const villagers = await g.searchVillagers('');
+      window._demandVillagersCache = villagers.slice();
       const types = await g.loadTaxTypes();
       if (vsel) {
         vsel.innerHTML = villagers.length
@@ -4542,6 +4568,7 @@
       if (m) m.classList.add('hidden');
     }
 
+        let demandSearchTimer; async function debouncedSearchDemandVillagers(q){ clearTimeout(demandSearchTimer); demandSearchTimer=setTimeout(async()=>{ const g=window.gramSetu; const vsel=document.getElementById('demand-villager'); if(!vsel)return; const villagers=q?await g.searchVillagers(q):(window._demandVillagersCache||await g.searchVillagers('')); if(!q) window._demandVillagersCache=villagers.slice(); vsel.innerHTML=villagers.length?'<option value="">Select a citizen…</option>'+villagers.map(v=>'<option value="'+v.villager_id+'">'+escapeHtml(v.name)+(v.house_number?' - House '+escapeHtml(v.house_number):'')+(v.mobile_number?' ('+escapeHtml(v.mobile_number)+')':'')+'</option>').join(''):'<option value="">No citizens found</option>'; safeCreateIcons(); },250); }
     async function handleDemandSubmit(e) {
       e.preventDefault();
       const g = window.gramSetu;
