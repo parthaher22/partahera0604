@@ -29,13 +29,24 @@ def register(payload: RegisterRequest, request: Request, background: BackgroundT
     if existing.data:
         raise HTTPException(status_code=400, detail="Mobile number already registered")
 
+    email = (payload.email or "").strip() or None
+    if email:
+        email_taken = (
+            supabase.table("users")
+            .select("user_id")
+            .eq("email", email)
+            .execute()
+        )
+        if email_taken.data:
+            raise HTTPException(status_code=400, detail="Email already registered")
+
     user_row = (
         supabase.table("users")
         .insert(
             {
                 "full_name": payload.full_name,
                 "mobile_number": payload.mobile_number,
-                "email": payload.email,
+                "email": email,
                 "password_hash": hash_password(payload.password),
                 "role": "villager",
                 "account_status": "active",

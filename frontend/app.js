@@ -228,7 +228,12 @@ class GramSetuClient {
       throw new Error(data && data.detail ? data.detail : 'Session expired. Please log in again.');
     }
     if (!res.ok) {
-      const msg = data ? (data.detail || data.message || JSON.stringify(data)) : `Request failed (${res.status})`;
+      let msg = data ? (data.detail || data.message) : null;
+      if (!msg) {
+        msg = res.status >= 500
+          ? 'The server could not complete this request. Please try again.'
+          : `Request failed (${res.status})`;
+      }
       throw new Error(msg);
     }
     if (auth && this.token) this.state.lastRefreshAt = Date.now(); // data freshness stamp
