@@ -597,6 +597,25 @@
             </div>
           </div>
 
+          <!-- Mobile-only bottom tab bar: page-to-page navigation for citizens (< 1024px) -->
+          <nav id="citizen-tabbar" class="citizen-tabbar" aria-label="Citizen sections">
+            <button type="button" class="citizen-tab active" data-page="home" onclick="citizenShowPage('home')" aria-label="Home">
+              <i data-lucide="home"></i><span>Home</span>
+            </button>
+            <button type="button" class="citizen-tab" data-page="services" onclick="citizenShowPage('services')" aria-label="Services and Tax">
+              <i data-lucide="credit-card"></i><span>Services</span>
+            </button>
+            <button type="button" class="citizen-tab" data-page="notices" onclick="citizenShowPage('notices')" aria-label="Notice Board">
+              <i data-lucide="bell"></i><span>Notices</span>
+            </button>
+            <button type="button" class="citizen-tab" data-page="schemes" onclick="citizenShowPage('schemes')" aria-label="Welfare Schemes">
+              <i data-lucide="award"></i><span>Schemes</span>
+            </button>
+            <button type="button" class="citizen-tab" data-page="more" onclick="citizenShowPage('more')" aria-label="More">
+              <i data-lucide="menu"></i><span>More</span>
+            </button>
+          </nav>
+
         </div>
 
         <!-- ========================================== -->
@@ -3625,6 +3644,7 @@
       document.body.classList.toggle('desk-mode', !isVillager);
       if (!isVillager) closeMobileDrawer();
       if (!isVillager) setDeskNavActive('admin-dashboard');
+      if (isVillager) applyCitizenPages();
 
       const villagerBtn = document.getElementById('role-villager-btn');
       const adminBtn = document.getElementById('role-admin-btn');
@@ -3654,6 +3674,60 @@
       'section-finance': 'admin-dashboard',
       'section-schemes': 'admin-dashboard'
     };
+
+    // ---- Citizen mobile pages (page-to-page navigation, < 1024px) -------------
+    const CITIZEN_PAGE_SECTIONS = {
+      home: ['section-dashboard', 'section-grievances', 'section-finance'],
+      services: ['section-services'],
+      notices: ['section-notices'],
+      schemes: ['section-schemes'],
+      more: ['section-members']
+    };
+    const CITIZEN_ALL_SECTIONS = [
+      'section-dashboard', 'section-grievances', 'section-notices',
+      'section-schemes', 'section-finance', 'section-services', 'section-members'
+    ];
+    const CITIZEN_SECTION_PAGE = {
+      'section-dashboard': 'home',
+      'section-grievances': 'home',
+      'section-finance': 'home',
+      'section-services': 'services',
+      'section-notices': 'notices',
+      'section-schemes': 'schemes',
+      'section-members': 'more'
+    };
+    const citizenMobileMq = window.matchMedia('(max-width: 1023.98px)');
+    let currentCitizenPage = 'home';
+
+    function isCitizenMobileView() { return citizenMobileMq.matches; }
+
+    function applyCitizenPages() {
+      if (!window.gramSetu || window.gramSetu.state.activeRole !== 'villager') return;
+      const showAll = !isCitizenMobileView();
+      const visible = CITIZEN_PAGE_SECTIONS[currentCitizenPage] || CITIZEN_PAGE_SECTIONS.home;
+      CITIZEN_ALL_SECTIONS.forEach(function (id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('hidden', !showAll && visible.indexOf(id) === -1);
+      });
+      document.querySelectorAll('.citizen-tab').forEach(function (tab) {
+        tab.classList.toggle('active', tab.getAttribute('data-page') === currentCitizenPage);
+      });
+    }
+
+    function citizenShowPage(page) {
+      if (!CITIZEN_PAGE_SECTIONS[page]) return false;
+      currentCitizenPage = page;
+      closeMobileDrawer();
+      applyCitizenPages();
+      if (isCitizenMobileView()) window.scrollTo({ top: 0, behavior: 'smooth' });
+      return false;
+    }
+
+    if (citizenMobileMq.addEventListener) {
+      citizenMobileMq.addEventListener('change', applyCitizenPages);
+    } else if (citizenMobileMq.addListener) {
+      citizenMobileMq.addListener(applyCitizenPages);
+    }
 
     function toggleMobileDrawer() {
       const open = document.body.classList.toggle('drawer-open');
@@ -3687,8 +3761,12 @@
         if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
         if (window.gramSetu.state.activeRole !== 'villager') switchRole('villager');
-        const sec = document.getElementById(target);
-        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (isCitizenMobileView()) {
+          citizenShowPage(CITIZEN_SECTION_PAGE[target] || 'home');
+        } else {
+          const sec = document.getElementById(target);
+          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       }
       return false;
     }
