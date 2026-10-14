@@ -247,6 +247,37 @@
 
           </div>
 
+          <!-- Panchayat Desk: simple mobile navigation (shown < 1024px in desk mode) -->
+          <nav id="desk-mobile-nav" class="desk-mobile-nav w-full" aria-label="Panchayat Desk sections">
+            <div class="desk-mobile-brand">
+              <span class="desk-mobile-emblem"><i data-lucide="landmark" class="w-4 h-4"></i></span>
+              <span>GRAMSETU <small>Kumbhari Panchayat Desk</small></span>
+            </div>
+            <div class="desk-mobile-scroll">
+              <a href="#admin-dashboard" onclick="return deskNav(this, 'admin-dashboard')" class="desk-mobile-link active">
+                <i data-lucide="layout-dashboard"></i><span>Dashboard</span>
+              </a>
+              <a href="#admin-grievances" onclick="return deskNav(this, 'admin-grievances')" class="desk-mobile-link">
+                <i data-lucide="file-text"></i><span>Grievances</span>
+              </a>
+              <a href="#admin-notices" onclick="return deskNav(this, 'admin-notices')" class="desk-mobile-link">
+                <i data-lucide="bell"></i><span>Notices</span>
+              </a>
+              <a href="#admin-staff" onclick="return deskNav(this, 'admin-staff')" class="desk-mobile-link">
+                <i data-lucide="users"></i><span>Staff</span>
+              </a>
+              <a href="#admin-finance" onclick="return deskNav(this, 'admin-finance')" class="desk-mobile-link">
+                <i data-lucide="wallet"></i><span>Finance</span>
+              </a>
+              <a href="#admin-payments" onclick="return deskNav(this, 'admin-payments')" class="desk-mobile-link">
+                <i data-lucide="receipt"></i><span>Fee Payments</span>
+              </a>
+              <a href="#admin-audit" onclick="return deskNav(this, 'admin-audit')" class="desk-mobile-link">
+                <i data-lucide="shield-check"></i><span>Audit</span>
+              </a>
+            </div>
+          </nav>
+
         </div>
       </header>
 
@@ -3593,6 +3624,7 @@
       document.getElementById('view-admin').classList.toggle('hidden', isVillager);
       document.body.classList.toggle('desk-mode', !isVillager);
       if (!isVillager) closeMobileDrawer();
+      if (!isVillager) setDeskNavActive('admin-dashboard');
 
       const villagerBtn = document.getElementById('role-villager-btn');
       const adminBtn = document.getElementById('role-admin-btn');
@@ -3659,6 +3691,24 @@
         if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
       return false;
+    }
+
+    // Simple mobile navigation for the Panchayat Desk (< 1024px).
+    function deskNav(el, id) {
+      if (!el) return false;
+      closeMobileDrawer();
+      document.querySelectorAll('.desk-mobile-link').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      if (!window.gramSetu.isStaff) return false;
+      if (window.gramSetu.state.activeRole !== 'admin') switchRole('admin');
+      scrollToSection(id);
+      return false;
+    }
+
+    function setDeskNavActive(id) {
+      const links = document.querySelectorAll('.desk-mobile-link');
+      if (!links.length) return;
+      links.forEach(a => a.classList.toggle('active', (a.getAttribute('href') || '') === '#' + id));
     }
 
     function adjustFont(delta, reset = false) {

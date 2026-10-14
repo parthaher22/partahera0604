@@ -820,6 +820,10 @@ textarea:focus-visible,
   body.drawer-open:not(.desk-mode) #drawer-backdrop { display: block; }
   body.desk-mode #drawer-backdrop { display: none !important; }
   body.desk-mode #mobile-menu-btn { display: none !important; }
+
+  /* Panchayat Desk: drop the tall stacked sidebar, use the compact mobile nav */
+  body.desk-mode .bespoke-sidebar { display: none; }
+  body.desk-mode #desk-mobile-nav { display: block; }
 }
 
 /* ---- Citizen modals: cap height + internal scroll on phones ---- */
@@ -843,4 +847,83 @@ textarea:focus-visible,
   #view-villager input[type="text"],
   #view-villager input[type="tel"],
   #view-villager input[type="search"] { min-height: 44px; }
+}
+
+/* ==========================================================================
+   PANCHAYAT DESK: SIMPLE MOBILE NAVIGATION
+   Hidden by default; only shown in desk mode below 1024px (see media query).
+   ========================================================================== */
+.desk-mobile-nav { display: none; }
+
+.desk-mobile-nav .desk-mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 9px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: var(--c-jade-900);
+}
+.desk-mobile-nav .desk-mobile-brand small {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--c-text-muted);
+}
+.desk-mobile-nav .desk-mobile-emblem {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--c-jade-900);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.desk-mobile-nav .desk-mobile-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.desk-mobile-nav .desk-mobile-scroll::-webkit-scrollbar { height: 4px; }
+.desk-mobile-nav .desk-mobile-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.desk-mobile-nav .desk-mobile-link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 13px;
+  border-radius: 8px;
+  border: 1px solid var(--c-border);
+  background: #ffffff;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.desk-mobile-nav .desk-mobile-link svg { width: 15px; height: 15px; }
+.desk-mobile-nav .desk-mobile-link:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: var(--c-jade-900);
+}
+.desk-mobile-nav .desk-mobile-link.active {
+  background: var(--c-jade-900);
+  border-color: var(--c-jade-900);
+  color: #ffffff;
 }
